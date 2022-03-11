@@ -27,7 +27,7 @@ OBJECTS	= $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
 
 # UTILS
 CC = gcc
-CFLAGS = -Imlx #-Wall -Wextra -Werror
+CFLAGS =  -Wall -Wextra -Werror -Imlx
 RM = rm -rf
 
 # COLORS
