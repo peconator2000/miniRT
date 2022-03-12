@@ -19,7 +19,8 @@ LIBFT_DIR = ./libft/
 LIBFT_HEADERS = $(LIBFT_DIR)
 
 # SOURCES
-SOURCES =	$(shell ls sources/*.c)
+SOURCES =	$(shell ls sources/*.c) \
+			$(shell ls sources/parse/*.c)
 
 # OBJECTS
 OBJ_DIR = ./objects/
