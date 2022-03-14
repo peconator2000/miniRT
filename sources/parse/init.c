@@ -1,13 +1,48 @@
 #include "miniRT.h"
 
+static void	init_scene(t_scene	*scene)
+{
+	scene->resolution[0] = 0;
+	scene->resolution[1] = 0;
+	scene->a_light = 0.0;
+	scene->al_color = 0;
+	scene->figs = NULL;
+}
+
+void	init_mlx(t_minirt *minirt, int choose)
+{
+	int	width;
+	int	height;
+
+	if (choose == 0)
+	{
+		minirt->mlx = mlx_init();
+		minirt->win = NULL;
+		minirt->img = NULL;
+		minirt->data_addr = NULL;
+		return ;
+	}
+	width = minirt->scene->resolution[0];
+	height = minirt->scene->resolution[1];
+	minirt->win = mlx_new_window(minirt->mlx, width, height, "miniRT");
+	minirt->img = mlx_new_image(minirt->mlx, width, height);
+	minirt->data_addr = mlx_get_data_addr(minirt->mlx, &(minirt->bits_per_pixel),
+			&(minirt->size_line), &(minirt->endian));
+
+}
+
 t_minirt	*init()
 {
 	t_minirt	*minirt;
 
 	minirt = (t_minirt *)err_malloc(sizeof(t_minirt));
-	// init_mlx(minirt);
-	// minirt = init_scene();
-	// minirt->scene->camera = init_camera();
-	// minirt->scene->light = init_light;
+	minirt->scene = (t_scene *)err_malloc(sizeof(t_scene));
+	minirt->scene->camera = (t_camera *)err_malloc(sizeof(t_camera));
+	minirt->scene->light = (t_light *)err_malloc(sizeof(t_light));
+	init_mlx(minirt, 0);
+	init_scene(minirt->scene);
+	minirt->scene->camera->degree = 0;
+	minirt->scene->light->color = 0;
+	minirt->scene->light->brightness = 0.0;
 	return (minirt);
 }

@@ -1,0 +1,10 @@
+#include "miniRT.h"
+
+void	free_minirt(t_minirt *minirt)
+{
+	// free_figs(minirt->scene->figs);
+	free(minirt->scene->light);
+	free(minirt->scene->camera);
+	free(minirt->scene);
+	free(minirt);
+}
