@@ -6,7 +6,7 @@
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 19:04:12 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/03/14 18:59:37 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/03/15 15:45:01 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,25 @@ int	str_to_int(char **str)
 
 double	str_to_double(char **str)
 {
-	(void)str;
-	return (0.0);
+	double	num;
+	double	fraction;
+	int		neg;
+
+	num = 0.0;
+	fraction = 0.0;
+	neg = 1;
+	if (**str == '-' && *((*str)++))
+		neg = -1;
+	while (ft_isdigit(**str))
+		num = num * 10 + (*((*str)++) - '0');
+	if (**str == '.')
+		(*str)++;
+	while (ft_isdigit(**str))
+		fraction = fraction * 10 + (*((*str)++) - '0');
+	while (fraction >= 1)
+		fraction /= 10;
+	num += fraction;
+	return (num * neg);
 }
 
 void	skip_space(char **str)
@@ -46,4 +63,11 @@ void	check_range(double num, double min, double max, char *elem_name)
 		ft_putstr_fd(elem_name, 2);
 		scene_error("parametr out of range");
 	}
+}
+
+void	comma(char **str)
+{
+	if (**str != ',')
+		scene_error("Bad formatted parameters");
+	(*str)++;
 }

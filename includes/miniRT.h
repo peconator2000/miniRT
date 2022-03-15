@@ -6,7 +6,7 @@
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:14:21 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/03/15 16:33:15 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/03/15 16:48:45 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,9 @@ int			str_to_int(char **str);
 double		str_to_double(char **str);
 void		skip_space(char **str);
 void		check_range(double num, double min, double max, char *elem_name);
+void		comma(char **str);
+int			parse_color(char **str);
+t_point3	parse_point3(char **str);
 
 // Error handling
 void		scene_error(char *msg);

@@ -32,7 +32,7 @@ OBJECTS	= $(addprefix $(OBJ_DIR), $(SOURCES:.c=.o))
 
 # UTILS
 CC = gcc
-CFLAGS =  -Wall -Wextra -Werror -Imlx
+CFLAGS = -Wall -Wextra -Werror -g -Imlx
 RM = rm -rf
 
 # COLORS

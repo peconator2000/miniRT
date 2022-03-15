@@ -14,6 +14,11 @@ void	parse_ambient_light(t_minirt *minirt, char **str)
 {
 	(void)minirt;
 	(void)str;
+	skip_space(str);
+	minirt->scene->a_light = str_to_double(str);
+	check_range(minirt->scene->a_light, 0.0, 1.0, "AMBIENT LIGHT");
+	skip_space(str);
+	minirt->scene->al_color =  parse_color(str);
 }
 
 void	parse_light(t_minirt *minirt, char **str)

@@ -13,6 +13,8 @@ int pixel_in_sp(t_sphere *sp, int x, int y)
 	new_x = sp->coord.x;
 	new_y = sp->coord.y;
 	new_rad = sqrt(new_x * new_x + new_y * new_y);
+	printf("newx[%d] = %f\n", x, new_x);
+	printf("newy[%d] = %f\n", y, new_y);
 	if ((new_rad - (sp->diameter * 0.5)) < eps)
 		return (1);
 	return (0);
@@ -59,6 +61,7 @@ void draw_sphere(t_minirt *data)
 		while (++i < len)
 			draw_pixel(data, i, j, pixel_in_sp(&(data->scene->figs->fig.sp), i, j));
 	}
+	printf("ok\n");
 }
 
 void	my_mlx_pixel_put(t_image *img, int x, int y, int color)
