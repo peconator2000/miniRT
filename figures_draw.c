@@ -16,6 +16,19 @@ int pixel_in_sp(t_sphere *sp, int x, int y)
 	return (0);
 }
 
+void	create_image(t_screen *scr)
+{
+	t_image	*img;
+
+	img = malloc(sizeof(t_image));
+	if (!img)
+		exit(0);
+	img->img = mlx_new_image(scr->init, scr->len, scr->high);
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
+			&img->line_length, &img->endian);
+	scr->img = img;
+}
+
 void draw_pixel(t_data *data, int x, int y, int draw)
 {
 	if (draw)

@@ -1,18 +1,5 @@
 #include "minirt.h"
 
-void	create_image(t_screen *scr)
-{
-	t_image	*img;
-
-	img = malloc(sizeof(t_image));
-	if (!img)
-		exit(0);
-	img->img = mlx_new_image(scr->init, scr->len, scr->high);
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-			&img->line_length, &img->endian);
-	scr->img = img;
-}
-
 t_screen	*screen_init(void)
 {
 	t_screen	*scr;
@@ -53,6 +40,8 @@ t_data	*data_init(void)
 		return (NULL);
 	data->scr = screen_init();
 	data->sph = sphere_init();
+	// data->camera = camera_init();
+	// data->ligth = ligth_init();
 	if (!data->scr || !data->sph)
 		return (0);
 	return (data);

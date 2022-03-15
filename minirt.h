@@ -42,12 +42,17 @@ typedef struct s_sphere
 
 typedef struct s_data
 {
-	t_screen *scr;
-	t_sphere *sph;
+	t_screen	*scr;
+	t_sphere	*sph;
+	t_dot		*camera;
+	t_dot		*ligth;
+	t_dot		*basis;
 }				t_data;
 
 t_data	*data_init(void);
 int		draw_figures(t_data *data);
 void	controller(t_data *data);
 void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
+void	create_image(t_screen *scr);
+
 #endif
