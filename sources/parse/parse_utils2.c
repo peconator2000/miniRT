@@ -2,20 +2,27 @@
 
 int	parse_color(char **str)
 {
-	int	r;
-	int	g;
-	int	b;
+	int	red;
+	int	green;
+	int	blue;
 
-	r = 0;
-	g = 0;
-	b = 0;
-	(void)str;
-	return (r | g | b);
+	red = 0;
+	green = 0;
+	blue = 0;
+	red = str_to_int(str);
+	check_range(red, 0.0, 255, "COLOR");
+	comma(str);
+	green = str_to_int(str);
+	check_range(green, 0.0, 255, "COLOR");
+	comma(str);
+	blue = str_to_int(str);
+	check_range(blue, 0.0, 255, "COLOR");
+	return ((red << 16) | (green << 8) | blue);
 }
 
-t_point3	parse_point3(char **str)
+t_point	parse_point3(char **str)
 {
-	t_point3	point;
+	t_point	point;
 
 	(void)str;
 	point.x = str_to_double(str);

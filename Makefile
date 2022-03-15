@@ -21,6 +21,7 @@ LIBFT_HEADERS = $(LIBFT_DIR)
 # SOURCES
 SOURCES =	$(shell ls sources/*.c) \
 			$(shell ls sources/parse/*.c) \
+			$(shell ls sources/vector_operations/*.c) \
 			$(shell ls sources/control/*.c) \
 			$(shell ls sources/coordinates/*.c) \
 			$(shell ls sources/draw/*.c) \
