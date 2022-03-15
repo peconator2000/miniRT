@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:14:21 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/03/15 15:51:29 by vellie           ###   ########.fr       */
+/*   Updated: 2022/03/15 16:33:15 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,10 @@ void		free_minirt(t_minirt *minirt);
 
 
 //old fun
-t_data	*data_init(void);
-int		draw_figures(t_data *data);
-void	controller(t_data *data);
-void	my_mlx_pixel_put(t_image *data, int x, int y, int color);
-void	create_image(t_screen *scr);
+// t_data	*data_init(void);
+int		draw_figures(t_minirt *data);
+void	controller(t_minirt *data);
+void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
+// void	create_image(t_screen *scr);
 
 #endif

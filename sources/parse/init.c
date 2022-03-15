@@ -17,17 +17,14 @@ void	init_mlx(t_minirt *minirt, int choose)
 	if (choose == 0)
 	{
 		minirt->mlx = mlx_init();
-		minirt->win = NULL;
-		minirt->img = NULL;
-		minirt->data_addr = NULL;
 		return ;
 	}
 	width = minirt->scene->resolution[0];
 	height = minirt->scene->resolution[1];
 	minirt->win = mlx_new_window(minirt->mlx, width, height, "miniRT");
-	minirt->img = mlx_new_image(minirt->mlx, width, height);
-	minirt->data_addr = mlx_get_data_addr(minirt->mlx, &(minirt->bits_per_pixel),
-			&(minirt->size_line), &(minirt->endian));
+	minirt->img->img = mlx_new_image(minirt->mlx, width, height);
+	minirt->img->addr = mlx_get_data_addr(minirt->mlx, &(minirt->img->bits_per_pixel),
+			&(minirt->img->line_length), &(minirt->img->endian));
 
 }
 
@@ -39,6 +36,7 @@ t_minirt	*init()
 	minirt->scene = (t_scene *)err_malloc(sizeof(t_scene));
 	minirt->scene->camera = (t_camera *)err_malloc(sizeof(t_camera));
 	minirt->scene->light = (t_light *)err_malloc(sizeof(t_light));
+	minirt->img = (t_image *)err_malloc(sizeof(t_image));
 	init_mlx(minirt, 0);
 	init_scene(minirt->scene);
 	minirt->scene->camera->degree = 0;
