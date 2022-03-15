@@ -10,7 +10,7 @@ int	parse_color(char **str)
 	g = 0;
 	b = 0;
 	(void)str;
-	return (1);
+	return (r | g | b);
 }
 
 t_point3	parse_point3(char **str)

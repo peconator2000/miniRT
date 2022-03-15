@@ -1,23 +1,5 @@
 #include "miniRT.h"
 
-// t_screen	*screen_init(void)
-// {
-// 	t_screen	*scr;
-// 	int			len;
-// 	int			high;
-
-// 	len = 800;
-// 	high = 1200;
-// 	scr = malloc(sizeof(t_screen));
-// 	scr->len = len;
-// 	scr->high = high;
-// 	scr->init = mlx_init();
-// 	scr->win = mlx_new_window(scr->init, len, high, "miniRT");
-// 	create_image(scr);
-// 	return (scr);
-// }
-
-
 t_figures *init_sp()
 {
 	t_figures *figs = err_malloc(sizeof(t_figures));
@@ -37,11 +19,14 @@ int	main(int argc, char **argv)
 	data = init();
 	if (!parse(argc, argv, data) || !data)
 		return (1);
-	printf("data->img->addr: %p\n", data->img->addr);
+
+	// TEMP ------------------------------------------------------------------------
 	data->scene->figs = init_sp();
 	printf(" sp.x = %f\n sp.y = %f\n sp.z = %f\n sp.diametr = %f",
 			data->scene->figs->fig.sp.coord.x, data->scene->figs->fig.sp.coord.y,
 			data->scene->figs->fig.sp.coord.z, data->scene->figs->fig.sp.diameter);
+	// TEMP ------------------------------------------------------------------------
+
 	controller(data);
 	return (0);
 }
