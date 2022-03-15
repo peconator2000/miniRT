@@ -6,7 +6,7 @@
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:14:21 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/03/15 22:58:49 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/03/15 23:28:46 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,14 @@ int			parse_color(char **str);
 t_point		parse_point3(char **str);
 
 // Vector operations
-double		get_dot(t_point point1, t_point point2);
-double		get_module(t_point point1, t_point point2);
+double		get_distance(t_point start, t_point end);
+double		get_dot(t_point start, t_point end);
+double		get_module(t_point start, t_point end);
 t_point		normalize(t_point point);
+t_point		point_define(double x, double y, double z);
+t_point		vector_add(t_point start, t_point end);
+t_point		vector_substract(t_point start, t_point end);
+t_point		vector_cross(t_point start, t_point end);
 
 // Error handling
 void		scene_error(char *msg);

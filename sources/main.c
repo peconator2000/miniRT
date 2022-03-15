@@ -3,8 +3,7 @@
 t_figures *init_sp()
 {
 	t_figures *figs = err_malloc(sizeof(t_figures));
-	char *str_with_coord = ft_strdup("400,600,0");
-	figs->fig.sp.coord = parse_point3(&str_with_coord);
+	figs->fig.sp.coord = point_define(400, 600, 0);
 	figs->fig.sp.diameter = 100.0;
 	figs->type = 2;
 	figs->next = NULL;
@@ -21,8 +20,6 @@ int	main(int argc, char **argv)
 		return (1);
 
 	// TEMP ------------------------------------------------------------------------
-	printf("brightness = %f\n", data->scene->light->brightness);
-	printf("brightness = %d\n", data->scene->camera->degree);
 	data->scene->figs = init_sp();
 	printf(" sp.x = %f\n sp.y = %f\n sp.z = %f\n sp.diametr = %f",
 			data->scene->figs->fig.sp.coord.x, data->scene->figs->fig.sp.coord.y,

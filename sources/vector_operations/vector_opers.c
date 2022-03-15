@@ -1,19 +1,27 @@
 #include "miniRT.h"
 
-double	get_dot(t_point point1, t_point point2)
+double	get_distance(t_point start, t_point end)
 {
-	return (point1.x * point2.x + point1.y * point2.y + point1.z * point2.z);
+	double	distance;
+
+	distance = sqrt(pow(end.x - start.x, 2) + pow(end.y - start.y, 2) + pow(end.z - start.z, 2));
+	return (distance);
 }
 
-double	get_module(t_point point1, t_point point2)
+double	get_dot(t_point start, t_point end)
 {
-	return (sqrt(get_dot(point1, point2)));
+	return (start.x * end.x + start.y * end.y + start.z * end.z);
+}
+
+double	get_module(t_point start, t_point end)
+{
+	return (sqrt(get_dot(start, end)));
 }
 
 t_point	normalize(t_point point)
 {
 	t_point	normalized_vector;
-	double		module;
+	double	module;
 
 	module = get_module(point, point);
 	normalized_vector.x = point.x / module;
