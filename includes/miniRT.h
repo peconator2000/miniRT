@@ -6,7 +6,7 @@
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:14:21 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/03/15 23:28:46 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/03/16 20:02:56 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # include <unistd.h>
 # include <fcntl.h>
 
+# define PLANE		1
+# define SPHERE		2
+# define CYLINDER	3
 
 typedef struct s_image
 {
@@ -66,6 +69,12 @@ void		check_range(double num, double min, double max, char *elem_name);
 void		comma(char **str);
 int			parse_color(char **str);
 t_point		parse_point3(char **str);
+
+// Figures utils
+int			count_figures(t_figures *first);
+t_figures	*new_figure(int type);
+t_figures	*get_last_fig(t_figures *figs);
+void		add_figure(t_figures **head, t_figures *figure);
 
 // Vector operations
 double		get_distance(t_point start, t_point end);
