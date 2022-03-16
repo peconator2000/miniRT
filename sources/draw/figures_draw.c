@@ -7,35 +7,18 @@ int pixel_in_sp(t_sphere *sp, int x, int y)
 	double new_x;
 	double new_y;
 	double new_rad;
+	double	rad;
 
 	(void)x;
 	(void)y;
-	new_x = sp->coord.x;
-	new_y = sp->coord.y;
+	new_x = x - sp->coord.x;
+	new_y = y - sp->coord.y;
 	new_rad = sqrt(new_x * new_x + new_y * new_y);
-	printf("newx[%d] = %f\n", x, new_x);
-	printf("newy[%d] = %f\n", y, new_y);
-	if ((new_rad - (sp->diameter * 0.5)) < eps)
+	rad = sp->diameter * 0.5;
+	if ((new_rad - (rad)) < eps)
 		return (1);
 	return (0);
 }
-
-// void	create_image(t_minirt *data)
-// {
-// 	t_image	*img;
-// 	double	len;
-// 	double	high;
-
-// 	img = malloc(sizeof(t_image));
-// 	if (!img)
-// 		exit(0);
-// 	len = data->scene->resolution[0];
-// 	high = data->scene->resolution[1];
-// 	img->img = mlx_new_image(data->mlx, len, high);
-// 	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-// 			&img->line_length, &img->endian);
-// 	data->img = img;
-// }
 
 void draw_pixel(t_minirt *data, int x, int y, int draw)
 {
@@ -61,7 +44,6 @@ void draw_sphere(t_minirt *data)
 		while (++i < len)
 			draw_pixel(data, i, j, pixel_in_sp(&(data->scene->figs->fig.sp), i, j));
 	}
-	printf("ok\n");
 }
 
 void	my_mlx_pixel_put(t_image *img, int x, int y, int color)
