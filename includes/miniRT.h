@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/14 14:14:21 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/03/15 18:10:13 by vellie           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINIRT_H
 # define MINIRT_H
 
@@ -36,57 +24,16 @@ typedef struct s_image
 
 typedef struct s_minirt
 {
-	void		*mlx;//init
+	void		*mlx; //init
 	void		*win;
 	t_image		*img;
 	t_scene		*scene;
 }				t_minirt;
 
-// typedef struct s_image
-// {
-// 	void	*img;
-// 	char	*addr;
-// 	int		bits_per_pixel;
-// 	int		line_length;
-// 	int		endian;
-// }			t_image;
-
-// typedef struct s_screen
-// {
-// 	t_image *img;
-// 	void	*init;
-// 	void	*win;
-// 	int		len;
-// 	int		high;
-// }				t_screen;
-
-// typedef struct s_dot
-// {
-// 	double		x;
-// 	double		y;
-// 	double		z;
-// }				t_dot;
-
-// typedef struct s_sphere
-// {
-// 	double		rad;
-// 	t_dot		centre;
-// 	t_screen	*scr;
-// }				t_sphere;
-
-// typedef struct s_data
-// {
-// 	t_screen	*scr;
-// 	t_sphere	*sph;
-// 	t_dot		*camera;
-// 	t_dot		*ligth;
-// 	t_dot		*basis;
-// }				t_data;
-
 // Parse
 int			parse(int argc, char **argv, t_minirt *minirt);
 t_minirt	*init();
-void		init_mlx(t_minirt *minirt, int choose);
+void		init_mlx(t_minirt *minirt);
 
 // Parse info
 void		parse_resolution(t_minirt *minirt, char **str);
@@ -106,22 +53,56 @@ void		skip_space(char **str);
 void		check_range(double num, double min, double max, char *elem_name);
 void		comma(char **str);
 int			parse_color(char **str);
-t_point3	parse_point3(char **str);
+t_point		parse_point3(char **str);
+
+// Vector operations
+double		get_distance(t_point start, t_point end);
+double		get_dot(t_point start, t_point end);
+double		get_module(t_point start, t_point end);
+t_point		normalize(t_point point);
+t_point		point_define(double x, double y, double z);
+t_point		vector_add(t_point start, t_point end);
+t_point		vector_substract(t_point start, t_point end);
+t_point		vector_cross(t_point start, t_point end);
 
 // Error handling
 void		scene_error(char *msg);
 void		terminate(char *msg);
 void		*err_malloc(unsigned int size);
 
-// Utils
-void		free_minirt(t_minirt *minirt);
+// Draw
+void		my_mlx_pixel_put(t_image *img, int x, int y, int color);
+
+// Control
+void		controller(t_minirt *data);
 
 
-//old fun
-// t_data	*data_init(void);
 int		draw_figures(t_minirt *data);
 void	controller(t_minirt *data);
 void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
-// void	create_image(t_screen *scr);
 void	create_image(t_minirt *data);
+
+// Utils
+void		free_minirt(t_minirt *minirt);
+
+//coordinates_transformation
+void	get_scene_point(t_point *res, t_scene *scene, int x, int y);//в res помещаем точку из экрана обзора
+void	get_new_basis(t_scene *scene);
+
+//vector_moves
+void	vec_equal(t_point *dot1, t_point *dot2);
+void	vec_fill(t_point *dot, double x, double y, double z);
+void	vec_mult_vec(t_point *res, t_point vec1, t_point vec2);
+void	vec_mult_num(t_point *res, double num);
+
+//coordinats_transformations2
+void delta_generate(double *delta_x, double *delta_y, t_scene *scene);
+
+//get_color
+int get_color(t_minirt *data, t_point dot);
+
+//ray_tracing
+int sphere_ray(int *min_t, int *min_color, t_point dot, t_sphere *sp);
+
+
 #endif
