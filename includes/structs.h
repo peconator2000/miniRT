@@ -6,13 +6,21 @@
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:14:13 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/03/16 19:40:11 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/03/16 22:07:42 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 
 # define STRUCTS_H
+
+typedef struct s_color
+{
+	int	r;
+	int	g;
+	int	b;
+}				t_color;
+
 
 typedef struct s_point
 {
@@ -48,8 +56,8 @@ typedef struct s_cylinder
 
 union			u_figures
 {
-	t_plane		pl;
 	t_sphere	sp;
+	t_plane		pl;
 	t_cylinder	cy;
 };
 
@@ -74,8 +82,13 @@ typedef struct s_light
 typedef struct s_camera
 {
 	t_point		pos;
+	t_point		new_pos;//положение в новой системе координат
 	t_point		no_vec;
-	int			degree;
+	t_point		dir;	//z
+	t_point		rigth;	//y
+	t_point		up;		//x
+	int			deg;
+	double		view_size[2];//размеры окна просмотра новые
 }				t_camera;
 
 // Scene

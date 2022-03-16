@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/14 14:14:21 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/03/16 20:02:56 by mwittenb         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINIRT_H
 # define MINIRT_H
 
@@ -92,13 +80,38 @@ void		terminate(char *msg);
 void		*err_malloc(unsigned int size);
 
 // Draw
-int			draw_figures(t_minirt *data);
 void		my_mlx_pixel_put(t_image *img, int x, int y, int color);
 
 // Control
 void		controller(t_minirt *data);
 
+
+int		draw_figures(t_minirt *data);
+void	controller(t_minirt *data);
+void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
+void	create_image(t_minirt *data);
+
 // Utils
 void		free_minirt(t_minirt *minirt);
+
+//coordinates_transformation
+void	get_scene_point(t_point *res, t_scene *scene, int x, int y);//в res помещаем точку из экрана обзора
+void	get_new_basis(t_scene *scene);
+
+//vector_moves
+void	vec_equal(t_point *dot1, t_point *dot2);
+void	vec_fill(t_point *dot, double x, double y, double z);
+void	vec_mult_vec(t_point *res, t_point vec1, t_point vec2);
+void	vec_mult_num(t_point *res, double num);
+
+//coordinats_transformations2
+void delta_generate(double *delta_x, double *delta_y, t_scene *scene);
+
+//get_color
+int get_color(t_minirt *data, t_point dot);
+
+//ray_tracing
+int sphere_ray(int *min_t, int *min_color, t_point dot, t_sphere *sp);
+
 
 #endif

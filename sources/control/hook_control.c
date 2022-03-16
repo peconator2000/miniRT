@@ -19,7 +19,7 @@ int	cross_icon(int key)
 
 void	controller(t_minirt *data)
 {
-	// mlx_loop_hook(data->mlx, &draw_figures, (void *)data);
+	draw_figures(data);
 	mlx_hook(data->win, 17, 0, &cross_icon, (void *)data);
 	mlx_key_hook(data->win, &key_hook, (void *)data);
 	mlx_loop(data->mlx);
