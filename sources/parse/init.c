@@ -9,14 +9,14 @@ static void	init_scene(t_scene	*scene)
 	scene->figs = NULL;
 }
 
-void init_camera(t_camera *cam)//test version
+void init_camera(t_camera *cam) //test version
 {
-	cam->view_size[0] = 0;//
-	cam->view_size[1] = 0;//
-	cam->deg = 90;//
-	// vec_fill(&(cam->pos), 0, 0, 0);
-	// vec_fill(&(cam->no_vec), 0, 0, 0);
-	// vec_fill(&(cam->new_pos), 0, 0, 0);
+	cam->view_size[0] = 0; //
+	cam->view_size[1] = 0; //
+	cam->deg = 90; //
+	vec_fill(&(cam->pos), 0, 0, 0);
+	vec_fill(&(cam->no_vec), 0, 0, 0);
+	vec_fill(&(cam->new_pos), 0, 0, 0);
 }
 
 void	init_mlx(t_minirt *minirt)
