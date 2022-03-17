@@ -25,7 +25,8 @@ SOURCES =	$(shell ls sources/*.c) \
 			$(shell ls sources/control/*.c) \
 			$(shell ls sources/coordinates/*.c) \
 			$(shell ls sources/draw/*.c) \
-			$(shell ls sources/rays/*.c)
+			$(shell ls sources/rays/*.c) \
+			$(shell ls sources/color/*.c)
 
 # OBJECTS
 OBJ_DIR = ./objects/

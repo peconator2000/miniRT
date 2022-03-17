@@ -33,6 +33,7 @@ void	draw_sphere(t_minirt *data, t_sphere *sp, int wid, int hig)
 	y = -1;
 	vec_fill(&view, 0, 0, 0);//убрать?
 	get_new_basis(data->scene);//получаем новый базис
+	(void)sp;
 	while (++y < hig)
 	{
 		x = -1;

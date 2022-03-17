@@ -20,7 +20,7 @@ int get_minimal_color(t_minirt *data, t_point dot)
 	// 	elems = elems->next;
 	// }
 	sphere_ray(&min_t, &min_color, dot, &(elems->fig.sp));
-	return (elems->color);//текущий
+	return (elems->color.mix);//текущий
 	// return(min_color);
 }
 
@@ -33,5 +33,5 @@ int get_color(t_minirt *data, t_point dot)//тут будет учет тене�
 	//эта функция выводит плоские фигуры
 
 	color = get_minimal_color(data, dot);
-
+	return (color);
 }

@@ -54,7 +54,7 @@ typedef struct s_figures
 {
 	int					type;
 	union u_figures		fig;
-	int					color;
+	t_color				color;
 	t_point				no_vec;
 	struct s_figures	*next;
 }				t_figures;
@@ -64,7 +64,7 @@ typedef struct s_light
 {
 	t_point		coord;
 	double		brightness;
-	int			color;
+	t_color		color;
 }				t_light;
 
 // Camera
@@ -86,7 +86,7 @@ typedef struct s_scene
 	int			resolution[2];
 	t_camera	*camera;
 	double		a_light;
-	int			al_color;
+	t_color		al_color;
 	t_light		*light;
 	t_figures	*figs;
 }				t_scene;
