@@ -24,7 +24,6 @@ t_point	parse_point3(char **str)
 {
 	t_point	point;
 
-	(void)str;
 	point.x = str_to_double(str);
 	comma(str);
 	point.y = str_to_double(str);

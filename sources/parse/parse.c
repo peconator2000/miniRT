@@ -49,6 +49,7 @@ int	parse(int argc, char **argv, t_minirt *minirt)
 		free(line);
 		line = NULL;
 	}
+	minirt->scene->figs = figs;
 	close(fd);
 	free(line);
 	return (1);

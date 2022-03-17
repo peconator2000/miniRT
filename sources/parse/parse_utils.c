@@ -6,7 +6,7 @@
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 19:04:12 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/03/15 15:45:01 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/03/16 19:47:14 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ double	str_to_double(char **str)
 	while (fraction >= 1)
 		fraction /= 10;
 	num += fraction;
+	skip_space(str);
 	return (num * neg);
 }
 
