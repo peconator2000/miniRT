@@ -6,7 +6,7 @@
 /*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 14:14:13 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/03/16 18:06:14 by vellie           ###   ########.fr       */
+/*   Updated: 2022/03/16 21:37:34 by vellie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ typedef struct s_color
 	int	r;
 	int	g;
 	int	b;
+	int	mix;
 }				t_color;
 
 
@@ -85,8 +86,8 @@ typedef struct s_camera
 	t_point		new_pos;//положение в новой системе координат
 	t_point		no_vec;
 	t_point		dir;	//z
-	t_point		rigth;	//y
-	t_point		up;		//x
+	t_point		rigth;	//x
+	t_point		up;		//y
 	int			deg;
 	double		view_size[2];//размеры окна просмотра новые
 }				t_camera;

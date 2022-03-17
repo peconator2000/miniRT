@@ -10,7 +10,6 @@ void get_tmp_vec(t_point *tmp, t_point dir)
 
 void	get_vector_rigth(t_camera *cam)
 {
-	t_point	dir;
 	t_point	tmp;
 
 	get_tmp_vec(&tmp, cam->dir);//получили пробный вектор
@@ -33,13 +32,28 @@ void	get_new_basis(t_scene *scene)
 	hig = scene->resolution[1];
 	deg_rad = scene->camera->deg * M_PI * pow(180, -1) * 0.5;
 	scene->camera->view_size[0] = 2 * tan(deg_rad);
-	scene->camera->view_size[1] = 2 * tan(deg_rad) * hig * pow(wid, -1);//получаем новые рзамеры окна просмотра
+	scene->camera->view_size[1] = 2 * tan(deg_rad) * hig * pow(wid, -1);//получаем новые размеры окна просмотра
 	vec_equal(&(scene->camera->dir), &(scene->camera->no_vec));//получаем вектор direction
 	get_vector_rigth(scene->camera);//получаем вектор rigth
 	get_vector_up(scene->camera);//получаем вектор up
 	scene->camera->dir.z *= -1;//поворачиваем внутрь экрана
+	vec_equal(&reverse_pos, &(scene->camera->pos));
 	vec_mult_num(&reverse_pos, -1);//берем обратные координаты камеры
-	new_basis_coordinates(&(scene->camera->new_pos), reverse_pos, scene->camera);//заполняем координаты камеры в новом базисе
+	new_camera_coords(&(scene->camera->new_pos), reverse_pos, scene->camera);//заполняем координаты камеры в новом базисе
+}
+
+void	new_camera_coords(t_point *dot, t_point old, t_camera *cam)//заполняет координатами в новой системе
+{
+	t_point	up;
+	t_point	dir;
+	t_point	rig;
+
+	up = cam->up;
+	dir = cam->dir;
+	rig = cam->rigth;
+	(*dot).x = rig.x * old.x + rig.y * old.y + rig.z * old.z;
+	(*dot).y = up.x * old.x + up.y * old.y + up.z * old.z;
+	(*dot).z = dir.x * old.x + dir.y * old.y + dir.z * old.z;
 }
 
 void	new_basis_coordinates(t_point *dot, t_point old, t_camera *cam)//заполняет координатами в новой системе
@@ -52,7 +66,7 @@ void	new_basis_coordinates(t_point *dot, t_point old, t_camera *cam)//запол
 	up = cam->up;
 	dir = cam->dir;
 	rig = cam->rigth;
-	c_pos = cam->new_pos;
+	c_pos = cam->pos;
 	(*dot).x = rig.x * old.x + rig.y * old.y + rig.z * old.z - c_pos.x;
 	(*dot).y = up.x * old.x + up.y * old.y + up.z * old.z - c_pos.y;
 	(*dot).z = dir.x * old.x + dir.y * old.y + dir.z * old.z - c_pos.z;
