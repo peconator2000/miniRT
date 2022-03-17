@@ -113,8 +113,12 @@ void delta_generate(double *delta_x, double *delta_y, t_scene *scene);
 int get_color(t_minirt *data, t_point dot);
 
 //ray_tracing
-int sphere_ray(int *min_t, int *min_color, t_point dot, t_sphere *sp);
+void	sphere_ray(double *min_t, int *min_color, t_point dot, t_figures *elem);
 void	new_camera_coords(t_point *dot, t_point old, t_camera *cam);
 void	new_basis_coordinates(t_point *dot, t_point old, t_camera *cam);
+
+//equations
+double	get_discr_sp(t_point cen, t_point ve, double rad);
+
 
 #endif

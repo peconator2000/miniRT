@@ -3,7 +3,7 @@
 int get_minimal_color(t_minirt *data, t_point dot)
 {
 	t_figures	*elems;
-	int			min_t;//минимальный параметр
+	double			min_t;//минимальный параметр
 	int			min_color;//минимальный цвет соответствующий минимальному параметру
 
 	min_t = -1;
@@ -19,7 +19,7 @@ int get_minimal_color(t_minirt *data, t_point dot)
 	// 		cylinder_ray(&min_t, &min_color, dot, elems->fig.cy);
 	// 	elems = elems->next;
 	// }
-	sphere_ray(&min_t, &min_color, dot, &(elems->fig.sp));
+	sphere_ray(&min_t, &min_color, dot, elems);
 	return (elems->color.mix);//текущий
 	// return(min_color);
 }
