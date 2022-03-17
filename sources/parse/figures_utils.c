@@ -51,3 +51,15 @@ void	add_figure(t_figures **head, t_figures *figure)
 	else
 		*head = figure;
 }
+
+void	free_figures(t_figures *figures)
+{
+	t_figures	*tmp;
+
+	while (figures)
+	{
+		tmp = figures->next;
+		free(figures);
+		figures = tmp;
+	}
+}

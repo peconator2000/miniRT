@@ -55,7 +55,8 @@ double		str_to_double(char **str);
 void		skip_space(char **str);
 void		check_range(double num, double min, double max, char *elem_name);
 void		comma(char **str);
-int			parse_color(char **str);
+t_color		create_color(int red, int green, int blue);
+t_color		parse_color(char **str);
 t_point		parse_point3(char **str);
 
 // Figures utils
@@ -63,6 +64,7 @@ int			count_figures(t_figures *first);
 t_figures	*new_figure(int type);
 t_figures	*get_last_fig(t_figures *figs);
 void		add_figure(t_figures **head, t_figures *figure);
+void		free_figures(t_figures *figures);
 
 // Vector operations
 double		get_distance(t_point start, t_point end);

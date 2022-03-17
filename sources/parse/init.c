@@ -5,7 +5,7 @@ static void	init_scene(t_scene	*scene)
 	scene->resolution[0] = 0;
 	scene->resolution[1] = 0;
 	scene->a_light = 0.0;
-	scene->al_color = 0;
+	scene->al_color = create_color(0, 0, 0);
 	scene->figs = NULL;
 }
 
@@ -14,9 +14,9 @@ void init_camera(t_camera *cam)//test version
 	cam->view_size[0] = 0;//
 	cam->view_size[1] = 0;//
 	cam->deg = 90;//
-	vec_fill(&(cam->pos), 0, 0, 0);
-	vec_fill(&(cam->no_vec), 0, 0, 0);
-	vec_fill(&(cam->new_pos), 0, 0, 0);
+	// vec_fill(&(cam->pos), 0, 0, 0);
+	// vec_fill(&(cam->no_vec), 0, 0, 0);
+	// vec_fill(&(cam->new_pos), 0, 0, 0);
 }
 
 void	init_mlx(t_minirt *minirt)
@@ -61,7 +61,7 @@ t_minirt	*init()
 	minirt->scene->light = (t_light *)err_malloc(sizeof(t_light));
 	minirt->img = (t_image *)err_malloc(sizeof(t_image));
 	init_scene(minirt->scene);
-	init_camera(minirt->scene->camera);
+	// init_camera(minirt->scene->camera);
 	minirt->scene->camera->deg = 0;
 	minirt->scene->light->color.r = 255;
 	minirt->scene->light->color.g = 255;
