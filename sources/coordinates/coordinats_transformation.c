@@ -2,7 +2,7 @@
 
 void get_tmp_vec(t_point *tmp, t_point dir)
 {
-	if (dir.x == 0 && dir.z == 0)//значит коллинеарны с tmp1
+	if (dir.x == 0 && dir.z == 0) // значит коллинеарны с tmp1
 		vec_fill(tmp, -1, 0, 0);
 	else
 		vec_fill(tmp, 0, 1, 0);
@@ -13,6 +13,8 @@ void	get_vector_rigth(t_camera *cam)
 	t_point	dir;
 	t_point	tmp;
 
+	// TODO
+	(void)dir;
 	get_tmp_vec(&tmp, cam->dir);//получили пробный вектор
 	vec_mult_vec(&(cam->rigth), cam->dir, tmp);//векторное умножение
 }

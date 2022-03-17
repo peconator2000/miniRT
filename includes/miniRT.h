@@ -81,39 +81,47 @@ void		scene_error(char *msg);
 void		terminate(char *msg);
 void		*err_malloc(unsigned int size);
 
-// Draw
-void		my_mlx_pixel_put(t_image *img, int x, int y, int color);
-
-// Control
-void		controller(t_minirt *data);
-
-
-int		draw_figures(t_minirt *data);
-void	controller(t_minirt *data);
-void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
-void	create_image(t_minirt *data);
-
 // Utils
 void		free_minirt(t_minirt *minirt);
 
-//coordinates_transformation
-void	get_scene_point(t_point *res, t_scene *scene, int x, int y);//в res помещаем точку из экрана обзора
-void	get_new_basis(t_scene *scene);
+// Draw
+int			pixel_in_sp(t_sphere *sp, int x, int y);
+void		draw_sphere(t_minirt *data, t_sphere *sp, int wid, int hig);
+void		my_mlx_pixel_put(t_image *img, int x, int y, int color);
+int			draw_figures(t_minirt *data);
 
-//vector_moves
-void	vec_equal(t_point *dot1, t_point *dot2);
-void	vec_fill(t_point *dot, double x, double y, double z);
-void	vec_mult_vec(t_point *res, t_point vec1, t_point vec2);
-void	vec_mult_num(t_point *res, double num);
+// Control
+int			key_hook(int keycode, t_minirt *data);
+int			cross_icon(int key);
+void		controller(t_minirt *data);
 
-//coordinats_transformations2
-void delta_generate(double *delta_x, double *delta_y, t_scene *scene);
+// COORDINATES
 
-//get_color
-int get_color(t_minirt *data, t_point dot);
+// coordinates_transformation.c
+void		get_tmp_vec(t_point *tmp, t_point dir);
+void		get_vector_rigth(t_camera *cam);
+void		get_vector_up(t_camera *cam);
+void		get_new_basis(t_scene *scene);
+void		new_basis_coordinates(t_point *dot, t_point old, t_camera *cam);
+void		get_scene_point(t_point *res, t_scene *scene, int x, int y); // в res помещаем точку из экрана обзора
 
-//ray_tracing
-int sphere_ray(int *min_t, int *min_color, t_point dot, t_sphere *sp);
+// coordinats_transformations2.c
+void		delta_generate(double *delta_x, double *delta_y, t_scene *scene);
+
+// vector_moves.c
+void		vec_equal(t_point *dot1, t_point *dot2);
+void		vec_fill(t_point *dot, double x, double y, double z);
+void		vec_mult_vec(t_point *res, t_point vec1, t_point vec2);
+void		vec_mult_num(t_point *res, double num);
+
+// Color
+int			get_minimal_color(t_minirt *data, t_point dot);
+int			get_color(t_minirt *data, t_point dot);
+
+// Rays
+int			sphere_ray(int *min_t, int *min_color, t_point dot, t_sphere *sp);
+int			plane_ray(int *min_t, int *min_color, t_point dot, t_plane *pl);
+int			cylinder_ray(int *min_t, int *min_color, t_point dot, t_cylinder *cy);
 
 
 #endif

@@ -33,24 +33,6 @@ void	init_mlx(t_minirt *minirt)
 			&(minirt->img->line_length), &(minirt->img->endian));
 }
 
-void	create_image(t_minirt *data)
-{
-	t_image	*img;
-	int len;
-	int high;
-
-	img = malloc(sizeof(t_image));
-	len = data->scene->resolution[0];
-	high = data->scene->resolution[1];
-	if (!img)
-		exit(0);
-	img->img = mlx_new_image(data->mlx, len,high) ;
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-			&img->line_length, &img->endian);
-	data->img = img;
-}
-
-
 t_minirt	*init()
 {
 	t_minirt	*minirt;

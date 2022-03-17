@@ -30,6 +30,8 @@ void	draw_sphere(t_minirt *data, t_sphere *sp, int wid, int hig)
 	int y;
 	t_point view;//точка на экране обзора
 
+	// TODO
+	(void)sp;
 	y = -1;
 	vec_fill(&view, 0, 0, 0);//убрать?
 	get_new_basis(data->scene);//получаем новый базис
