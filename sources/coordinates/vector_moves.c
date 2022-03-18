@@ -1,20 +1,20 @@
 #include "miniRT.h"
 
-void	vec_equal(t_point *dot1, t_point *dot2)//dot1 становится dot2
+void	vec_equal(t_point *dot1, t_point *dot2) // dot1 становится dot2
 {
 	(*dot1).x = (*dot2).x;
 	(*dot1).y = (*dot2).y;
 	(*dot1).z = (*dot2).z;
 }
 
-void	vec_fill(t_point *res, double x, double y, double z)//заполнение вектора данными x, y, z
+void	vec_fill(t_point *res, double x, double y, double z) // заполнение вектора данными x, y, z
 {
 	(*res).x = x;
 	(*res).y = y;
 	(*res).z = z;
 }
 
-void	vec_mult_vec(t_point *res, t_point vec1, t_point vec2)//векторное умножение, помещается в res
+void	vec_mult_vec(t_point *res, t_point vec1, t_point vec2) // векторное умножение, помещается в res
 {
 	(*res).x = vec1.y * vec2.z - vec1.z * vec2.y;
 	(*res).y = vec2.x * vec1.z - vec1.x * vec2.z;

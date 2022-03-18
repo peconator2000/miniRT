@@ -28,22 +28,40 @@ void	draw_sphere(t_minirt *data, t_sphere *sp, int wid, int hig)
 {
 	int	x;
 	int y;
+	double min_x;
+	double max_y;
+	double mid;
 	t_point view;//точка на экране обзора
 
+	// TODO
+	(void)sp;
 	y = -1;
 	vec_fill(&view, 0, 0, 0);//убрать?
+	// printf("in drawsph1\n");
 	get_new_basis(data->scene);//получаем новый базис
-	(void)sp;
+	// printf("in drawsph2\n");
+	min_x = data->scene->resolution[0] * (-0.5);
+	max_y = data->scene->resolution[1] * (0.5);
+	mid = min_x;
 	while (++y < hig)
 	{
 		x = -1;
+		min_x = mid;
 		while (++x < wid)
 		{
-			get_scene_point(&view, data->scene, x, y);//получаем точку на экране обзора
-			new_basis_coordinates(&view, view, data->scene->camera);//поворачиваем сцену по вектору direction, теперь view - радиус-вектор
+			// printf("min_x = %f max_y = %f\n", min_x, max_y);
+			// printf("[in drawsph] before sc_point\n");
+			get_scene_point(&view, data->scene, min_x, max_y);//получаем точку на экране обзора
+			// printf("[in drawsph] after sc_point\n");
+			// new_basis_coordinates(&view, view, data->scene->camera);//поворачиваем сцену по вектору direction, теперь view - радиус-вектор
+			// printf("[in drawsph] after new_b_coords\n");
 			my_mlx_pixel_put(data->img, x, y, get_color(data, view));
+			// printf("[in drawsph] after mymlx_pixel_put\n");
+			min_x++;
 		}
+		max_y--;
 	}
+	printf("wi = %f hi = %f\n", data->scene->camera->view_size[0], data->scene->camera->view_size[1]);
 }
 
 void	my_mlx_pixel_put(t_image *img, int x, int y, int color)

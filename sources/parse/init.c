@@ -9,14 +9,14 @@ static void	init_scene(t_scene	*scene)
 	scene->figs = NULL;
 }
 
-void init_camera(t_camera *cam)//test version
+void init_camera(t_camera *cam) //test version
 {
-	cam->view_size[0] = 0;//
-	cam->view_size[1] = 0;//
-	cam->deg = 90;//
-	// vec_fill(&(cam->pos), 0, 0, 0);
-	// vec_fill(&(cam->no_vec), 0, 0, 0);
-	// vec_fill(&(cam->new_pos), 0, 0, 0);
+	cam->view_size[0] = 0; //
+	cam->view_size[1] = 0; //
+	cam->deg = 90; //
+	vec_fill(&(cam->pos), 0, 0, 0);
+	vec_fill(&(cam->no_vec), 0, 0, 0);
+	vec_fill(&(cam->new_pos), 0, 0, 0);
 }
 
 void	init_mlx(t_minirt *minirt)
@@ -33,24 +33,6 @@ void	init_mlx(t_minirt *minirt)
 			&(minirt->img->line_length), &(minirt->img->endian));
 }
 
-void	create_image(t_minirt *data)
-{
-	t_image	*img;
-	int len;
-	int high;
-
-	img = malloc(sizeof(t_image));
-	len = data->scene->resolution[0];
-	high = data->scene->resolution[1];
-	if (!img)
-		exit(0);
-	img->img = mlx_new_image(data->mlx, len,high) ;
-	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel,
-			&img->line_length, &img->endian);
-	data->img = img;
-}
-
-
 t_minirt	*init()
 {
 	t_minirt	*minirt;
@@ -61,7 +43,7 @@ t_minirt	*init()
 	minirt->scene->light = (t_light *)err_malloc(sizeof(t_light));
 	minirt->img = (t_image *)err_malloc(sizeof(t_image));
 	init_scene(minirt->scene);
-	// init_camera(minirt->scene->camera);
+	init_camera(minirt->scene->camera);
 	minirt->scene->camera->deg = 0;
 	minirt->scene->light->color.r = 255;
 	minirt->scene->light->color.g = 255;

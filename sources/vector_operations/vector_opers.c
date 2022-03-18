@@ -29,3 +29,13 @@ t_point	normalize(t_point point)
 	normalized_vector.z = point.z / module;
 	return (normalized_vector);
 }
+
+void	normalize2(t_point *dot, t_point point)
+{
+	double	module;
+
+	module = get_module(point, point);
+	(*dot).x = point.x / module;
+	(*dot).y = point.y / module;
+	(*dot).z = point.z / module;
+}

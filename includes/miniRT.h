@@ -71,6 +71,7 @@ double		get_distance(t_point start, t_point end);
 double		get_dot(t_point start, t_point end);
 double		get_module(t_point start, t_point end);
 t_point		normalize(t_point point);
+void		normalize2(t_point *dot, t_point point);
 t_point		point_define(double x, double y, double z);
 t_point		vector_add(t_point start, t_point end);
 t_point		vector_substract(t_point start, t_point end);
@@ -81,10 +82,18 @@ void		scene_error(char *msg);
 void		terminate(char *msg);
 void		*err_malloc(unsigned int size);
 
+// Utils
+void		free_minirt(t_minirt *minirt);
+
 // Draw
+int			pixel_in_sp(t_sphere *sp, int x, int y);
+void		draw_sphere(t_minirt *data, t_sphere *sp, int wid, int hig);
 void		my_mlx_pixel_put(t_image *img, int x, int y, int color);
+int			draw_figures(t_minirt *data);
 
 // Control
+int			key_hook(int keycode, t_minirt *data);
+int			cross_icon(int key);
 void		controller(t_minirt *data);
 
 
@@ -97,7 +106,7 @@ void	create_image(t_minirt *data);
 void		free_minirt(t_minirt *minirt);
 
 //coordinates_transformation
-void	get_scene_point(t_point *res, t_scene *scene, int x, int y);//в res помещаем точку из экрана обзора
+void	get_scene_point(t_point *res, t_scene *scene, double x, double y);//в res помещаем точку из экрана обзора
 void	get_new_basis(t_scene *scene);
 
 //vector_moves
@@ -113,12 +122,12 @@ void delta_generate(double *delta_x, double *delta_y, t_scene *scene);
 int get_color(t_minirt *data, t_point dot);
 
 //ray_tracing
-void	sphere_ray(double *min_t, int *min_color, t_point dot, t_figures *elem);
+void sphere_ray(double *min_t, int *min_color, t_point dot, t_figures *elem);
 void	new_camera_coords(t_point *dot, t_point old, t_camera *cam);
 void	new_basis_coordinates(t_point *dot, t_point old, t_camera *cam);
 
 //equations
 double	get_discr_sp(t_point cen, t_point ve, double rad);
-
+double	get_min_root(double dis, t_point cen, t_point ve, double rad);
 
 #endif
