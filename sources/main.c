@@ -1,15 +1,5 @@
 #include "miniRT.h"
 
-t_figures *init_sp()
-{
-	t_figures *figs = err_malloc(sizeof(t_figures));
-	figs->fig.sp.coord = point_define(400, 600, 0);
-	figs->fig.sp.diameter = 100.0;
-	figs->type = 2;
-	figs->next = NULL;
-	return (figs);
-}
-
 int	main(int argc, char **argv)
 {
 	t_minirt	*data;
@@ -21,7 +11,6 @@ int	main(int argc, char **argv)
 		return (1);
 
 	figs = data->scene->figs;
-	// Вывод данных фигур
 	while (figs)
 	{
 		if (figs->type == PLANE) {
@@ -37,12 +26,6 @@ int	main(int argc, char **argv)
 		printf("\n\n");
 		figs = figs->next;
 	}
-	// //  Заполнени сферы для пробы----------------------------------------------------
-	// data->scene->figs = init_sp();
-	// printf(" sp.x = %f\n sp.y = %f\n sp.z = %f\n sp.diametr = %f",
-	// 		data->scene->figs->fig.sp.coord.x, data->scene->figs->fig.sp.coord.y,
-	// 		data->scene->figs->fig.sp.coord.z, data->scene->figs->fig.sp.diameter);
-	// // TEMP ------------------------------------------------------------------------
 
 	controller(data);
 	return (0);
