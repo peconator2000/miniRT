@@ -49,14 +49,9 @@ void	draw_sphere(t_minirt *data, t_sphere *sp, int wid, int hig)
 		min_x = mid;
 		while (++x < wid)
 		{
-			// printf("min_x = %f max_y = %f\n", min_x, max_y);
-			// printf("[in drawsph] before sc_point\n");
-			get_scene_point(&view, data->scene, min_x, max_y);//получаем точку на экране обзора
-			// printf("[in drawsph] after sc_point\n");
-			// new_basis_coordinates(&view, view, data->scene->camera);//поворачиваем сцену по вектору direction, теперь view - радиус-вектор
-			// printf("[in drawsph] after new_b_coords\n");
+			get_scene_point(&view, data->scene, min_x, max_y);
+			new_basis_coordinates(&view, view, data->scene->camera);//поворачиваем сцену по вектору direction, теперь view - радиус-вектор
 			my_mlx_pixel_put(data->img, x, y, get_color(data, view));
-			// printf("[in drawsph] after mymlx_pixel_put\n");
 			min_x++;
 		}
 		max_y--;

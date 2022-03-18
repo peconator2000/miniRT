@@ -39,11 +39,12 @@ void	get_new_basis(t_scene *scene)
 	vec_equal(&(scene->camera->dir), &(scene->camera->no_vec));//получаем вектор direction
 	get_vector_rigth(scene->camera);//получаем вектор rigth
 	get_vector_up(scene->camera);//получаем вектор up
-	// scene->camera->dir.z *= -1;//поворачиваем внутрь экрана
-	vec_mult_num(&(scene->camera->dir), -1);
+	scene->camera->dir.z *= -1;//поворачиваем внутрь экрана
+	// vec_mult_num(&(scene->camera->dir), -1);
 	vec_equal(&reverse_pos, &(scene->camera->pos));
 	vec_mult_num(&reverse_pos, -1);//берем обратные координаты камеры
 	new_camera_coords(&(scene->camera->new_pos), reverse_pos, scene->camera);//заполняем координаты камеры в новом базисе
+	printf("new_x = %f new_y = %f new_z = %f\n", scene->camera->new_pos.x, scene->camera->new_pos.y, scene->camera->new_pos.z);
 }
 
 void	new_camera_coords(t_point *dot, t_point old, t_camera *cam)//заполняет координатами в новой системе
@@ -55,6 +56,9 @@ void	new_camera_coords(t_point *dot, t_point old, t_camera *cam)//заполня
 	up = cam->up;
 	dir = cam->dir;
 	rig = cam->rigth;
+	printf("rig.x = %f rig.y = %f rig.z  =%f\n", rig.x, rig.y, rig.z);
+	printf("up.x = %f up.y = %f up.z  =%f\n", up.x, up.y, up.z);
+	printf("dir.x = %f dir.y = %f dir.z  =%f\n", dir.x, dir.y, dir.z);
 	(*dot).x = rig.x * old.x + rig.y * old.y + rig.z * old.z;
 	(*dot).y = up.x * old.x + up.y * old.y + up.z * old.z;
 	(*dot).z = dir.x * old.x + dir.y * old.y + dir.z * old.z;
@@ -70,7 +74,7 @@ void	new_basis_coordinates(t_point *dot, t_point old, t_camera *cam)//запол
 	up = cam->up;
 	dir = cam->dir;
 	rig = cam->rigth;
-	c_pos = cam->pos;
+	c_pos = cam->new_pos;
 	(*dot).x = rig.x * old.x + rig.y * old.y + rig.z * old.z - c_pos.x;
 	(*dot).y = up.x * old.x + up.y * old.y + up.z * old.z - c_pos.y;
 	(*dot).z = dir.x * old.x + dir.y * old.y + dir.z * old.z - c_pos.z;
