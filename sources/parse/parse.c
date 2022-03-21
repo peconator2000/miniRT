@@ -14,11 +14,11 @@ static void	parse_line(t_minirt *minirt, t_figures **figs, char **strptr)
 	else if (*str == 'L' && *(str++))
 		parse_light(minirt, &str);
 	else if (*str == 'c' && *(str + 1) == 'y' && *(str++) && *(str)++)
-		parse_cylinder(figs, &str);
+		parse_cylinder(figs, &str, minirt->scene);
 	else if (*str == 's' && *(str + 1) == 'p' && *(str++) && *(str)++)
-		parse_sphere(figs, &str);
+		parse_sphere(figs, &str, minirt->scene);
 	else if (*str == 'p' && *(str + 1) == 'l' && *(str++) && *(str)++)
-		parse_plane(figs, &str);
+		parse_plane(figs, &str, minirt->scene);
 	*strptr = str;
 }
 
@@ -26,6 +26,7 @@ static void	parse_element(t_minirt *minirt, t_figures **figs, char *line)
 {
 	while (*line)
 	{
+		printf("'line = [%s]'\n", line);
 		parse_line(minirt, figs, &line);
 		line++;
 	}

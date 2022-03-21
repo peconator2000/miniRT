@@ -44,6 +44,7 @@ void	get_new_basis(t_scene *scene)
 	vec_equal(&reverse_pos, &(scene->camera->pos));
 	vec_mult_num(&reverse_pos, -1);//берем обратные координаты камеры
 	new_camera_coords(&(scene->camera->new_pos), reverse_pos, scene->camera);//заполняем координаты камеры в новом базисе
+	new_basis_coordinates(&(scene->light->coord), (scene->light->coord), scene->camera);//заполняем координаты света в новом базисе
 	printf("new_x = %f new_y = %f new_z = %f\n", scene->camera->new_pos.x, scene->camera->new_pos.y, scene->camera->new_pos.z);
 }
 

@@ -48,6 +48,6 @@ t_minirt	*init()
 	minirt->scene->light->color.r = 255;
 	minirt->scene->light->color.g = 255;
 	minirt->scene->light->color.b = 255;
-	minirt->scene->light->brightness = 0.0;
+	minirt->scene->light->bri = 0.0;
 	return (minirt);
 }

@@ -45,9 +45,9 @@ void		parse_light(t_minirt *minirt, char **str);
 void		parse_camera(t_minirt *minirt, char **str);
 
 // Parse figures
-void		parse_cylinder(t_figures **figs, char **str);
-void		parse_sphere(t_figures **figs, char **str);
-void		parse_plane(t_figures **figs, char **str);
+void		parse_cylinder(t_figures **figs, char **str, t_scene *scene);
+void		parse_sphere(t_figures **figs, char **str, t_scene *scene);
+void		parse_plane(t_figures **figs, char **str, t_scene *scene);
 
 // Parse_utils
 int			str_to_int(char **str);
@@ -114,6 +114,7 @@ void	vec_equal(t_point *dot1, t_point *dot2);
 void	vec_fill(t_point *dot, double x, double y, double z);
 void	vec_mult_vec(t_point *res, t_point vec1, t_point vec2);
 void	vec_mult_num(t_point *res, double num);
+double	vec_scalar_mult(t_point vec1, t_point vec2);
 
 //coordinats_transformations2
 void delta_generate(double *delta_x, double *delta_y, t_scene *scene);
@@ -122,12 +123,17 @@ void delta_generate(double *delta_x, double *delta_y, t_scene *scene);
 int get_color(t_minirt *data, t_point dot);
 
 //ray_tracing
-void sphere_ray(double *min_t, int *min_color, t_point dot, t_figures *elem);
 void	new_camera_coords(t_point *dot, t_point old, t_camera *cam);
 void	new_basis_coordinates(t_point *dot, t_point old, t_camera *cam);
 
 //equations
 double	get_discr_sp(t_point cen, t_point ve, double rad);
 double	get_min_root(double dis, t_point cen, t_point ve, double rad);
+
+//color_ligth
+t_color get_minimal_color(t_minirt *data, t_point dot);
+t_color get_ligth_sphere(t_figures *sp, t_point dot, t_color true_color);
+void	sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem);
+
 
 #endif

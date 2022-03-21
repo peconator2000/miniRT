@@ -43,11 +43,14 @@ typedef struct s_cylinder
 	double		height;
 }				t_cylinder;
 
+typedef struct s_scene t_scene;
+
 union			u_figures
 {
 	t_sphere	sp;
 	t_plane		pl;
 	t_cylinder	cy;
+	t_scene		*scene;
 };
 
 typedef struct s_figures
@@ -63,7 +66,7 @@ typedef struct s_figures
 typedef struct s_light
 {
 	t_point		coord;
-	double		brightness;
+	double		bri;
 	t_color		color;
 }				t_light;
 

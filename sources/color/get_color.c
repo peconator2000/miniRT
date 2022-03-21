@@ -1,13 +1,16 @@
 #include "miniRT.h"
 
-int get_minimal_color(t_minirt *data, t_point dot)
+t_color get_minimal_color(t_minirt *data, t_point dot)
 {
 	t_figures	*elems;
 	double		min_t;//минимальный параметр
-	int			min_color;//минимальный цвет соответствующий минимальному параметру
+	t_color			min_color;//минимальный цвет соответствующий минимальному параметру
 
 	min_t = 0;
-	min_color = 0;
+	min_color.r = 0;
+	min_color.g = 0;
+	min_color.b = 0;
+	min_color.mix = 0;
 	elems = data->scene->figs;
 	while (elems)
 	{
@@ -19,19 +22,18 @@ int get_minimal_color(t_minirt *data, t_point dot)
 		// 	cylinder_ray(&min_t, &min_color, dot, &(elems->fig.cy));
 		elems = elems->next;
 	}
-	// if (min_color!= 0)
-	// 	printf("nashli cvet\n");
 	return (min_color);//текущий
 }
 
 int get_color(t_minirt *data, t_point dot)//тут будет учет теней, глубины, света и тд
 {
-	int color;
+	t_color color;
 
 	//функция, которая проходится по всем фигурам из списка, ищет пересечения, сохраняет минимальный параметр
 	//и возвращает цвет той фигуры, которая соответствует минимальному параметру
 	//эта функция выводит плоские фигуры
 	color = get_minimal_color(data, dot);
 	// printf("[in get_color] color = %d\n", color);
-	return (color);
+	// color.mix = (color.r << 16) | (color.g << 8) | color.b;
+	return (color.mix);
 }

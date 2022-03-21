@@ -22,8 +22,8 @@ void	parse_light(t_minirt *minirt, char **str)
 {
 	skip_space(str);
 	minirt->scene->light->coord = parse_point3(str);
-	minirt->scene->light->brightness = str_to_double(str);
-	check_range(minirt->scene->light->brightness, 0.0, 1.0, "LIGHT");
+	minirt->scene->light->bri = str_to_double(str);
+	check_range(minirt->scene->light->bri, 0.0, 1.0, "LIGHT");
 	minirt->scene->light->color = parse_color(str);
 }
 

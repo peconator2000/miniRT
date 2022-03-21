@@ -27,3 +27,15 @@ void	vec_mult_num(t_point *res, double num)
 	(*res).y *= num;
 	(*res).z *= num;
 }
+
+double vec_scalar_mult(t_point vec1, t_point vec2)
+{
+	double x_res;
+	double y_res;
+	double z_res;
+
+	x_res = vec1.x * vec2.x;
+	y_res = vec1.y * vec2.y;
+	z_res = vec1.z * vec2.z;
+	return (x_res + y_res + z_res);
+}

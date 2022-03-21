@@ -30,10 +30,25 @@ double	get_min_root(double dis, t_point cen, t_point ve, double rad)
 
 	root1 = get_root(sqrt(dis), cen, ve, rad);
 	root2 = get_root(-sqrt(dis), cen, ve, rad);
+	if (!(root1 < 1) || !(root2 < 1))
+	{
+		printf("validno\n");
+		// return (root1);
+	}
 	if (root1 > root2)
-		return (root2);
+	{
+		if (root2 < 1)
+			return (root1);
+		else
+			return (root2);
+	}
 	else if (root1 < root2)
-		return (root1);
+	{
+		if (root1 > 1)
+			return (root1);
+		else
+			return (root2);
+	}
 	return(root1);
 }
 
