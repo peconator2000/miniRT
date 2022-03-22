@@ -7,17 +7,13 @@ t_color get_ligth(t_point v1, t_point v2, t_figures *elem, t_color true_color)
 	double how;
 	t_color new_color;
 	t_light *light;
-	double	part;
 
 	how = vec_scalar_mult(v1, v2);
 	light = elem->fig.scene->light;
-	printf("how = %f\n", how);
-	// if (how <= epsi || true_color.mix == 0)
-	// 	return (true_color);
-	part = pow(true_color.r + true_color.g + true_color.b, -1);
-	new_color.r = true_color.r;// + light->color.r * (how + light->bri) * part;// * how * part * true_color.r;// + light->color.r * how * light->bri;//* (light->color.r + (how * light->bri));
-	new_color.g = true_color.g;// + light->color.g * (how + light->bri) * part;// + light->color.g * how * light->bri;//* (light->color.g + (how * light->bri));
-	new_color.b = true_color.b;// + light->color.b * (how + light->bri) * part;// + light->color.b * how * light->bri;//+ (how * light->bri) * light->color.b);//* (light->color.b + (how * light->bri));
+	// printf("how = %f\n", how);
+	new_color.r = true_color.r * light->color.r * (how * light->bri) * pow(255, -1);// * how * part * true_color.r;// + light->color.r * how * light->bri;//* (light->color.r + (how * light->bri));
+	new_color.g = true_color.g * light->color.g * (how * light->bri) * pow(255, -1);// + light->color.g * how * light->bri;//* (light->color.g + (how * light->bri));
+	new_color.b = true_color.b * light->color.b * (how * light->bri) * pow(255, -1);// + light->color.b * how * light->bri;//+ (how * light->bri) * light->color.b);//* (light->color.b + (how * light->bri));
 	new_color.mix =((new_color.r << 16) | (new_color.g << 8) | new_color.b);// * light->bri;
 	return (new_color);
 }

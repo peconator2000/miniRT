@@ -6,7 +6,7 @@ void sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem)
 	double		cur_t;
 	double		discr;
 	double		rad;
-	// t_point		sp_dot;
+	t_point		sp_dot;
 
 	rad = elem->fig.sp.diameter * 0.5;
 	discr = get_discr_sp(elem->fig.sp.coord, dot, rad);
@@ -18,11 +18,11 @@ void sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem)
 	{
 		*min_t = cur_t;
 		*min_color = elem->color;
-		// vec_fill(&sp_dot, elem->fig.scene->camera->dir.x * (*min_t) + elem->fig.scene->camera->new_pos.x,
-		// elem->fig.scene->camera->dir.y * (*min_t) + elem->fig.scene->camera->new_pos.y, 
-		// elem->fig.scene->camera->dir.z * (*min_t) + elem->fig.scene->camera->new_pos.z);
+		vec_fill(&sp_dot, elem->fig.scene->camera->dir.x * (*min_t) + elem->fig.scene->camera->new_pos.x,
+		elem->fig.scene->camera->dir.y * (*min_t) + elem->fig.scene->camera->new_pos.y, 
+		elem->fig.scene->camera->dir.z * (*min_t) + elem->fig.scene->camera->new_pos.z);
 		// printf("min_t = %f dot.x = %f dot.y = %f dot.z = %f\n", *min_t ,sp_dot.x, sp_dot.y, sp_dot.z);
-		// *min_color = get_ligth_sphere(elem, sp_dot, *min_color);
+		*min_color = get_ligth_sphere(elem, sp_dot, *min_color);
 	}
 }
 

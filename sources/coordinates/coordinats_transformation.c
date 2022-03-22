@@ -37,8 +37,11 @@ void	get_new_basis(t_scene *scene)
 	scene->camera->view_size[0] = 2 * tan(deg_rad);
 	scene->camera->view_size[1] = 2 * tan(deg_rad) * hig * pow(wid, -1);//получаем новые размеры окна просмотра
 	vec_equal(&(scene->camera->dir), &(scene->camera->no_vec));//получаем вектор direction
+	printf("vector dir = [%f, %f, %f]\n",scene->camera->dir.x, scene->camera->dir.y, scene->camera->dir.z);
 	get_vector_rigth(scene->camera);//получаем вектор rigth
+	printf("vector rigth = [%f, %f, %f]\n",scene->camera->rigth.x, scene->camera->rigth.y, scene->camera->rigth.z);
 	get_vector_up(scene->camera);//получаем вектор up
+	printf("vector up = [%f, %f, %f]\n",scene->camera->up.x, scene->camera->up.y, scene->camera->up.z);
 	scene->camera->dir.z *= -1;//поворачиваем внутрь экрана
 	// vec_mult_num(&(scene->camera->dir), -1);
 	vec_equal(&reverse_pos, &(scene->camera->pos));
