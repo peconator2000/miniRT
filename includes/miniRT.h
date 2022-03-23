@@ -106,7 +106,7 @@ void	create_image(t_minirt *data);
 void		free_minirt(t_minirt *minirt);
 
 //coordinates_transformation
-void	get_scene_point(t_point *res, t_scene *scene, double x, double y);//в res помещаем точку из экрана обзора
+void	get_scene_point(t_point *res, t_scene *scene, double x, double y);
 void	get_new_basis(t_scene *scene);
 
 //vector_moves
@@ -132,8 +132,9 @@ double	get_min_root(double dis, t_point cen, t_point ve, double rad);
 
 //color_ligth
 t_color get_minimal_color(t_minirt *data, t_point dot);
-t_color get_ligth_sphere(t_figures *sp, t_point dot, t_color true_color);
-void	sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem);
+t_color get_ligth_sphere(t_figures *elem, t_point dot, t_color true_color, t_light *ligth);
+void sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem, t_point sp_dot, t_light *ligth);
+t_color get_ligth(t_point v1, t_point v2, t_figures *elem, t_color true_color, t_light *light);
 
 
 #endif

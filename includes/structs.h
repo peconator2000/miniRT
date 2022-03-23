@@ -33,7 +33,9 @@ typedef struct s_plane
 typedef struct s_sphere
 {
 	t_point		coord;
+	t_point		newcoord;
 	double		diameter;
+	double		newdi;
 }				t_sphere;
 
 typedef struct s_cylinder
@@ -59,6 +61,7 @@ typedef struct s_figures
 	union u_figures		fig;
 	t_color				color;
 	t_point				no_vec;
+	t_scene				*scene;
 	struct s_figures	*next;
 }				t_figures;
 
@@ -66,6 +69,7 @@ typedef struct s_figures
 typedef struct s_light
 {
 	t_point		coord;
+	t_point		newcoord;
 	double		bri;
 	t_color		color;
 }				t_light;

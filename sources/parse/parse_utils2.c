@@ -41,7 +41,7 @@ t_point	parse_point3(char **str)
 	comma(str);
 	point.y = str_to_double(str);
 	comma(str);
-	point.z = 100;str_to_double(str);
+	point.z = str_to_double(str);
 	skip_space(str);
 	return (point);
 }

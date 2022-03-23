@@ -60,6 +60,7 @@ void	draw_sphere(t_minirt *data, t_sphere *sp, int wid, int hig)
 			// 	printf("new center OF SPHERE x = %f  y = %f  z = %f\n", view.x, view.y, view.z);
 			// 	printf("x = %d, y = %d\n", x, y);
 			// }
+			// printf("(x = %d y = %d) on scr	(view.x = %f view.y = %f view.z = %f)\n", x, y, view.x, view.y, view.z);
 			my_mlx_pixel_put(data->img, x, y, get_color(data, view));
 			min_x++;
 		}

@@ -44,12 +44,30 @@ void	get_new_basis(t_scene *scene)
 	printf("vector up = [%f, %f, %f]\n",scene->camera->up.x, scene->camera->up.y, scene->camera->up.z);
 	scene->camera->dir.z *= -1;//поворачиваем внутрь экрана
 	// vec_mult_num(&(scene->camera->dir), -1);
+
+	scene->camera->pos.z = (scene->camera->pos.z * scene->camera->view_size[0] * pow(scene->resolution[0], -1));// * (-1));
+	get_scene_point(&(scene->camera->pos), scene, scene->camera->pos.x, scene->camera->pos.y);
+
 	vec_equal(&reverse_pos, &(scene->camera->pos));
-	vec_mult_num(&reverse_pos, -1);//берем обратные координаты камеры
+	reverse_pos.z *= -1;
 	new_camera_coords(&(scene->camera->new_pos), reverse_pos, scene->camera);//заполняем координаты камеры в новом базисе
-	new_basis_coordinates(&(scene->light->coord), (scene->light->coord), scene->camera);//заполняем координаты света в новом базисе
+	
+	get_scene_point(&scene->light->coord, scene, scene->light->coord.x, scene->light->coord.y);
+	scene->light->coord.z = (scene->light->coord.z * scene->camera->view_size[0] * pow(scene->resolution[0], -1)) * -1;
+	new_basis_coordinates(&(scene->light->newcoord), (scene->light->coord), scene->camera);//заполняем координаты света в новом базисе
 	printf("new_x = %f new_y = %f new_z = %f\n", scene->camera->new_pos.x, scene->camera->new_pos.y, scene->camera->new_pos.z);
 }
+
+	// scene->camera->pos.z = (scene->camera->pos.z * scene->camera->view_size[0] * pow(scene->resolution[0], -1));// * (-1));
+	// get_scene_point(&(scene->camera->new_pos), scene, scene->camera->pos.x, scene->camera->pos.y);
+	// vec_equal(&reverse_pos, &(scene->camera->pos));
+	// reverse_pos.z *= -1;
+	// new_camera_coords(&(scene->camera->new_pos), reverse_pos, scene->camera);//заполняем координаты камеры в новом базисе
+	// scene->camera->pos.z = (scene->camera->pos.z * scene->camera->view_size[0] * pow(scene->resolution[0], -1));
+	// get_scene_point(&scene->light->newcoord, scene, scene->light->coord.x, scene->light->coord.y);
+	// scene->light->coord.z = (scene->light->coord.z * scene->camera->view_size[0] * pow(scene->resolution[0], -1));
+	// new_basis_coordinates(&(scene->light->newcoord), (scene->light->coord), scene->camera);//заполняем координаты света в новом базисе
+	// printf("new_x = %f new_y = %f new_z = %f\n", scene->camera->new_pos.x, scene->camera->new_pos.y, scene->camera->new_pos.z);
 
 void	new_camera_coords(t_point *dot, t_point old, t_camera *cam)//заполняет координатами в новой системе
 {
@@ -76,33 +94,24 @@ void	new_basis_coordinates(t_point *dot, t_point old, t_camera *cam)//запол
 	t_point	rig;
 	t_point	c_pos;
 
-	// printf("in cc\n");
 	up = cam->up;
-	// printf("up\n");
 	dir = cam->dir;
-	// printf("dir\n");
 	rig = cam->rigth;
-	// printf("rigth\n");
 	c_pos = cam->new_pos;
-	// printf("newpos\n");
-	(*dot).x = rig.x * old.x + rig.y * old.y + rig.z * old.z - c_pos.x;
-	// printf("net old\n");
-	(*dot).y = up.x * old.x + up.y * old.y + up.z * old.z - c_pos.y;
-	(*dot).z = dir.x * old.x + dir.y * old.y + dir.z * old.z - c_pos.z;
-	printf("norm\n");
+	(*dot).x = rig.x * old.x + rig.y * old.y + rig.z * old.z + c_pos.x;
+	(*dot).y = up.x * old.x + up.y * old.y + up.z * old.z + c_pos.y;
+	(*dot).z = dir.x * old.x + dir.y * old.y + dir.z * old.z + c_pos.z;
 }
 
-void	get_scene_point(t_point *res, t_scene *scene, double x, double y)
+void	get_scene_point(t_point *res, t_scene *scene, double x, double y)//, double z)
 {
 	static double	delta_x;
 	static double	delta_y;
 
 	if (!delta_x || !delta_y)
-	{
-		delta_generate(&delta_x, &delta_y, scene);//если они не определены, определяем дельты
-		// printf("delta_x = %f delta_y = %f\n", delta_x, delta_y);
-	}
+		delta_generate(&delta_x, &delta_y, scene);
+	printf("delta = %f deltay = %f\n", delta_x, delta_y);
 	(*res).x = delta_x * x;//scene->camera->view_size[0] + delta_x * x;
 	(*res).y = delta_y * y;//scene->camera->view_size[1] - delta_y * y;
-	(*res).z = -1;
+	// (*res).z = delta_x * z;
 }
