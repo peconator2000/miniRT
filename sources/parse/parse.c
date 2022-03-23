@@ -8,7 +8,11 @@ static void	parse_line(t_minirt *minirt, t_figures **figs, char **strptr)
 	if (*str == 'R' && *(str++))
 		parse_resolution(minirt, &str);
 	else if (*str == 'A' && *(str++))
+	{
+		// printf("before al\n");
 		parse_ambient_light(minirt, &str);
+		// printf("after al\n");
+	}
 	else if (*str == 'C' && *(str++))
 		parse_camera(minirt, &str);
 	else if (*str == 'L' && *(str++))

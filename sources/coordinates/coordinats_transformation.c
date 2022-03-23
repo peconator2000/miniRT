@@ -66,6 +66,7 @@ void	new_camera_coords(t_point *dot, t_point old, t_camera *cam)//заполня
 	(*dot).x = rig.x * old.x + rig.y * old.y + rig.z * old.z;
 	(*dot).y = up.x * old.x + up.y * old.y + up.z * old.z;
 	(*dot).z = dir.x * old.x + dir.y * old.y + dir.z * old.z;
+	printf("ok\n");
 }
 
 void	new_basis_coordinates(t_point *dot, t_point old, t_camera *cam)//заполняет координатами в новой системе
@@ -75,13 +76,20 @@ void	new_basis_coordinates(t_point *dot, t_point old, t_camera *cam)//запол
 	t_point	rig;
 	t_point	c_pos;
 
+	// printf("in cc\n");
 	up = cam->up;
+	// printf("up\n");
 	dir = cam->dir;
+	// printf("dir\n");
 	rig = cam->rigth;
+	// printf("rigth\n");
 	c_pos = cam->new_pos;
+	// printf("newpos\n");
 	(*dot).x = rig.x * old.x + rig.y * old.y + rig.z * old.z - c_pos.x;
+	// printf("net old\n");
 	(*dot).y = up.x * old.x + up.y * old.y + up.z * old.z - c_pos.y;
 	(*dot).z = dir.x * old.x + dir.y * old.y + dir.z * old.z - c_pos.z;
+	printf("norm\n");
 }
 
 void	get_scene_point(t_point *res, t_scene *scene, double x, double y)

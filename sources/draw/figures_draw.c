@@ -45,26 +45,27 @@ void	draw_sphere(t_minirt *data, t_sphere *sp, int wid, int hig)
 	mid = min_x;
 	t_point newc = data->scene->figs->fig.sp.coord;
 	printf("hig = %d wid = %d\ncenter OF SPHERE x = %f  y = %f  z = %f\n",hig, wid, newc.x, newc.y, newc.z);
-	// while (++y < hig)
-	// {
+	printf("napravlenie camery = [%f, %f, %f]\n", data->scene->camera->no_vec.x, data->scene->camera->no_vec.y, data->scene->camera->no_vec.z);
+	while (++y < hig)
+	{
 		x = -1;
-		// min_x = mid;
-	// 	while (++x < wid)
-	// 	{
-	// 		get_scene_point(&view, data->scene, min_x, max_y);
-	// 		new_basis_coordinates(&view, view, data->scene->camera);//поворачиваем сцену по вектору direction, теперь view - радиус-вектор
-	// 		// printf("minx_z = %f max_y = %f\n", min_x, max_y);
-	// 		if (fabs(min_x - newc.x) < 0.0000001 && fabs(max_y - newc.y) < 0.0000001)
-	// 		{
-	// 			printf("new center OF SPHERE x = %f  y = %f  z = %f\n", view.x, view.y, view.z);
-	// 			printf("x = %d, y = %d\n", x, y);
-	// 		}
-	// 		my_mlx_pixel_put(data->img, x, y, get_color(data, view));
-	// 		min_x++;
-	// 	}
-	// 	max_y--;
-	// }
-	// printf("view wi = %f view hi = %f\n", data->scene->camera->view_size[0], data->scene->camera->view_size[1]);
+		min_x = mid;
+		while (++x < wid)
+		{
+			get_scene_point(&view, data->scene, min_x, max_y);
+			new_basis_coordinates(&view, view, data->scene->camera);//поворачиваем сцену по вектору direction, теперь view - радиус-вектор
+			// printf("minx_z = %f max_y = %f\n", min_x, max_y);
+			// if (fabs(min_x - newc.x) < 0.0000001 && fabs(max_y - newc.y) < 0.0000001)
+			// {
+			// 	printf("new center OF SPHERE x = %f  y = %f  z = %f\n", view.x, view.y, view.z);
+			// 	printf("x = %d, y = %d\n", x, y);
+			// }
+			my_mlx_pixel_put(data->img, x, y, get_color(data, view));
+			min_x++;
+		}
+		max_y--;
+	}
+	printf("view wi = %f view hi = %f\n", data->scene->camera->view_size[0], data->scene->camera->view_size[1]);
 }
 
 void	my_mlx_pixel_put(t_image *img, int x, int y, int color)

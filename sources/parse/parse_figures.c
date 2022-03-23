@@ -21,11 +21,11 @@ void	parse_sphere(t_figures **figs, char **str, t_scene *scene)
 
 	add_figure(figs, new_figure(SPHERE));
 	current_fig = get_last_fig(*figs);
+	current_fig->fig.scene = scene;
 	skip_space(str);
 	current_fig->fig.sp.coord = parse_point3(str);
-	current_fig->fig.sp.diameter = 200;//str_to_double(str);
+	current_fig->fig.sp.diameter = str_to_double(str);
 	current_fig->color = parse_color(str);
-	// current_fig->fig.scene = scene;
 	(void)scene;
 }
 
