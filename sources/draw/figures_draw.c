@@ -52,15 +52,10 @@ void	draw_sphere(t_minirt *data, t_sphere *sp, int wid, int hig)
 		min_x = mid;
 		while (++x < wid)
 		{
-			get_scene_point(&view, data->scene, min_x, max_y);
-			new_basis_coordinates(&view, view, data->scene->camera);//поворачиваем сцену по вектору direction, теперь view - радиус-вектор
-			// printf("minx_z = %f max_y = %f\n", min_x, max_y);
-			// if (fabs(min_x - newc.x) < 0.0000001 && fabs(max_y - newc.y) < 0.0000001)
-			// {
-			// 	printf("new center OF SPHERE x = %f  y = %f  z = %f\n", view.x, view.y, view.z);
-			// 	printf("x = %d, y = %d\n", x, y);
-			// }
-			// printf("(x = %d y = %d) on scr	(view.x = %f view.y = %f view.z = %f)\n", x, y, view.x, view.y, view.z);
+			get_scene_point(&view, data->scene, min_x, max_y);//экран просмотра в новом базисе
+			new_basis_coordinates(&view, view, data->scene->camera);//экран просмотра в мировом базисе
+			normalize2(&view, view);
+			// printf("view = [%f, %f, %f]\n", view.x, view.y, view.z);
 			my_mlx_pixel_put(data->img, x, y, get_color(data, view));
 			min_x++;
 		}

@@ -22,10 +22,10 @@ double get_root(double sq_dis, t_point cen, t_point ve, double rad)
 	a = pow(ve.x, 2) + pow(ve.y, 2) + pow(ve.z, 2);
 	b = (2 * ve.x * cen.x + 2 * ve.y * cen.y + 2 * ve.z * cen.z);
 	c = pow(cen.x, 2) + pow(cen.y, 2) + pow(cen.z, 2) - pow(rad, 2);
-	return ((b + sq_dis) * pow(2 * a * c, -1));
+	return ((b + sq_dis) * pow(2 * a, -1));
 }
 
-double	get_min_root(double dis, t_point cen, t_point ve, double rad)
+double	            get_min_root(double dis, t_point cen, t_point ve, double rad)
 {
 	double root1;
 	double root2;

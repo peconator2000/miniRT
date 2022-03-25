@@ -136,5 +136,8 @@ t_color get_ligth_sphere(t_figures *elem, t_point dot, t_color true_color, t_lig
 void sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem, t_point sp_dot, t_light *ligth);
 t_color get_ligth(t_point v1, t_point v2, t_figures *elem, t_color true_color, t_light *light);
 
+void camera_diff(t_point *dot, t_camera *cam);
+
+
 
 #endif

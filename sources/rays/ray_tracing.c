@@ -8,29 +8,26 @@ void sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem,
 	double		rad;
 	// t_point		sp_dot;
 
-	rad = elem->fig.sp.newdi * 0.5;
-	discr = get_discr_sp(elem->fig.sp.newcoord, dot, rad);
+	rad = elem->fig.sp.diameter * 0.5;
+	// printf("dot = [%f, %f, %f]\n", dot.x, dot.y, dot.z);
+	discr = get_discr_sp(elem->fig.sp.coord, dot, rad);
+	// printf("centre = (%f, %f, %f)\n", elem->fig.sp.coord.x,  elem->fig.sp.coord.y,  elem->fig.sp.coord.z);
 	// printf("discr = %f\n", discr);
 	if (discr < 0)
 	{
-		printf("blc\n");
+		// printf("blc\n");
 		return ;
 	}
-	cur_t = get_min_root(discr, elem->fig.sp.newcoord, dot, rad);
-	// printf("root = %f\n", cur_t);
-	if ((*min_t == -1 || cur_t < *min_t) && cur_t > 1)
+	cur_t = get_min_root(discr, elem->fig.sp.coord, dot, rad);
+	// printf("rad = [%f, %f, %f] cur_t = %f\n", elem->fig.sp.coord.x, elem->fig.sp.coord.y, elem->fig.sp.coord.z, cur_t);
+	if ((*min_t == -1 || cur_t < *min_t))// && cur_t > 1)
 	{
-		// printf("zashel\n");
 		*min_t = cur_t;
 		*min_color = elem->color;
-		// printf("elem->color.r = %d elem->color.g = %d elem->color.b = %d\n", (*min_color).r, (*min_color).g, (*min_color).b);
-		// printf("dot.x = %f, dot.y = %f cur_t = %f\n", dot.x, dot.y, cur_t);
-		// printf("min_t = %f dot.x = %f dot.y = %f dot.z = %f\n", *min_t ,sp_dot.x, sp_dot.y, sp_dot.z);
 		vec_mult_num(&sp_dot, (*min_t));
-		// (void)ligth;
-		// printf("tut\n");
+		// printf("GET DOT = [%f, %f, %f]\n", sp_dot.x, sp_dot.y, sp_dot.z);
+		(void)ligth;
 		*min_color = get_ligth_sphere(elem, sp_dot, *min_color, ligth);
-		// printf("ne  tut\n");
 	}
 }
 

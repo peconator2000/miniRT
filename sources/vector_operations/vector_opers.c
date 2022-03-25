@@ -24,9 +24,9 @@ t_point	normalize(t_point point)
 	double	module;
 
 	module = get_module(point, point);
-	normalized_vector.x = point.x / module;
-	normalized_vector.y = point.y / module;
-	normalized_vector.z = point.z / module;
+	normalized_vector.x = point.x * pow(module, -1);
+	normalized_vector.y = point.y * pow(module, -1);
+	normalized_vector.z = point.z * pow(module, -1);
 	return (normalized_vector);
 }
 
@@ -35,7 +35,7 @@ void	normalize2(t_point *dot, t_point point)
 	double	module;
 
 	module = get_module(point, point);
-	(*dot).x = point.x / module;
-	(*dot).y = point.y / module;
-	(*dot).z = point.z / module;
+	(*dot).x = point.x * pow(module, -1);
+	(*dot).y = point.y * pow(module ,-1);
+	(*dot).z = point.z * pow(module, -1);
 }

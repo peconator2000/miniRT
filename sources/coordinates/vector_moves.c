@@ -37,6 +37,6 @@ double vec_scalar_mult(t_point vec1, t_point vec2)
 	x_res = vec1.x * vec2.x;
 	y_res = vec1.y * vec2.y;
 	z_res = vec1.z * vec2.z;
-	printf("ldist (%f, %f, %f) x norm (%f, %f, %f)\n", vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z);
+	// printf("ldist (%f, %f, %f) x norm (%f, %f, %f)\n", vec1.x, vec1.y, vec1.z, vec2.x, vec2.y, vec2.z);
 	return (x_res + y_res + z_res);
 }
