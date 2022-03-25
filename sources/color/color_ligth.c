@@ -27,16 +27,17 @@ t_color get_ligth(t_point v1, t_point v2, t_figures *elem, t_color true_color, t
 	// }
 	if (how < 0)
 	{
-		new_color.r = -true_color.r * how ;// * how * part * true_color.r;// + light->color.r * how * light->bri;//* (light->color.r + (how * light->bri));
-		new_color.g = -true_color.g * how;// + light->color.g * how * light->bri;//* (light->color.g + (how * light->bri));
-		new_color.b = -true_color.b * how;
+		new_color.r = true_color.r * (0.2 + how) ;// * how * part * true_color.r;// + light->color.r * how * light->bri;//* (light->color.r + (how * light->bri));
+		new_color.g = true_color.g * (0.2 + how);// + light->color.g * how * light->bri;//* (light->color.g + (how * light->bri));
+		new_color.b = true_color.b * (0.2 + how);
 		new_color.mix =((new_color.r << 16) | (new_color.g << 8) | new_color.b);
 		return (new_color);
+		return (true_color);
 	}
 	(void)elem;
-	new_color.r = true_color.r * light->color.r * (how * light->bri) * pow(255, -1);// * how * part * true_color.r;// + light->color.r * how * light->bri;//* (light->color.r + (how * light->bri));
-	new_color.g = true_color.g * light->color.g * (how * light->bri) * pow(255, -1);// + light->color.g * how * light->bri;//* (light->color.g + (how * light->bri));
-	new_color.b = true_color.b * light->color.b * (how * light->bri) * pow(255, -1);// + light->color.b * how * light->bri;//+ (how * light->bri) * light->color.b);//* (light->color.b + (how * light->bri));
+	new_color.r = true_color.r * light->color.r * (how *  light->bri * pow(255, -1));// * how * part * true_color.r;// + light->color.r * how * light->bri;//* (light->color.r + (how * light->bri));
+	new_color.g = true_color.g * light->color.g * (how * light->bri * pow(255, -1));// + light->color.g * how * light->bri;//* (light->color.g + (how * light->bri));
+	new_color.b = true_color.b * light->color.b * (how * light->bri * pow(255, -1));// + light->color.b * how * light->bri;//+ (how * light->bri) * light->color.b);//* (light->color.b + (how * light->bri));
 	// printf("true_red = %d	true_green = %d		true_blue = %d\n", new_color.r, new_color.g, new_color.b);
 	// printf("red = %d	green = %d		blue = %d\n", new_color.r, new_color.g, new_color.b);
 	new_color.mix =((new_color.r << 16) | (new_color.g << 8) | new_color.b);// * light->bri;

@@ -53,8 +53,11 @@ void	draw_sphere(t_minirt *data, t_sphere *sp, int wid, int hig)
 		while (++x < wid)
 		{
 			get_scene_point(&view, data->scene, min_x, max_y);//экран просмотра в новом базисе
+			// printf("\nview in new_basis [%f, %f, %f]\n", view.x, view.y, view.z);
 			new_basis_coordinates(&view, view, data->scene->camera);//экран просмотра в мировом базисе
-			normalize2(&view, view);
+			// printf("view in world basis [%f, %f, %f]\n", view.x, view.y, view.z);
+			// printf("[%f, %f, %f], [%f, %f, %f], [%f, %f, %f]\n", data->scene->camera->rigth.x,  data->scene->camera->rigth.y,  data->scene->camera->rigth.z,  data->scene->camera->up.x, data->scene->camera->up.y, data->scene->camera->up.z, data->scene->camera->dir.x, data->scene->camera->dir.y, data->scene->camera->dir.z);
+			// normalize2(&view, view);
 			// printf("view = [%f, %f, %f]\n", view.x, view.y, view.z);
 			my_mlx_pixel_put(data->img, x, y, get_color(data, view));
 			min_x++;

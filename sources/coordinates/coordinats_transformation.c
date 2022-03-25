@@ -3,7 +3,7 @@
 void get_tmp_vec(t_point *tmp, t_point dir)
 {
 	if (dir.x == 0 && dir.z == 0) // значит коллинеарны с tmp1
-		vec_fill(tmp, -1, 0, 0);
+		vec_fill(tmp, 0, 0, 1);
 	else
 		vec_fill(tmp, 0, 1, 0);
 }
@@ -39,19 +39,21 @@ void	get_new_basis(t_scene *scene)
 	get_vector_up(scene->camera);//получаем вектор up
 	// vec_mult_num(&(scene->camera->dir), -1);//поворачиваем внутрь экрана
 	camera_diff(&(scene->light->coord), scene->camera);
+	// camera_diff(&(scene->camera->pos), scene->camera);
+	// camera_diff()
 	//print
-	printf("vector dir = [%f, %f, %f]\n",scene->camera->dir.x, scene->camera->dir.y, scene->camera->dir.z);
 	printf("vector rigth = [%f, %f, %f]\n",scene->camera->rigth.x, scene->camera->rigth.y, scene->camera->rigth.z);
 	printf("vector up = [%f, %f, %f]\n",scene->camera->up.x, scene->camera->up.y, scene->camera->up.z);
+	printf("vector dir = [%f, %f, %f]\n",scene->camera->dir.x, scene->camera->dir.y, scene->camera->dir.z);
 }
 
 t_point lookat_cam(t_point pos, t_point rig, t_point up, t_point dir)
 {
 	t_point res;
 
-	res.x = (pos.x * rig.x + pos.y * rig.y + pos.z * rig.z);// * (-1);
-	res.y = (pos.x * up.x + pos.y * up.y + pos.z * up.z);// * (-1);
-	res.z = (pos.x * dir.x + pos.y * dir.y + pos.z * dir.z);// * (-1);
+	res.x = (pos.x * rig.x + pos.y * rig.y + pos.z * rig.z) * (-1);
+	res.y = (pos.x * up.x + pos.y * up.y + pos.z * up.z) * (-1);
+	res.z = (pos.x * dir.x + pos.y * dir.y + pos.z * dir.z) * (-1);
 	return (res);
 }
 
@@ -66,9 +68,9 @@ void	new_basis_coordinates(t_point *dot, t_point old, t_camera *cam)//lookat mat
 	dir = cam->dir;
 	rig = cam->rigth;
 	c_pos = lookat_cam(cam->pos, rig, up, dir);
-	(*dot).x = rig.x * old.x + rig.y * old.y + rig.z * old.z + c_pos.x - cam->pos.x;
-	(*dot).y = up.x * old.x + up.y * old.y + up.z * old.z + c_pos.y - cam->pos.y;
-	(*dot).z = dir.x * old.x + dir.y * old.y + dir.z * old.z + c_pos.z - cam->pos.z;
+	(*dot).x = rig.x * old.x + rig.y * old.y + rig.z * old.z + c_pos.x;// - cam->pos.x;
+	(*dot).y = up.x * old.x + up.y * old.y + up.z * old.z + c_pos.y;//  - cam->pos.y;
+	(*dot).z = dir.x * old.x + dir.y * old.y + dir.z * old.z + c_pos.z;//  - cam->pos.z;
 }
 
 void	get_scene_point(t_point *res, t_scene *scene, double x, double y)//, double z)

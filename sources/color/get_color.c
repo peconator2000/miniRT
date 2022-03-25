@@ -24,7 +24,7 @@ t_color get_minimal_color(t_minirt *data, t_point dot)
 		min_color.mix = 0;
 		if (elems->type == SPHERE)
 		{
-			camera_diff(&(elems->fig.sp.coord), data->scene->camera);
+			// camera_diff(&(elems->fig.sp.coord), data->scene->camera);
 			vec_fill(&cur_dot, dot.x, dot.y, dot.z);
 			sphere_ray(&min_t, &min_color, dot, elems, cur_dot, data->scene->light);
 		}
