@@ -1,5 +1,13 @@
 #include "miniRT.h"
 
+void	fill_color(t_color *col, int r, int g, int b)
+{
+	(*col).r = r;
+	(*col).g = g;
+	(*col).b = b;
+	(*col).mix = (((*col).r << 16) | ((*col).g << 8) | (*col).b);
+}
+
 void camera_diff(t_point *dot, t_camera *cam)
 {
 	(*dot).x -= cam->pos.x;
@@ -9,43 +17,31 @@ void camera_diff(t_point *dot, t_camera *cam)
 
 t_color get_minimal_color(t_minirt *data, t_point dot)
 {
+	double		min_t;
+	t_point		cur_dot;
+	t_color		min_color;
 	t_figures	*elems;
-	double		min_t;//минимальный параметр
-	t_color			min_color;//минимальный цвет соответствующий минимальному параметру
-	t_point cur_dot;
 
 	elems = data->scene->figs;
+	(void)cur_dot;
 	while (elems)
 	{
 		min_t = -1;
-		min_color.r = 0;
-		min_color.g = 0;
-		min_color.b = 0;
-		min_color.mix = 0;
+		fill_color(&min_color, 0, 0, 0);//инициализируем черным цветом
 		if (elems->type == SPHERE)
-		{
-			// camera_diff(&(elems->fig.sp.coord), data->scene->camera);
-			vec_fill(&cur_dot, dot.x, dot.y, dot.z);
-			sphere_ray(&min_t, &min_color, dot, elems, cur_dot, data->scene->light);
-		}
-		// else if (elems->type == 2)//plane
-		// 	plane_ray(&min_t, &min_color, dot, &(elems->fig.pl));
-		// else if (elems->type == 3)//cylinder
-		// 	cylinder_ray(&min_t, &min_color, dot, &(elems->fig.cy));
+			is_sphere(data->scene, dot, &min_color, &min_t, elems);
 		elems = elems->next;
 	}
 	return (min_color);//текущий
 }
 
-int get_color(t_minirt *data, t_point dot)//тут будет учет теней, глубины, света и тд
+int get_color(t_minirt *data, double x_sc, double y_sc)
 {
 	t_color color;
+	t_point	dot;
 
-	//функция, которая проходится по всем фигурам из списка, ищет пересечения, сохраняет минимальный параметр
-	//и возвращает цвет той фигуры, которая соответствует минимальному параметру
-	//эта функция выводит плоские фигуры
+	get_inscreen(data->scene, &dot, x_sc, y_sc);// x', y', z'
+	get_new_coords(data->scene->camera, &dot);//Ax, Ay, Az
 	color = get_minimal_color(data, dot);
-	// printf("[in get_color] color = %d\n", color);
-	// color.mix = (color.r << 16) | (color.g << 8) | color.b;
 	return (color.mix);
 }

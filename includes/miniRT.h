@@ -120,7 +120,7 @@ double	vec_scalar_mult(t_point vec1, t_point vec2);
 void delta_generate(double *delta_x, double *delta_y, t_scene *scene);
 
 //get_color
-int get_color(t_minirt *data, t_point dot);
+int get_color(t_minirt *data, double x_sc, double y_sc);
 
 //ray_tracing
 void	new_camera_coords(t_point *dot, t_point old, t_camera *cam);
@@ -133,11 +133,15 @@ double	get_min_root(double dis, t_point cen, t_point ve, double rad);
 //color_ligth
 t_color get_minimal_color(t_minirt *data, t_point dot);
 t_color get_ligth_sphere(t_figures *elem, t_point dot, t_color true_color, t_light *ligth);
-void sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem, t_point sp_dot, t_light *ligth);
+void sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem, t_point sp_dot, t_light *ligth, t_camera *camera);
 t_color get_ligth(t_point v1, t_point v2, t_figures *elem, t_color true_color, t_light *light);
 
 void camera_diff(t_point *dot, t_camera *cam);
 
-
-
+//new_basis
+void new_basis(t_scene *scene);
+void	get_inscreen(t_scene *sc, t_point *dot, double x, double y);
+void get_new_coords(t_camera *cam, t_point *dot);
+void	fill_color(t_color *col, int r, int g, int b);
+void	is_sphere(t_scene *sc, t_point dot, t_color *min_color, double *min_t, t_figures *sp);
 #endif

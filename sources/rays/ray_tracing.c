@@ -1,35 +1,54 @@
 #include "miniRT.h"
 
 //sphere_ray(&min_t, &min_color, dot, elems->fig.sp);
-void sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem, t_point sp_dot, t_light *ligth)
-{
-	double		cur_t;
-	double		discr;
-	double		rad;
-	// t_point		sp_dot;
+// void sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem, t_point sp_dot, t_light *ligth, t_camera *cam)
+// {
+// 	double		cur_t;
+// 	double		discr;
+// 	double		rad;
+// 	static int flag;
+// 	// t_point		sp_dot;
 
-	rad = elem->fig.sp.diameter * 0.5;
-	// printf("dot = [%f, %f, %f]\n", dot.x, dot.y, dot.z);
-	discr = get_discr_sp(elem->fig.sp.coord, dot, rad);
-	// printf("centre = (%f, %f, %f)\n", elem->fig.sp.coord.x,  elem->fig.sp.coord.y,  elem->fig.sp.coord.z);
-	// printf("discr = %f\n", discr);
-	if (discr < 0)
-	{
-		// printf("blc\n");
-		return ;
-	}
-	cur_t = get_min_root(discr, elem->fig.sp.coord, dot, rad);
-	// printf("rad = [%f, %f, %f] cur_t = %f\n", elem->fig.sp.coord.x, elem->fig.sp.coord.y, elem->fig.sp.coord.z, cur_t);
-	if ((*min_t == -1 || cur_t < *min_t))// && cur_t > 1)
-	{
-		*min_t = cur_t;
-		*min_color = elem->color;
-		vec_mult_num(&sp_dot, (*min_t));
-		// printf("GET DOT = [%f, %f, %f]\n", sp_dot.x, sp_dot.y, sp_dot.z);
-		(void)ligth;
-		*min_color = get_ligth_sphere(elem, sp_dot, *min_color, ligth);
-	}
-}
+// 	rad = elem->fig.sp.diameter * 0.5;
+// 	if (!flag)
+// 	{
+// 		printf("rad = %f, centre = [%f, %f, %f]\n", rad, elem->fig.sp.coord.x, elem->fig.sp.coord.y, elem->fig.sp.coord.z);
+// 		printf("first dot = [%f, %f, %f]\n", dot.x, dot.y, dot.z);
+// 		flag++;
+// 	}
+// 	// printf("dot = [%f, %f, %f]\n", dot.x, dot.y, dot.z);
+// 	// t_point newdot;
+// 	// newdot.x = cam->pos.x - elem->fig.sp.coord.x;
+// 	// newdot.y = cam->pos.y - elem->fig.sp.coord.y;
+// 	// newdot.z = cam->pos.z - elem->fig.sp.coord.z;
+// 	// static double	delta_x;
+// 	// delta_x = cam->view_size[0] * pow(800, -1);
+// 	// dot.x *= pow(delta_x, -1);
+// 	// dot.y *= pow(delta_x, -1);
+// 	// dot.z *= pow(delta_x, -1);
+// 	dot.x -= cam->pos.x;
+// 	dot.y -= cam->pos.y;
+// 	dot.z -= cam->pos.z;
+// 	discr = get_discr_sp(cam->pos, dot, rad);
+// 	// printf("centre = (%f, %f, %f)\n", elem->fig.sp.coord.x,  elem->fig.sp.coord.y,  elem->fig.sp.coord.z);
+// 	// printf("discr = %f\n", discr);
+// 	if (discr < 0)
+// 	{
+// 		// printf("blc\n");
+// 		return ;
+// 	}
+// 	cur_t = get_min_root(discr, elem->fig.sp.coord, dot, rad);
+// 	// printf("rad = [%f, %f, %f] cur_t = %f\n", elem->fig.sp.coord.x, elem->fig.sp.coord.y, elem->fig.sp.coord.z, cur_t);
+// 	if ((*min_t == -1 || cur_t < *min_t))// && cur_t > 1)
+// 	{
+// 		*min_t = cur_t;
+// 		*min_color = elem->color;
+// 		vec_mult_num(&sp_dot, (*min_t));
+// 		// printf("GET DOT = [%f, %f, %f]\n", sp_dot.x, sp_dot.y, sp_dot.z);
+// 		(void)ligth;
+// 		*min_color = get_ligth_sphere(elem, sp_dot, *min_color, ligth);
+// 	}
+// }
 
 int	plane_ray(int *min_t, int *min_color, t_point dot, t_plane *pl)
 {

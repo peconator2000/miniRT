@@ -22,6 +22,7 @@ void	controller(t_minirt *data)
 {
 	draw_figures(data);
 	// my_mlx_pixel_put(data->img, 100, 100, data->scene->figs->color.mix);
+	// draw_all();
 	mlx_hook(data->win, 17, 0, &cross_icon, (void *)data);
 	mlx_key_hook(data->win, &key_hook, (void *)data);
 	mlx_loop(data->mlx);

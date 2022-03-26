@@ -14,11 +14,11 @@ void	vec_fill(t_point *res, double x, double y, double z) // заполнени�
 	(*res).z = z;
 }
 
-void	vec_mult_vec(t_point *res, t_point vec1, t_point vec2) // векторное умножение, помещается в res
+void	vec_mult_vec(t_point *res, t_point a, t_point b) // векторное умножение, помещается в res
 {
-	(*res).x = vec1.y * vec2.z - vec1.z * vec2.y;
-	(*res).y = vec2.x * vec1.z - vec1.x * vec2.z;
-	(*res).z = vec1.x * vec2.y - vec2.x * vec1.y;
+	(*res).x = a.y * b.z - a.z * b.y;
+	(*res).y = b.x * a.z - a.x * b.z;
+	(*res).z = a.x * b.y - b.x * a.y;
 }
 
 void	vec_mult_num(t_point *res, double num)
