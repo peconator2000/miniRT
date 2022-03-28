@@ -24,12 +24,14 @@ t_color get_minimal_color(t_minirt *data, t_point dot)
 
 	elems = data->scene->figs;
 	(void)cur_dot;
+	min_t = -1;
+	fill_color(&min_color, 0, 0, 0);//инициализируем черным цветом
 	while (elems)
 	{
-		min_t = -1;
-		fill_color(&min_color, 0, 0, 0);//инициализируем черным цветом
 		if (elems->type == SPHERE)
 			is_sphere(data->scene, dot, &min_color, &min_t, elems);
+		else if (elems->type == PLANE)
+			is_plane(data->scene, dot, &min_color, &min_t, elems);
 		elems = elems->next;
 	}
 	return (min_color);//текущий

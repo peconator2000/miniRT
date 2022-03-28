@@ -43,3 +43,19 @@ t_color get_ligth_sphere(t_figures *elem, t_point dot, t_color true_color, t_lig
 	normalize2(&norm, norm);
 	return (get_ligth(l_dist, norm, elem, true_color, ligth));
 }
+
+t_color get_ligth_plane(t_figures *elem, t_point dot, t_color true_color, t_light *ligth)
+{
+	t_point lig;
+	t_point l_dist;
+	t_point	norm;
+
+	lig.x = ligth->coord.x;
+	lig.y = ligth->coord.y;
+	lig.z = ligth->coord.z;
+	vec_fill(&l_dist, lig.x - dot.x, lig.y - dot.y, lig.z - dot.z);
+	vec_fill(&norm, elem->no_vec.x, elem->no_vec.y, elem->no_vec.z);
+	normalize2(&l_dist, l_dist);
+	normalize2(&norm, norm);
+	return (get_ligth(l_dist, norm, elem, true_color, ligth));
+}
