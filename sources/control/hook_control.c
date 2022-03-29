@@ -8,6 +8,16 @@ int	key_hook(int keycode, t_minirt *data)
 		free_minirt(data);
 		exit(0);
 	}
+	else if (keycode == 124)//rigth
+	{
+		data->scene->camera->pos.x += 0.1;
+		draw_figures(data);
+	}
+	else if (keycode == 123)//left
+	{
+		data->scene->camera->pos.x -= 0.1;
+		draw_figures(data);
+	}
 	return (1);
 }
 
