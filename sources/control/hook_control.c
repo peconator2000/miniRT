@@ -10,12 +10,32 @@ int	key_hook(int keycode, t_minirt *data)
 	}
 	else if (keycode == 124)//rigth
 	{
-		data->scene->camera->pos.x += 0.1;
+		data->scene->camera->pos.x += STEP;
 		draw_figures(data);
 	}
 	else if (keycode == 123)//left
 	{
-		data->scene->camera->pos.x -= 0.1;
+		data->scene->camera->pos.x -= STEP;
+		draw_figures(data);
+	}
+	else if (keycode == 125)//down
+	{
+		data->scene->camera->pos.z -= STEP;
+		draw_figures(data);
+	}
+	else if (keycode == 126)//up
+	{
+		data->scene->camera->pos.z += STEP;
+		draw_figures(data);
+	}
+	else if (keycode == 13)
+	{
+		data->scene->camera->pos.y += STEP;
+		draw_figures(data);
+	}
+	else if (keycode == 1)
+	{
+		data->scene->camera->pos.y -= STEP;
 		draw_figures(data);
 	}
 	return (1);

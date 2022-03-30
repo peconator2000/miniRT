@@ -18,20 +18,22 @@ void camera_diff(t_point *dot, t_camera *cam)
 t_color get_minimal_color(t_minirt *data, t_point dot)
 {
 	double		min_t;
-	t_point		cur_dot;
 	t_color		min_color;
 	t_figures	*elems;
 
 	elems = data->scene->figs;
-	(void)cur_dot;
 	min_t = -1;
 	fill_color(&min_color, 0, 0, 0);//инициализируем черным цветом
 	while (elems)
 	{
-		if (elems->type == SPHERE)
-			is_sphere(data->scene, dot, &min_color, &min_t, elems);
-		else if (elems->type == PLANE)
+		if (elems->type == PLANE)
+		{
 			is_plane(data->scene, dot, &min_color, &min_t, elems);
+		}
+		if (elems->type == SPHERE)
+		{
+			is_sphere(data->scene, dot, &min_color, &min_t, elems);
+		}
 		elems = elems->next;
 	}
 	return (min_color);//текущий

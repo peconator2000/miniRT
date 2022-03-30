@@ -23,33 +23,41 @@ double get_min_param(double discr, t_point m, t_point ray)
 {
 	double	root1;
 	double	root2;
+	double	dd = 0.00001;
+	// double eps = 0.00001;
 
 	root1 = vec_scalar_mult(m, ray) * (-1) + sqrt(discr);
 	root1 *= pow(2 * (pow(m.x, 2) + pow(m.y, 2) + pow(m.z, 2)), -1);
 	root2 = vec_scalar_mult(m, ray) * (-1) - sqrt(discr);
 	root2 *= pow(2 * (pow(m.x, 2) + pow(m.y, 2) + pow(m.z, 2)), -1);
-	if (root1 > 1 || root2 > 1)
+	if (root1 > dd || root2 > dd)
 	{
-		if (root1 > 1 && root2 > 1)
+		if (root1 > dd && root2 > dd)
 		{
 			if (root1 < root2)
 				return (root1);
 			return (root2);
 		}
-		if (root1 > 1)
+		if (root1 > dd)
 			return (root1);
 		return (root2);
 	}
-	return (-1);
+	if (root1 < root2)
+		return (root1);
+	else
+		return (root2);
 }
 
-t_point	get_sp_dot(t_point m, t_scene *sc, double min_t)
+t_point	get_sp_dot(t_point m, double min_t, t_point dot)
 {
 	t_point res;
 
-	res.x = m.x * min_t + sc->camera->pos.x;
-	res.y = m.y * min_t + sc->camera->pos.y;
-	res.z = m.z * min_t + sc->camera->pos.z;
+	// res.x = m.x * (min_t) + sc->camera->pos.x;
+	// res.y = m.y * (min_t) + sc->camera->pos.y;
+	// res.z = m.z * (min_t) + sc->camera->pos.z;
+	res.x = m.x * min_t + dot.x;
+	res.y = m.y * min_t + dot.y;
+	res.z = m.z * min_t + dot.z;
 	return (res);
 }
 
@@ -61,18 +69,25 @@ void	is_sphere(t_scene *sc, t_point dot, t_color *min_color, double *min_t, t_fi
 	double	discr;
 
 	get_scr_vec(&m, sc->camera, dot);
-	ray.x = sc->camera->pos.x - sp->fig.sp.coord.x;
-	ray.y = sc->camera->pos.y - sp->fig.sp.coord.y;
-	ray.z = sc->camera->pos.z - sp->fig.sp.coord.z;
+	normalize2(&m, m);
+	// ray.x = sc->camera->pos.x - sp->fig.sp.coord.x;
+	// ray.y =  sc->camera->pos.y - sp->fig.sp.coord.y;
+	// ray.z =  sc->camera->pos.z - sp->fig.sp.coord.z;
+	ray.x = dot.x - sp->fig.sp.coord.x;
+	ray.y =  dot.y - sp->fig.sp.coord.y;
+	ray.z =  dot.z - sp->fig.sp.coord.z;
 	get_discr(&discr, m, ray, sp->fig.sp.diameter * 0.5);
 	if (discr < 0)
 		return ;
 	cur_t = get_min_param(discr, m, ray);
-	if ((*min_t == -1 || cur_t < *min_t) && cur_t > 1)
+	if (cur_t <= -1)
+		return ;
+	if ((*min_t == -1 || cur_t < *min_t))
 	{
 		*min_t = cur_t;
 		*min_color = sp->color;
-		*min_color = get_ligth_sphere(sp, get_sp_dot(m, sc, *min_t), *min_color, sc->light);
+		*min_color = get_ligth_sphere(sp, get_sp_dot(m,*min_t, dot), *min_color, sc->light);
+		// printf("cur_t = %f\n", cur_t);
 	}
 }
 
@@ -80,9 +95,9 @@ t_point	get_pl_dot(t_point m, t_scene *sc, double min_t)
 {
 	t_point res;
 
-	res.x = m.x * min_t + sc->camera->pos.x;
-	res.y = m.y * min_t + sc->camera->pos.y;
-	res.z = m.z * min_t + sc->camera->pos.z;
+	res.x = m.x * (min_t - 1) + sc->camera->pos.x;
+	res.y = m.y * (min_t - 1) + sc->camera->pos.y;
+	res.z = m.z * (min_t - 1) + sc->camera->pos.z;
 	return (res);
 }
 
@@ -111,20 +126,21 @@ void	is_plane(t_scene *sc, t_point dot, t_color *min_color, double *min_t, t_fig
 	double	cur_t;
 
 	get_scr_vec(&m, sc->camera, dot);//пускаем луч
+	normalize2(&m, m);
 	num = get_pl_numerator(sc->camera->pos, pl->no_vec, pl->fig.pl.coord);
 	den = get_pl_denominator(m, pl->no_vec);
-	if (den == 0)
+	if (num == 0 && den == 0)
 		return ;//ничего не делаем
 	else
-	{
+	{                                                                                                                                                                                              
 		cur_t = num * pow(den, -1);
-		if (cur_t < 1)
+		if (cur_t <= 0)
 			return ;
-		if (*min_t == -1 || cur_t < *min_t)
+		if (*min_t == -1 || cur_t < *min_t)//fabs(cur_t) < fabs(*min_t)
 		{
 			*min_t= cur_t;
 			*min_color = pl->color;
-			*min_color = get_ligth_plane(pl, get_pl_dot(m, sc, *min_t), *min_color, sc->light);
+			*min_color = get_ligth_plane(pl, get_sp_dot(m, *min_t, dot), *min_color, sc->light);
 		}
 	}
 }
