@@ -8,12 +8,12 @@ void	fill_color(t_color *col, int r, int g, int b)
 	(*col).mix = (((*col).r << 16) | ((*col).g << 8) | (*col).b);
 }
 
-void camera_diff(t_point *dot, t_camera *cam)
-{
-	(*dot).x -= cam->pos.x;
-	(*dot).y -= cam->pos.y;
-	(*dot).z -= cam->pos.z;
-}
+// void camera_diff(t_point *dot, t_camera *cam)
+// {
+// 	(*dot).x -= cam->pos.x;
+// 	(*dot).y -= cam->pos.y;
+// 	(*dot).z -= cam->pos.z;
+// }
 
 t_color get_minimal_color(t_minirt *data, t_point dot)
 {

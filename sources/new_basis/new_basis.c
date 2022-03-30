@@ -51,7 +51,7 @@ void	get_r(t_camera *cam)
 
 void new_basis(t_scene *scene)
 {
-	vec_mult_num(&(scene->camera->dir), -1);
+	// vec_mult_num(&(scene->camera->dir), -1);
 	get_d(scene->camera);
 	get_r(scene->camera);
 	// get_u(scene->camera);

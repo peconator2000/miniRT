@@ -2,9 +2,12 @@
 
 void	get_scr_vec(t_point *ray, t_camera *cam, t_point dot)
 {
+	(void)cam;
 	(*ray).x = dot.x - cam->pos.x;
 	(*ray).y = dot.y - cam->pos.y;
 	(*ray).z = dot.z - cam->pos.z;
+	// printf("dot on scr (%f, %f, %f)\n", dot.x, dot.y, dot.z);
+	// printf("dot on camscr (%f, %f, %f)\n", (*ray).x, (*ray).y, (*ray).z);
 }
 
 void	get_discr(double *discr, t_point m, t_point ray, double rad)
@@ -27,6 +30,7 @@ t_point	get_sp_dot(t_point m, double min_t, t_scene *sc)
 	res.x =  m.x * (min_t) + sc->camera->pos.x;
 	res.y = m.y * (min_t) + sc->camera->pos.y;
 	res.z =  m.z * (min_t) + sc->camera->pos.z;
+	// printf("dot sp(%f, %f, %f)\n", res.x, res.y, res.z);
 	// res.x = m.x * min_t + dot.x;
 	// res.y = m.y * min_t + dot.y;
 	// res.z = m.z * min_t + dot.z;
@@ -39,7 +43,7 @@ double get_min_param(double discr, t_point m, t_point ray, t_scene *sc)
 	double	root2;
 	t_point	sca1;
 	t_point	sca2;
-	double	dd = -1;
+	double	dd = 1;
 	// double eps = 0.00001;
 
 	root1 = vec_scalar_mult(m, ray) * (-1) + sqrt(discr);
@@ -92,7 +96,7 @@ void	is_sphere(t_scene *sc, t_point dot, t_color *min_color, double *min_t, t_fi
 		*min_t = cur_t;
 		// printf("min_param = %f\n", *min_t);
 		*min_color = sp->color;
-		// *min_color = get_ligth_sphere(sp, get_sp_dot(m,*min_t, sc), *min_color, sc->light);
+		*min_color = get_ligth_sphere(sp, get_sp_dot(m,*min_t, sc), *min_color, sc->light);
 		// printf("cur_t = %f\n", cur_t);
 	}
 }
