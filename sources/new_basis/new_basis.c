@@ -12,32 +12,35 @@ void	get_norm(t_point *dot)
 
 void	get_d(t_camera *cam)
 {
-	// get_norm(&(cam->no_vec));
 	vec_fill(&(cam->dir), cam->no_vec.x, cam->no_vec.y, cam->no_vec.z);
-}
-
-void	get_u(t_camera *cam)
-{
-	t_point tmp;
-
-	if (cam->dir.x == 0 && cam->dir.z == 0)
-		vec_fill(&tmp, 0, 1, 0);
-	else
-		vec_fill(&tmp, 1, 0, 0);
-	vec_mult_vec(&(cam->up), cam->dir, tmp);
 }
 
 void	get_r(t_camera *cam)
 {
-	vec_mult_vec(&(cam->rigth), cam->up, cam->dir);
+	t_point tmp;
+
+	vec_fill(&tmp, 0, 1, 0);
+	if (cam->dir.y == 1 || cam->dir.y == -1)
+	{
+		if (cam->dir.y == 1)
+			vec_fill(&(cam->rigth), 1, 0, 0);
+		else
+			vec_fill(&(cam->rigth), -1, 0, 0);
+	}
+	else
+		vec_mult_vec(&(cam->rigth), tmp, cam->dir);
+	vec_mult_vec(&(cam->up), cam->dir, cam->rigth);
 }
 
 void new_basis(t_scene *scene)
 {
+	// vec_mult_num(&(scene->camera->dir), -1);
 	get_d(scene->camera);
-	get_u(scene->camera);
 	get_r(scene->camera);
+	// get_u(scene->camera);
+	// vec_mult_num(&(scene->camera->up), -1);
+	// vec_mult_num(&(scene->camera->rigth), -1);
 	get_norm(&(scene->camera->dir));
 	get_norm(&(scene->camera->up));
-	get_norm(&(scene->camera->dir));
+	get_norm(&(scene->camera->rigth));
 }

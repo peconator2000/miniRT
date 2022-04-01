@@ -15,6 +15,7 @@
 # define PLANE		1
 # define SPHERE		2
 # define CYLINDER	3
+# define STEP		1
 
 typedef struct s_image
 {
