@@ -28,10 +28,8 @@ static void	parse_line(t_minirt *minirt, t_figures **figs, char **strptr)
 
 static void	parse_element(t_minirt *minirt, t_figures **figs, char *line)
 {
-	printf("LINE = [%s]\n", line);
 	if (*line)
 		parse_line(minirt, figs, &line);
-	printf("LINE = [%s]\n", line);
 }
 
 int	parse(int argc, char **argv, t_minirt *minirt)
