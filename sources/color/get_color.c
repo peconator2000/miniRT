@@ -45,7 +45,9 @@ int get_color(t_minirt *data, double x_sc, double y_sc)
 	t_point	dot;
 
 	get_inscreen(data->scene, &dot, x_sc, y_sc);// x', y', z'
+	// printf("dot on local system (%f, %f, %f)\n", dot.x, dot.y, dot.z);
 	get_new_coords(data->scene->camera, &dot);//Ax, Ay, Az
+	// printf("dot on world system (%f, %f, %f)\n", dot.x, dot.y, dot.z);
 	color = get_minimal_color(data, dot);
 	return (color.mix);
 }

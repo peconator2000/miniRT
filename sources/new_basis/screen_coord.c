@@ -20,8 +20,8 @@ void	get_inscreen(t_scene *sc, t_point *dot, double x, double y)
 
 	if (!delta)
 		get_new_sizes(sc, &delta);
-	(*dot).x = x * delta;
-	(*dot).y = y * delta;
+	(*dot).x = (x) * delta;
+	(*dot).y = (y) * delta;
 	(*dot).z = 1;
 }
 
@@ -34,10 +34,7 @@ void get_new_coords(t_camera *cam, t_point *dot)
 	rig = cam->rigth;
 	up = cam->up;
 	dir = cam->dir;
-	// printf("rig = (%f, %f, %f)\n", rig.x, rig.y, rig.z);
-	// printf("up = (%f, %f, %f)\n", up.x, up.y, up.z);
-	// printf("dir = (%f, %f, %f)\n", dir.x, dir.y, dir.z);
-	(*dot).x = rig.x * (*dot).x + rig.y * (*dot).y + rig.z * (*dot).z + cam->pos.x;
-	(*dot).y = up.x * (*dot).x + up.y * (*dot).y + up.z * (*dot).z + cam->pos.y;
-	(*dot).z = dir.x * (*dot).x + dir.y * (*dot).y + dir.z * (*dot).z + cam->pos.z;
+	(*dot).x = rig.x * (*dot).x + rig.y * (*dot).y + rig.z * (*dot).z + cam->pos.x;//(rig.x * cam->pos.x + rig.y * cam->pos.y + rig.z * cam->pos.z);
+	(*dot).y = up.x * (*dot).x + up.y * (*dot).y + up.z * (*dot).z  + cam->pos.y;//(up.x * cam->pos.x + up.y * cam->pos.y + up.z * cam->pos.z);
+	(*dot).z = dir.x * (*dot).x + dir.y * (*dot).y + dir.z * (*dot).z + cam->pos.z;// dir.x * cam->pos.x + dir.y * cam->pos.y + dir.z * cam->pos.z;
 }
