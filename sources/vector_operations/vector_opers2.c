@@ -20,7 +20,7 @@ t_point	vector_add(t_point start, t_point end)
 	return (result_point);
 }
 
-t_point	vector_substract(t_point start, t_point end)
+t_point	vector_subtract(t_point start, t_point end)
 {
 	t_point	result_point;
 
@@ -38,4 +38,9 @@ t_point	vector_cross(t_point start, t_point end)
 	cross_point.y = start.z * end.x - start.x * end.z;
 	cross_point.z = start.x * end.y - start.y * end.x;
 	return (cross_point);
+}
+
+t_point	vector_nmultiply(t_point p1, double n)
+{
+	return (point_define(p1.x * n, p1.y * n, p1.z * n));
 }

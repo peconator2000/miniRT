@@ -47,9 +47,9 @@ void draw_all(t_minirt *data, int wid, int hig)
 	y_pix = 0;
 	y_sc = hig * (0.5);
 	new_basis(data->scene);
-	printf("rigth = (%f, %f, %f)\n", data->scene->camera->rigth.x, data->scene->camera->rigth.y, data->scene->camera->rigth.z);
-	printf("up = (%f, %f, %f)\n", data->scene->camera->up.x, data->scene->camera->up.y, data->scene->camera->up.z);
-	printf("dir = (%f, %f, %f)\n", data->scene->camera->dir.x, data->scene->camera->dir.y, data->scene->camera->dir.z);
+	// printf("rigth = (%f, %f, %f)\n", data->scene->camera->rigth.x, data->scene->camera->rigth.y, data->scene->camera->rigth.z);
+	// printf("up = (%f, %f, %f)\n", data->scene->camera->up.x, data->scene->camera->up.y, data->scene->camera->up.z);
+	// printf("dir = (%f, %f, %f)\n", data->scene->camera->dir.x, data->scene->camera->dir.y, data->scene->camera->dir.z);
 	while (y_pix < hig )
 	{
 		x_pix = 0;

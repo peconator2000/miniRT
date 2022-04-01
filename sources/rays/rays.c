@@ -90,25 +90,25 @@ void	is_sphere(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figu
 	discr = b * b - 4 * a * c;
 	t1 = (b * (-1) + sqrt(discr)) / (2 * a);
 	t2 = (b * (-1) - sqrt(discr)) / (2 * a);
-	// if (t1 >= 1 || t2 >= 1)
-	// {
-	// 	if (t1 >= 1 && t2 >= 1)
-	// 	{
-	// 		if (t1 < t2)
-	// 			t_min = t1;
-	// 		else
-	// 			t_min = t2;
-	// 	}
-	// 	else
-	// 	{
-	// 		if (t1 >= 1)
-	// 			t_min = t1;
-	// 		else	
-	// 			t_min = t2;
-	// 	}
-	// }
-	// else
-	// 	return ;
+	if (t1 >= 1 || t2 >= 1)
+	{
+		if (t1 >= 1 && t2 >= 1)
+		{
+			if (t1 < t2)
+				t_min = t1;
+			else
+				t_min = t2;
+		}
+		else
+		{
+			if (t1 >= 1)
+				t_min = t1;
+			else
+				t_min = t2;
+		}
+	}
+	else
+		return ;
 	sp_dot.x = op.x * t_min + o.x;
 	sp_dot.y = op.y * t_min + o.y;
 	sp_dot.z = op.z * t_min + o.z;
@@ -117,7 +117,8 @@ void	is_sphere(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figu
 		*min_t = t_min;
 		*min_color = sp->color;
 		// *min_color = get_ligth_sphere(sp, sp_dot, *min_color, sc->light);
-	}	
+		*min_color = compute_color(sc, sp, p, t_min);
+	}
 }
 
 double	get_pl_numerator(t_point cam, t_point norm, t_point N)
@@ -150,7 +151,7 @@ void	is_plane(t_scene *sc, t_point dot, t_color *min_color, double *min_t, t_fig
 	if (num == 0 && den == 0)
 		return ;//ничего не делаем
 	else
-	{                                                                                                                                                                                              
+	{
 		cur_t = num * pow(den, -1);
 		if (cur_t < 1)
 			return ;
@@ -159,6 +160,7 @@ void	is_plane(t_scene *sc, t_point dot, t_color *min_color, double *min_t, t_fig
 			*min_t= cur_t;
 			*min_color = pl->color;
 			// *min_color = get_ligth_plane(pl, get_sp_dot(m, *min_t, sc), *min_color, sc->light);
+			*min_color = compute_color(sc, pl, dot, cur_t);
 		}
 	}
 }
