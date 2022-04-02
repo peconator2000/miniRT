@@ -147,4 +147,6 @@ void	fill_color(t_color *col, int r, int g, int b);
 void	is_sphere(t_scene *sc, t_point dot, t_color *min_color, double *min_t, t_figures *sp);
 t_color get_ligth_plane(t_figures *elem, t_point dot, t_color true_color, t_light *ligth);
 void	is_plane(t_scene *sc, t_point dot, t_color *min_color, double *min_t, t_figures *pl);
+void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figures *cy);
+
 #endif
