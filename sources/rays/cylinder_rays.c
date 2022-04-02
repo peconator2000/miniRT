@@ -80,6 +80,7 @@ void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_fi
 	double t1;
 	double t2;
 	double t_min = -1;
+	double t_min2 = -1;
 	t_point cy_dot;
 	double hei = cy->fig.cy.height;
 
@@ -107,9 +108,9 @@ void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_fi
 			cy_dot.z = (new_op.z + new_o.z) * hei * (0.5);
 		cy_dot.x = new_o.x;
 		cy_dot.y = new_o.y;
+		printf("hey\n");
 		if (cy_dot.x * cy_dot.x + cy_dot.y * cy_dot.y - rad * rad > 0.00001)
 			return ;
-		printf("hey\n");
 	}
 	else
 	{
@@ -120,16 +121,28 @@ void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_fi
 			if (t1 >= 1 && t2 >= 1)
 			{
 				if (t1 < t2)
+				{
 					t_min = t1;
+					t_min2 = t2;
+				}
 				else
+				{
 					t_min = t2;
+					t_min2 = t1;
+				}
 			}
 			else
 			{
 				if (t1 >= 1)
+				{
 					t_min = t1;
+					t_min2 = t2;
+				}
 				else	
+				{
 					t_min = t2;
+					t_min2 = t1;
+				}
 			}
 		}
 		else
@@ -138,23 +151,28 @@ void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_fi
 		cy_dot.x = new_op.x * t_min + new_o.x;
 		cy_dot.y = new_op.y * t_min + new_o.y;
 		cy_dot.z = new_op.z * t_min + new_o.z;
+
+		if (cy_dot.z < (-0.5) * hei || cy_dot.z > hei * (0.5))
+		{
+			t_min = t_min2;
+			// return ;
+		}
+		cy_dot.x = new_op.x * t_min + new_o.x;
+		cy_dot.y = new_op.y * t_min + new_o.y;
+		cy_dot.z = new_op.z * t_min + new_o.z;
 		if (cy_dot.z < (-0.5) * hei || cy_dot.z > hei * (0.5))
 			return ;
-		else if (fabs(cy_dot.z - (-0.5) * hei) < 0.00001 || fabs(cy_dot.z + (-0.5) * hei) < 0.00001)
-		{
-			printf("popal\n");
-		}
 		*min_t = t_min;
 		*min_color = cy->color;
 		return ;
 	}
-	// if (*min_t == -1 || t_min < *min_t)
-	// {
+	if (*min_t == -1 || t_min < *min_t)
+	{
 
 		*min_t = t_min;
 		// printf("ok\n");
-		// *min_color = cy->color;
-		fill_color(min_color, 255, 0, 0);
+		*min_color = cy->color;
+		// fill_color(min_color, 255, 0, 0);
 		// *min_color = get_ligth_sphere(cy, cy_dot, *min_color, sc->light);
-	// }			
+	}			
 }
