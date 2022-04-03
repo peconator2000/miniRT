@@ -8,23 +8,55 @@ void	fill_color(t_color *col, int r, int g, int b)
 	(*col).mix = (((*col).r << 16) | ((*col).g << 8) | (*col).b);
 }
 
+void	get_sphere_param(double *min_t, t_color *min_color, t_figures *sp, t_scene *sc, t_ray ray)
+{
+	t_point		sp_dot;
+	double		t;
+
+	t = is_sphere(ray, sp);
+	if (((*min_t) == -1 || t < *min_t) && t != -1)
+	{
+		(*min_t) = t;
+		(*min_color) = sp->color;
+		get_ray_dot(&sp_dot, ray, *(min_t));
+		(*min_color) = get_ligth_sphere(sp, sp_dot, (*min_color), sc->light);
+	}
+}
+
+void	get_plane_param(double *min_t, t_color *min_color, t_figures *pl, t_scene *sc, t_ray ray)
+{
+	t_point		pl_dot;
+	double		t;
+
+	t = is_plane(ray, pl);
+	if (((*min_t) == -1 || t < *min_t) && t > 1)
+	{
+		(*min_t) = t;
+		(*min_color) = pl->color;
+		get_ray_dot(&pl_dot, ray, *(min_t));
+		(*min_color) = get_ligth_plane(pl, pl_dot, (*min_color), sc->light);
+	}
+}
+
 t_color get_minimal_color(t_minirt *data, t_point dot)
 {
 	double		min_t;
 	t_color		min_color;
 	t_figures	*elems;
+	t_ray ray;
 
 	elems = data->scene->figs;
 	min_t = -1;
 	fill_color(&min_color, 0, 0, 0);//инициализируем черным цветом
 	while (elems)
 	{
+		ray_fill(&ray, data->scene->camera->pos, dot);
 		if (elems->type == PLANE)
-			is_plane(data->scene, dot, &min_color, &min_t, elems);
+			get_plane_param(&min_t, &min_color, elems, data->scene, ray);
 		if (elems->type == SPHERE)
-			is_sphere(data->scene, dot, &min_color, &min_t, elems);
-		if (elems->type == CYLINDER)
-			is_cylinder(data->scene, dot, &min_color, &min_t, elems);
+			get_sphere_param(&min_t, &min_color, elems, data->scene, ray);
+		// if (elems->type == CYLINDER)
+			
 		elems = elems->next;
 	}
 	return (min_color);//текущий

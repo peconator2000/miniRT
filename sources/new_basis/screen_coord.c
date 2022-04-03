@@ -22,7 +22,7 @@ void	get_inscreen(t_scene *sc, t_point *dot, double x, double y)
 		get_new_sizes(sc, &delta);
 	(*dot).x = (x) * delta;
 	(*dot).y = (y) * delta;
-	(*dot).z = 1;
+	(*dot).z = -1;
 }
 
 void get_new_coords(t_camera *cam, t_point *dot)

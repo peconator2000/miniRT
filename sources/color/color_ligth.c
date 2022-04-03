@@ -44,6 +44,22 @@ t_color get_ligth_sphere(t_figures *elem, t_point dot, t_color true_color, t_lig
 	return (get_ligth(l_dist, norm, elem, true_color, ligth));
 }
 
+
+t_color get_ligth_cylinder(t_figures *elem, t_point dot, t_point norm, t_color true_color, t_light *ligth)
+{
+	t_point lig;
+	t_point l_dist;
+
+	lig.x = ligth->coord.x;
+	lig.y = ligth->coord.y;
+	lig.z = ligth->coord.z;
+	get_cy_basis_dot(lig, &lig, elem->r, elem->u, elem->d, elem->fig.cy.coord);
+	vec_fill(&l_dist, lig.x - dot.x, lig.y - dot.y, lig.z - dot.z);
+	normalize2(&l_dist, l_dist);
+	// printf("stranno\n");
+	return (get_ligth(l_dist, norm, elem, true_color, ligth));
+}
+
 t_color get_ligth_plane(t_figures *elem, t_point dot, t_color true_color, t_light *ligth)
 {
 	t_point lig;

@@ -66,59 +66,59 @@ double get_min_param(double discr, t_point m, t_point ray, t_scene *sc)
 		return (root2);
 }
 
-void	is_sphere(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figures *sp)
-{
-	double	a;
-	double	b;
-	double	c;
-	double	t1;
-	double	t2;
-	double	t_min = -1;
-	double	discr;
-	t_point	sp_dot;
-	t_point	op;//вектор направления
-	t_point	o = sc->camera->pos;//позиция камеры
-	t_point	s = sp->fig.sp.coord;//центр сферы
-	double	rad = sp->fig.sp.diameter * 0.5;//радиус
+// void	is_sphere(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figures *sp)
+// {
+// 	double	a;
+// 	double	b;
+// 	double	c;
+// 	double	t1;
+// 	double	t2;
+// 	double	t_min = -1;
+// 	double	discr;
+// 	t_point	sp_dot;
+// 	t_point	op;//вектор направления
+// 	t_point	o = sc->camera->pos;//позиция камеры
+// 	t_point	s = sp->fig.sp.coord;//центр сферы
+// 	double	rad = sp->fig.sp.diameter * 0.5;//радиус
 
-	op.x = p.x - o.x;
-	op.y = p.y - o.y;
-	op.z = p.z - o.z;
-	a = op.x * op.x + op.y * op.y + op.z * op.z;
-	b = 2 * (op.x * (o.x - s.x) + op.y * (o.y - s.y) + op.z * (o.z - s.z));
-	c = ((o.x - s.x) * (o.x - s.x) + (o.y - s.y) * (o.y - s.y) + (o.z - s.z) * (o.z - s.z) - rad * rad);
-	discr = b * b - 4 * a * c;
-	t1 = (b * (-1) + sqrt(discr)) / (2 * a);
-	t2 = (b * (-1) - sqrt(discr)) / (2 * a);
-	if (t1 >= 1 || t2 >= 1)
-	{
-		if (t1 >= 1 && t2 >= 1)
-		{
-			if (t1 < t2)
-				t_min = t1;
-			else
-				t_min = t2;
-		}
-		else
-		{
-			if (t1 >= 1)
-				t_min = t1;
-			else	
-				t_min = t2;
-		}
-	}
-	else
-		return ;
-	sp_dot.x = op.x * t_min + o.x;
-	sp_dot.y = op.y * t_min + o.y;
-	sp_dot.z = op.z * t_min + o.z;
-	if (*min_t == -1 || t_min < *min_t)
-	{
-		*min_t = t_min;
-		*min_color = sp->color;
-		*min_color = get_ligth_sphere(sp, sp_dot, *min_color, sc->light);
-	}	
-}
+// 	op.x = p.x - o.x;
+// 	op.y = p.y - o.y;
+// 	op.z = p.z - o.z;
+// 	a = op.x * op.x + op.y * op.y + op.z * op.z;
+// 	b = 2 * (op.x * (o.x - s.x) + op.y * (o.y - s.y) + op.z * (o.z - s.z));
+// 	c = ((o.x - s.x) * (o.x - s.x) + (o.y - s.y) * (o.y - s.y) + (o.z - s.z) * (o.z - s.z) - rad * rad);
+// 	discr = b * b - 4 * a * c;
+// 	t1 = (b * (-1) + sqrt(discr)) / (2 * a);
+// 	t2 = (b * (-1) - sqrt(discr)) / (2 * a);
+// 	if (t1 >= 1 || t2 >= 1)
+// 	{
+// 		if (t1 >= 1 && t2 >= 1)
+// 		{
+// 			if (t1 < t2)
+// 				t_min = t1;
+// 			else
+// 				t_min = t2;
+// 		}
+// 		else
+// 		{
+// 			if (t1 >= 1)
+// 				t_min = t1;
+// 			else	
+// 				t_min = t2;
+// 		}
+// 	}
+// 	else
+// 		return ;
+// 	sp_dot.x = op.x * t_min + o.x;
+// 	sp_dot.y = op.y * t_min + o.y;
+// 	sp_dot.z = op.z * t_min + o.z;
+// 	if (*min_t == -1 || t_min < *min_t)
+// 	{
+// 		*min_t = t_min;
+// 		*min_color = sp->color;
+// 		*min_color = get_ligth_sphere(sp, sp_dot, *min_color, sc->light);
+// 	}	
+// }
 
 double	get_pl_numerator(t_point cam, t_point norm, t_point N)
 {
@@ -137,61 +137,35 @@ double	get_pl_denominator(t_point m, t_point norm)
 	return (res);
 }
 
-// void	is_plane(t_scene *sc, t_point dot, t_color *min_color, double *min_t, t_figures *pl)
+// void	is_plane(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figures *pl)
 // {
-// 	t_point	m;//вектор направления
-// 	double	num;//числитель
-// 	double	den;//знаменатель
-// 	double	cur_t;
+// 	t_point o = sc->camera->pos;
+// 	t_point op;
+// 	double t;
+// 	t_point pl_dot;
+// 	t_point n = pl->no_vec;
+// 	t_point k = pl->fig.pl.coord;
+// 	double	num;
+// 	double	den;
+// 	double	d;
 
-// 	get_scr_vec(&m, sc->camera, dot);//пускаем луч
-// 	num = get_pl_numerator(sc->camera->pos, pl->no_vec, pl->fig.pl.coord);
-// 	den = get_pl_denominator(m, pl->no_vec);
-// 	if (num == 0 && den == 0)
-// 		return ;//ничего не делаем
-// 	else
-// 	{                                                                                                                                                                                              
-// 		cur_t = num * pow(den, -1);
-// 		if (cur_t < 1)
-// 			return ;
-// 		if (*min_t == -1 || cur_t < *min_t)//fabs(cur_t) < fabs(*min_t)
-// 		{
-// 			*min_t= cur_t;
-// 			*min_color = pl->color;
-// 			*min_color = get_ligth_plane(pl, get_sp_dot(m, *min_t, sc), *min_color, sc->light);
-// 		}
+// 	op.x = p.x - o.x;
+// 	op.y = p.y - o.y;
+// 	op.z = p.z - o.z;
+
+// 	d = n.x * k.x + n.y * k.y + n.z * k.z;
+// 	num = d - (n.x * o.x + n.y * o.y + n.z * o.z);
+// 	den = n.x * op.x + n.y * op.y + n.z * op.z;
+// 	if (den == 0)
+// 		return ;
+// 	t = num * pow(den, -1);
+// 	pl_dot.x = op.x * t + o.x;
+// 	pl_dot.y = op.y * t + o.y;
+// 	pl_dot.z = op.z * t + o.z;
+// 	if ((*min_t == -1 || t < *min_t) && t > 1)
+// 	{
+// 		*min_t = t;
+// 		*min_color = pl->color;
+// 		*min_color = get_ligth_plane(pl, pl_dot, *min_color, sc->light);
 // 	}
 // }
-
-void	is_plane(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figures *pl)
-{
-	t_point o = sc->camera->pos;
-	t_point op;
-	double t;
-	t_point pl_dot;
-	t_point n = pl->no_vec;
-	t_point k = pl->fig.pl.coord;
-	double	num;
-	double	den;
-	double	d;
-
-	op.x = p.x - o.x;
-	op.y = p.y - o.y;
-	op.z = p.z - o.z;
-
-	d = n.x * k.x + n.y * k.y + n.z * k.z;
-	num = d - (n.x * o.x + n.y * o.y + n.z * o.z);
-	den = n.x * op.x + n.y * op.y + n.z * op.z;
-	if (den == 0)
-		return ;
-	t = num * pow(den, -1);
-	pl_dot.x = op.x * t + o.x;
-	pl_dot.y = op.y * t + o.y;
-	pl_dot.z = op.z * t + o.z;
-	if ((*min_t == -1 || t < *min_t) && t > 1)
-	{
-		*min_t = t;
-		*min_color = pl->color;
-		*min_color = get_ligth_plane(pl, pl_dot, *min_color, sc->light);
-	}
-}

@@ -62,6 +62,9 @@ typedef struct s_figures
 	t_color				color;
 	t_point				no_vec;
 	t_scene				*scene;
+	t_point r;
+	t_point u;
+	t_point d;
 	struct s_figures	*next;
 }				t_figures;
 
@@ -97,5 +100,23 @@ typedef struct s_scene
 	t_light		*light;
 	t_figures	*figs;
 }				t_scene;
+
+typedef struct s_equ
+{
+	double	a;
+	double	b;
+	double	c;
+	double	discr;
+	double	t1;
+	double	t2;
+	double	t_min;
+}				t_equ;
+
+typedef struct s_ray
+{
+	t_point op;
+	t_point o;
+	t_point p;
+}				t_ray;
 
 #endif

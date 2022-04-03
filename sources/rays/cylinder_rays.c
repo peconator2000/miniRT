@@ -82,9 +82,13 @@ void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_fi
 	double t_min = -1;
 	double t_min2 = -1;
 	t_point cy_dot;
+	t_point norm;
 	double hei = cy->fig.cy.height;
 
 	get_new_cylinder_basis(cy, &r, &u, &d);
+	cy->r = r;
+	cy->u = u;
+	cy->d = d;
 	get_cy_basis_dot(p, &new_p, r, u, d, k);
 	get_cy_basis_dot(o, &new_o, r, u, d, k);
 
@@ -108,9 +112,11 @@ void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_fi
 			cy_dot.z = (new_op.z + new_o.z) * hei * (0.5);
 		cy_dot.x = new_o.x;
 		cy_dot.y = new_o.y;
-		printf("hey\n");
+		// printf("hey\n");
 		if (cy_dot.x * cy_dot.x + cy_dot.y * cy_dot.y - rad * rad > 0.00001)
 			return ;
+		vec_fill(&norm, 0, 0, cy_dot.z);
+		normalize2(&norm, norm);
 	}
 	else
 	{
@@ -153,26 +159,25 @@ void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_fi
 		cy_dot.z = new_op.z * t_min + new_o.z;
 
 		if (cy_dot.z < (-0.5) * hei || cy_dot.z > hei * (0.5))
-		{
 			t_min = t_min2;
-			// return ;
-		}
+
 		cy_dot.x = new_op.x * t_min + new_o.x;
 		cy_dot.y = new_op.y * t_min + new_o.y;
 		cy_dot.z = new_op.z * t_min + new_o.z;
 		if (cy_dot.z < (-0.5) * hei || cy_dot.z > hei * (0.5))
 			return ;
+		vec_fill(&norm, cy_dot.x, cy_dot.y, 0);
+		normalize2(&norm, norm);
 		*min_t = t_min;
 		*min_color = cy->color;
-		return ;
 	}
-	if (*min_t == -1 || t_min < *min_t)
-	{
+	// if (*min_t == -1 || t_min < *min_t)
+	// {
 
 		*min_t = t_min;
 		// printf("ok\n");
 		*min_color = cy->color;
 		// fill_color(min_color, 255, 0, 0);
-		// *min_color = get_ligth_sphere(cy, cy_dot, *min_color, sc->light);
-	}			
+		*min_color = get_ligth_cylinder(cy, cy_dot, norm, *min_color, sc->light);
+	// }			
 }
