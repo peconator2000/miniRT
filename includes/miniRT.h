@@ -16,6 +16,7 @@
 # define SPHERE		2
 # define CYLINDER	3
 # define STEP		1
+# define EPSILON	0.0001
 
 typedef struct s_image
 {
@@ -34,11 +35,15 @@ typedef struct s_minirt
 	t_scene		*scene;
 }				t_minirt;
 
+double	p_intersect(t_point src_coord, t_point ray, t_figures *plane);
+double	s_intersect(t_point src_coord,t_point ray, t_figures *sphere);
 // Parse
 int			parse(int argc, char **argv, t_minirt *minirt);
 t_minirt	*init();
 void		init_mlx(t_minirt *minirt);
 
+double		plane_intersect(t_point src_coord,t_point ray, t_figures *figs);
+double		sphere_intersect(t_point src_coord,t_point ray, t_figures *figure);
 // Parse info
 void		parse_resolution(t_minirt *minirt, char **str);
 void		parse_ambient_light(t_minirt *minirt, char **str);
@@ -75,8 +80,13 @@ t_point		normalize(t_point point);
 void		normalize2(t_point *dot, t_point point);
 t_point		point_define(double x, double y, double z);
 t_point		vector_add(t_point start, t_point end);
-t_point		vector_substract(t_point start, t_point end);
+t_point		vector_subtract(t_point start, t_point end);
 t_point		vector_cross(t_point start, t_point end);
+t_point		vector_nmultiply(t_point p1, double n);
+double		vcos(t_point a, t_point b);
+double		vsin(t_point a, t_point b);
+t_point		vec_mult_coef(t_point vector, double coef);
+t_point		reflect_ray(t_point ray, t_point normal);
 
 // Error handling
 void		scene_error(char *msg);
@@ -122,6 +132,9 @@ void delta_generate(double *delta_x, double *delta_y, t_scene *scene);
 
 //get_color
 int get_color(t_minirt *data, double x_sc, double y_sc);
+void	add_coeficient(double (*rgb)[3], double coef, int color);
+t_color	build_color(int color, double rgb[3]);
+t_color	compute_color(t_scene *scene, t_figures *figure, t_point ray, double dist);
 
 //ray_tracing
 void	new_camera_coords(t_point *dot, t_point old, t_camera *cam);

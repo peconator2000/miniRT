@@ -75,3 +75,5 @@ t_color get_ligth_plane(t_figures *elem, t_point dot, t_color true_color, t_ligh
 	normalize2(&norm, norm);
 	return (get_ligth(l_dist, norm, elem, true_color, ligth));
 }
+
+
