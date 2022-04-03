@@ -24,42 +24,6 @@ static t_point	get_normal(t_figures *figure, t_point intersect)
 	return (normal);
 }
 
-static void	get_dist_to_obj(t_scene *scene, t_point ray, double *closest_intersection)
-{
-	double		dist;
-	t_figures	*figs;
-
-	figs = scene->figs;
-	dist = INFINITY;
-	(void)ray;
-	while (figs)
-	{
-		// if (figs->type == SPHERE)
-		// 	dist = sphere_intersect(scene->light->coord, ray, figs);
-		// else if (figs->type == PLANE)
-		// 	dist = plane_intersect(scene->light->coord, ray, figs);
-		if (dist > EPSILON && dist < *closest_intersection)
-			*closest_intersection = dist;
-		figs = figs->next;
-	}
-}
-
-static int	check_shadow(t_scene *scene, t_point intersect, t_figures *figure)
-{
-	t_point	ray;
-	double	ray_len;
-	double	dist;
-
-	ray = vector_subtract(intersect, scene->light->coord);
-	ray_len = get_module(ray, ray);
-	ray = normalize(ray);
-	dist = INFINITY;
-	get_dist_to_obj(scene, ray, &dist);
-	if (dist > EPSILON && dist < ray_len - EPSILON && figure->type != -1)
-		return (1);
-	return (0);
-}
-
 t_color	compute_color(t_scene *scene, t_figures *figure, t_point ray, double dist)
 {
 	t_point	intersect;
@@ -74,8 +38,7 @@ t_color	compute_color(t_scene *scene, t_figures *figure, t_point ray, double dis
 	normal = get_normal(figure, intersect);
 	direction = normalize(vector_subtract(scene->light->coord, intersect));
 	add_coeficient(&rgb, scene->a_light, scene->al_color.mix);
-	if (get_dot(normal, direction) > 0
-		&& !check_shadow(scene, intersect, figure))
+	if (get_dot(normal, direction) > 0)
 	{
 		light = vcos(normal, direction) * scene->light->bri;
 		add_coeficient(&rgb, light, scene->light->color.mix);

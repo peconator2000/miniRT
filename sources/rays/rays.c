@@ -103,11 +103,7 @@ void	is_sphere(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figu
 		{
 			if (t1 >= 1)
 				t_min = t1;
-<<<<<<< HEAD
 			else
-=======
-			else
->>>>>>> a492f840131799e545a44866c26834ee8ca54177
 				t_min = t2;
 		}
 	}
@@ -155,7 +151,7 @@ double	get_pl_denominator(t_point m, t_point norm)
 // 	if (num == 0 && den == 0)
 // 		return ;//ничего не делаем
 // 	else
-// 	{                
+// 	{
 // 		cur_t = num * pow(den, -1);
 // 		if (cur_t < 1)
 // 			return ;
@@ -170,30 +166,6 @@ double	get_pl_denominator(t_point m, t_point norm)
 
 void	is_plane(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figures *pl)
 {
-<<<<<<< HEAD
-	t_point	m;//вектор направления
-	double	num;//числитель
-	double	den;//знаменатель
-	double	cur_t;
-
-	get_scr_vec(&m, sc->camera, dot);//пускаем луч
-	num = get_pl_numerator(sc->camera->pos, pl->no_vec, pl->fig.pl.coord);
-	den = get_pl_denominator(m, pl->no_vec);
-	if (num == 0 && den == 0)
-		return ;//ничего не делаем
-	else
-	{
-		cur_t = num * pow(den, -1);
-		if (cur_t < 1)
-			return ;
-		if (*min_t == -1 || cur_t < *min_t)//fabs(cur_t) < fabs(*min_t)
-		{
-			*min_t= cur_t;
-			*min_color = pl->color;
-			// *min_color = get_ligth_plane(pl, get_sp_dot(m, *min_t, sc), *min_color, sc->light);
-			*min_color = compute_color(sc, pl, dot, cur_t);
-		}
-=======
 	t_point o = sc->camera->pos;
 	t_point op;
 	double t;
@@ -221,7 +193,7 @@ void	is_plane(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figur
 	{
 		*min_t = t;
 		*min_color = pl->color;
-		*min_color = get_ligth_plane(pl, pl_dot, *min_color, sc->light);
->>>>>>> a492f840131799e545a44866c26834ee8ca54177
+		// *min_color = get_ligth_plane(pl, pl_dot, *min_color, sc->light);
+		*min_color = compute_color(sc, pl, p, t);
 	}
 }
