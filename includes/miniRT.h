@@ -159,12 +159,26 @@ void get_new_coords(t_camera *cam, t_point *dot);
 void	fill_color(t_color *col, int r, int g, int b);
 t_color get_ligth_plane(t_figures *elem, t_point dot, t_color true_color, t_light *ligth);
 double	is_plane(t_ray ray, t_figures *pl);
-void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figures *cy);
 t_color get_ligth_cylinder(t_figures *elem, t_point dot, t_point norm, t_color true_color, t_light *ligth);
-void get_cy_basis_dot(t_point dot, t_point *new, t_point r, t_point u, t_point d, t_point k);
 void ray_dir(t_point *res, t_point dot1, t_point dot2);
 double	is_sphere(t_ray ray, t_figures *sp);
 void ray_fill(t_ray *res, t_point dot1, t_point dot2);
 void	get_ray_dot(t_point *res_dot, t_ray ray, double t_min);
+int is_valid_param(t_equ *equ);
+void show_vec(char *str, t_point vec);
+
+
+
+//new
+void get_cy_basis_dot(t_point dot, t_point *new, t_figures *fig, t_point k);
+double is_cylinder(t_point o, t_point p, t_figures *cy);
+
+
+
+
+//old
+// void get_cy_basis_dot(t_point dot, t_point *new, t_point r, t_point u, t_point d, t_point k);
+// void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figures *cy);
+
 
 #endif

@@ -53,7 +53,8 @@ t_color get_ligth_cylinder(t_figures *elem, t_point dot, t_point norm, t_color t
 	lig.x = ligth->coord.x;
 	lig.y = ligth->coord.y;
 	lig.z = ligth->coord.z;
-	get_cy_basis_dot(lig, &lig, elem->r, elem->u, elem->d, elem->fig.cy.coord);
+	get_cy_basis_dot(lig, &lig, elem, elem->fig.cy.coord);//new
+	// get_cy_basis_dot(lig, &lig, elem->r, elem->u, elem->d, elem->fig.cy.coord);
 	vec_fill(&l_dist, lig.x - dot.x, lig.y - dot.y, lig.z - dot.z);
 	normalize2(&l_dist, l_dist);
 	// printf("stranno\n");

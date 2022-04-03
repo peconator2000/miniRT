@@ -62,9 +62,9 @@ typedef struct s_figures
 	t_color				color;
 	t_point				no_vec;
 	t_scene				*scene;
-	t_point r;
-	t_point u;
-	t_point d;
+	t_point				r;
+	t_point				u;
+	t_point				d;
 	struct s_figures	*next;
 }				t_figures;
 
