@@ -63,13 +63,11 @@ t_color get_minimal_color(t_minirt *data, t_point dot)
 	while (elems)
 	{
 		if (elems->type == PLANE)
-		{
 			is_plane(data->scene, dot, &min_color, &min_t, elems);
-		}
 		if (elems->type == SPHERE)
-		{
 			is_sphere(data->scene, dot, &min_color, &min_t, elems);
-		}
+		if (elems->type == CYLINDER)
+			is_cylinder(data->scene, dot, &min_color, &min_t, elems);
 		elems = elems->next;
 	}
 	return (min_color);//текущий
