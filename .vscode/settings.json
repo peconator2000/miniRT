@@ -1,10 +1,6 @@
 {
 	"files.associations": {
 		"sstream": "c",
-<<<<<<< HEAD
 		"functional": "c"
-=======
-		"minirt.h": "c"
->>>>>>> db94e143b9277e5d9333372bde1b23f2ba70f76f
 	}
 }

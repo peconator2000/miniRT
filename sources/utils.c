@@ -2,7 +2,6 @@
 
 void	free_minirt(t_minirt *minirt)
 {
-	printf("FREE\n");
 	free_figures(minirt->scene->figs);
 	free(minirt->scene->light);
 	free(minirt->scene->camera);
