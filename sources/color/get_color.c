@@ -16,40 +16,7 @@ void	fill_color(t_color *col, int r, int g, int b)
 // }
 
 
-// static void	get_dist_to_obj(t_scene *scene, t_point ray, double *closest_intersection)
-// {
-// 	double		dist;
-// 	t_figures	*figs;
 
-// 	figs = scene->figs;
-// 	dist = INFINITY;
-// 	while (figs)
-// 	{
-// 		if (figs->type == SPHERE)
-// 			dist = sphere_intersect(scene->light->coord, ray, figs);
-// 		else if (figs->type == PLANE)
-// 			dist = plane_intersect(scene->light->coord, ray, figs);
-// 		if (dist > EPSILON && dist < *closest_intersection)
-// 			*closest_intersection = dist;
-// 		figs = figs->next;
-// 	}
-// }
-
-// static int	check_shadow(t_scene *scene, t_point intersect, t_figures *figure)
-// {
-// 	t_point	ray;
-// 	double	ray_len;
-// 	double	dist;
-
-// 	ray = vector_subtract(intersect, scene->light->coord);
-// 	ray_len = get_module(ray, ray);
-// 	ray = normalize(ray);
-// 	dist = INFINITY;
-// 	get_dist_to_obj(scene, ray, &dist);
-// 	if (dist > EPSILON && dist < ray_len - EPSILON && figure->type != -1)
-// 		return (1);
-// 	return (0);
-// }
 
 t_color get_minimal_color(t_minirt *data, t_point dot)
 {

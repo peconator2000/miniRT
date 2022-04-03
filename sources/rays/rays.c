@@ -117,7 +117,7 @@ void	is_sphere(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figu
 		*min_t = t_min;
 		*min_color = sp->color;
 		// *min_color = get_ligth_sphere(sp, sp_dot, *min_color, sc->light);
-		*min_color = compute_color(sc, sp, p, t_min);
+		*min_color = compute_color(sc, sp, op, t_min);
 	}
 }
 
@@ -194,6 +194,6 @@ void	is_plane(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figur
 		*min_t = t;
 		*min_color = pl->color;
 		// *min_color = get_ligth_plane(pl, pl_dot, *min_color, sc->light);
-		*min_color = compute_color(sc, pl, p, t);
+		*min_color = compute_color(sc, pl, op, t);
 	}
 }

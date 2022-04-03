@@ -35,6 +35,8 @@ typedef struct s_minirt
 	t_scene		*scene;
 }				t_minirt;
 
+double	p_intersect(t_point src_coord, t_point ray, t_figures *plane);
+double	s_intersect(t_point src_coord,t_point ray, t_figures *sphere);
 // Parse
 int			parse(int argc, char **argv, t_minirt *minirt);
 t_minirt	*init();

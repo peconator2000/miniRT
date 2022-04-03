@@ -99,7 +99,7 @@ void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_fi
 	discr = b * b - 4 * a * c;
 	if (discr < 0)
 		return ;
-	if (a < 0.00001)// цилиндр повернут 
+	if (a < 0.00001)// цилиндр повернут
 	{
 
 		if (new_op.x == 0 && new_op.y == 0 && new_op.z > 0)
@@ -138,7 +138,7 @@ void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_fi
 					t_min = t1;
 					t_min2 = t2;
 				}
-				else	
+				else
 				{
 					t_min = t2;
 					t_min2 = t1;
@@ -174,5 +174,5 @@ void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_fi
 		*min_color = cy->color;
 		// fill_color(min_color, 255, 0, 0);
 		// *min_color = get_ligth_sphere(cy, cy_dot, *min_color, sc->light);
-	}			
+	}
 }
