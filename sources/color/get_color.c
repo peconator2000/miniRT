@@ -19,7 +19,7 @@ void	get_sphere_param(double *min_t, t_color *min_color, t_figures *sp, t_scene 
 		(*min_t) = t;
 		(*min_color) = sp->color;
 		get_ray_dot(&sp_dot, ray, *(min_t));
-		(*min_color) = get_ligth_sphere(sp, sp_dot, (*min_color), sc->light);
+		(*min_color) = compute_color(sc, sp, ray.op, t);
 	}
 }
 
@@ -34,7 +34,7 @@ void	get_plane_param(double *min_t, t_color *min_color, t_figures *pl, t_scene *
 		(*min_t) = t;
 		(*min_color) = pl->color;
 		get_ray_dot(&pl_dot, ray, *(min_t));
-		(*min_color) = get_ligth_plane(pl, pl_dot, (*min_color), sc->light);
+		(*min_color) = compute_color(sc, pl, ray.op, t);
 	}
 }
 
@@ -56,7 +56,6 @@ t_color get_minimal_color(t_minirt *data, t_point dot)
 		if (elems->type == SPHERE)
 			get_sphere_param(&min_t, &min_color, elems, data->scene, ray);
 		// if (elems->type == CYLINDER)
-			
 		elems = elems->next;
 	}
 	return (min_color);//текущий

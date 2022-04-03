@@ -29,21 +29,17 @@ typedef struct s_image
 
 typedef struct s_minirt
 {
-	void		*mlx; //init
+	void		*mlx;
 	void		*win;
 	t_image		*img;
 	t_scene		*scene;
 }				t_minirt;
 
-double	p_intersect(t_point src_coord, t_point ray, t_figures *plane);
-double	s_intersect(t_point src_coord,t_point ray, t_figures *sphere);
 // Parse
 int			parse(int argc, char **argv, t_minirt *minirt);
-t_minirt	*init();
+t_minirt	*init(void);
 void		init_mlx(t_minirt *minirt);
 
-double		plane_intersect(t_point src_coord,t_point ray, t_figures *figs);
-double		sphere_intersect(t_point src_coord,t_point ray, t_figures *figure);
 // Parse info
 void		parse_resolution(t_minirt *minirt, char **str);
 void		parse_ambient_light(t_minirt *minirt, char **str);
@@ -93,9 +89,6 @@ void		scene_error(char *msg);
 void		terminate(char *msg);
 void		*err_malloc(unsigned int size);
 
-// Utils
-void		free_minirt(t_minirt *minirt);
-
 // Draw
 int			pixel_in_sp(t_sphere *sp, int x, int y);
 void		draw_sphere(t_minirt *data, t_sphere *sp, int wid, int hig);
@@ -106,65 +99,66 @@ int			draw_figures(t_minirt *data);
 int			key_hook(int keycode, t_minirt *data);
 int			cross_icon(int key);
 void		controller(t_minirt *data);
+int			draw_figures(t_minirt *data);
+void		controller(t_minirt *data);
+void		my_mlx_pixel_put(t_image *img, int x, int y, int color);
+void		create_image(t_minirt *data);
 
+// coordinates_transformation
+void		get_scene_point(t_point *res, t_scene *scene, double x, double y);
+void		get_new_basis(t_scene *scene);
 
-int		draw_figures(t_minirt *data);
-void	controller(t_minirt *data);
-void	my_mlx_pixel_put(t_image *img, int x, int y, int color);
-void	create_image(t_minirt *data);
+// vector_moves
+void		vec_equal(t_point *dot1, t_point *dot2);
+void		vec_fill(t_point *dot, double x, double y, double z);
+void		vec_mult_vec(t_point *res, t_point vec1, t_point vec2);
+void		vec_mult_num(t_point *res, double num);
+double		vec_scalar_mult(t_point vec1, t_point vec2);
+
+// coordinats_transformations2
+void		delta_generate(double *delta_x, double *delta_y, t_scene *scene);
+
+// Color
+int			get_color(t_minirt *data, double x_sc, double y_sc);
+void		add_coeficient(double (*rgb)[3], double coef, int color);
+t_color		build_color(int color, double rgb[3]);
+t_color		compute_color(t_scene *scene, t_figures *figure,
+				t_point ray, double dist);
+t_point		get_normal(t_figures *figure, t_point intersect, t_point ray);
+int			check_shadow(t_scene *scene, t_point intersect, t_figures *figure);
+
+// Ray tracing
+void		new_camera_coords(t_point *dot, t_point old, t_camera *cam);
+void		new_basis_coordinates(t_point *dot, t_point old, t_camera *cam);
+
+// Equations
+double		get_discr_sp(t_point cen, t_point ve, double rad);
+double		get_min_root(double dis, t_point cen, t_point ve, double rad);
+
+// Color Light
+t_color		get_minimal_color(t_minirt *data, t_point dot);
+t_color		get_ligth_sphere(t_figures *elem, t_point dot,
+				t_color true_color, t_light *ligth);
+void		sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem, t_point sp_dot, t_light *ligth, t_camera *camera);
+t_color		get_ligth(t_point v1, t_point v2, t_figures *elem, t_color true_color, t_light *light);
+void		camera_diff(t_point *dot, t_camera *cam);
+
+// New basis
+void		new_basis(t_scene *scene);
+void		get_inscreen(t_scene *sc, t_point *dot, double x, double y);
+void		get_new_coords(t_camera *cam, t_point *dot);
+void		fill_color(t_color *col, int r, int g, int b);
+t_color		get_ligth_plane(t_figures *elem, t_point dot,
+				t_color true_color, t_light *ligth);
+double		is_plane(t_ray ray, t_figures *pl);
+void		is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figures *cy);
+t_color		get_ligth_cylinder(t_figures *elem, t_point dot, t_point norm, t_color true_color, t_light *ligth);
+void		get_cy_basis_dot(t_point dot, t_point *new, t_point r, t_point u, t_point d, t_point k);
+void		ray_dir(t_point *res, t_point dot1, t_point dot2);
+double		is_sphere(t_ray ray, t_figures *sp);
+void		ray_fill(t_ray *res, t_point dot1, t_point dot2);
+void		get_ray_dot(t_point *res_dot, t_ray ray, double t_min);
 
 // Utils
 void		free_minirt(t_minirt *minirt);
-
-//coordinates_transformation
-void	get_scene_point(t_point *res, t_scene *scene, double x, double y);
-void	get_new_basis(t_scene *scene);
-
-//vector_moves
-void	vec_equal(t_point *dot1, t_point *dot2);
-void	vec_fill(t_point *dot, double x, double y, double z);
-void	vec_mult_vec(t_point *res, t_point vec1, t_point vec2);
-void	vec_mult_num(t_point *res, double num);
-double	vec_scalar_mult(t_point vec1, t_point vec2);
-
-//coordinats_transformations2
-void delta_generate(double *delta_x, double *delta_y, t_scene *scene);
-
-//get_color
-int get_color(t_minirt *data, double x_sc, double y_sc);
-void	add_coeficient(double (*rgb)[3], double coef, int color);
-t_color	build_color(int color, double rgb[3]);
-t_color	compute_color(t_scene *scene, t_figures *figure, t_point ray, double dist);
-
-//ray_tracing
-void	new_camera_coords(t_point *dot, t_point old, t_camera *cam);
-void	new_basis_coordinates(t_point *dot, t_point old, t_camera *cam);
-
-//equations
-double	get_discr_sp(t_point cen, t_point ve, double rad);
-double	get_min_root(double dis, t_point cen, t_point ve, double rad);
-
-//color_ligth
-t_color get_minimal_color(t_minirt *data, t_point dot);
-t_color get_ligth_sphere(t_figures *elem, t_point dot, t_color true_color, t_light *ligth);
-void sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem, t_point sp_dot, t_light *ligth, t_camera *camera);
-t_color get_ligth(t_point v1, t_point v2, t_figures *elem, t_color true_color, t_light *light);
-
-void camera_diff(t_point *dot, t_camera *cam);
-
-//new_basis
-void new_basis(t_scene *scene);
-void	get_inscreen(t_scene *sc, t_point *dot, double x, double y);
-void get_new_coords(t_camera *cam, t_point *dot);
-void	fill_color(t_color *col, int r, int g, int b);
-t_color get_ligth_plane(t_figures *elem, t_point dot, t_color true_color, t_light *ligth);
-double	is_plane(t_ray ray, t_figures *pl);
-void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figures *cy);
-t_color get_ligth_cylinder(t_figures *elem, t_point dot, t_point norm, t_color true_color, t_light *ligth);
-void get_cy_basis_dot(t_point dot, t_point *new, t_point r, t_point u, t_point d, t_point k);
-void ray_dir(t_point *res, t_point dot1, t_point dot2);
-double	is_sphere(t_ray ray, t_figures *sp);
-void ray_fill(t_ray *res, t_point dot1, t_point dot2);
-void	get_ray_dot(t_point *res_dot, t_ray ray, double t_min);
-
 #endif
