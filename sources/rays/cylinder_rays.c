@@ -112,7 +112,7 @@ int is_valid_cy_param(t_equ *equ)
 	return (1);
 }
 
-double	get_cy_t(t_equ equ, double hei, t_ray new_ray)
+double	get_cy_t(t_equ equ, double hei, t_ray new_ray, t_figures *cy)
 {
 	double t_min;
 
@@ -121,12 +121,14 @@ double	get_cy_t(t_equ equ, double hei, t_ray new_ray)
 	equ.t2 = ((-1) * equ.b - sqrt(equ.discr)) / (2 * equ.a);
 	swap_t(&equ);
 	// printf("t1, t2 = %f , %f\n", equ.t2, equ.t1);
+	cy->in_dot = 0;
 	if (!is_valid_cy_param(&equ))
 		return (-1);
 	t_min = equ.t_min;
 	if (rem_cylinder(new_ray, t_min, hei))
 	{
 		t_min = equ.t2;
+		cy->in_dot = 1;
 	}
 	if (rem_cylinder(new_ray, t_min, hei))
 		return (-1);
@@ -157,7 +159,7 @@ double is_cylinder(t_point o, t_point p, t_figures *cy)
 		return (-1);
 	if (fabs(equ.a) < 0.00001)// крышка
 		return (-1);
-	return (get_cy_t(equ, hei, new_ray));
+	return (get_cy_t(equ, hei, new_ray, cy));
 }
 
 

@@ -27,7 +27,6 @@ SOURCES =	$(shell ls sources/*.c) \
 			$(shell ls sources/draw/*.c) \
 			$(shell ls sources/rays/*.c) \
 			$(shell ls sources/color/*.c) \
-			$(shell ls sources/math_moves/*.c) \
 			$(shell ls sources/new_basis/*.c)
 
 
