@@ -38,6 +38,7 @@ void	get_plane_param(double *min_t, t_color *min_color, t_figures *pl, t_scene *
 	}
 }
 
+
 void	get_cylinder_param(double *min_t, t_color *min_color, t_figures *cy, t_scene *sc, t_point dot)
 {
 	t_ray		new_ray;
@@ -48,14 +49,15 @@ void	get_cylinder_param(double *min_t, t_color *min_color, t_figures *cy, t_scen
 	t = is_cylinder(sc->camera->pos, dot, cy);
 	if (((*min_t) == -1 || t < *min_t) && t > 1)
 	{
-		get_cy_basis_dot(sc->camera->pos, &new_ray.o, cy, cy->fig.cy.coord);
-		get_cy_basis_dot(dot, &new_ray.o, cy, cy->fig.cy.coord);
+		get_cy_basis_dot(sc->camera->pos, &(new_ray.o), cy, cy->fig.cy.coord);
+		get_cy_basis_dot(dot, &(new_ray.p), cy, cy->fig.cy.coord);
+		ray_fill(&new_ray, new_ray.o, new_ray.p);
 		(*min_t) = t;
 		(*min_color) = cy->color;
 		get_ray_dot(&cy_dot, new_ray, *(min_t));
 		vec_fill(&norm, cy_dot.x, cy_dot.y, 0);
 		normalize2(&norm, norm);
-		// (*min_color) = get_ligth_cylinder(cy, cy_dot, norm, (*min_color), sc->light);
+		(*min_color) = get_ligth_cylinder(cy, cy_dot, norm, (*min_color), sc->light);
 	}
 }
 
@@ -77,8 +79,8 @@ t_color get_minimal_color(t_minirt *data, t_point dot)
 		if (elems->type == SPHERE)
 			get_sphere_param(&min_t, &min_color, elems, data->scene, ray);
 		if (elems->type == CYLINDER)
-			get_cylinder_param(&min_t, &min_color, elems, data->scene, dot);//new
 			// is_cylinder(data->scene, dot, &min_color, &min_t, elems);//old
+			get_cylinder_param(&min_t, &min_color, elems, data->scene, dot);//new
 		elems = elems->next;
 	}
 	return (min_color);//текущий
