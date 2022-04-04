@@ -15,7 +15,7 @@
 # define PLANE		1
 # define SPHERE		2
 # define CYLINDER	3
-# define STEP		1
+# define STEP		2
 # define EPSILON	0.0001
 
 t_point aha;
@@ -124,8 +124,8 @@ void		delta_generate(double *delta_x, double *delta_y, t_scene *scene);
 int			get_color(t_minirt *data, double x_sc, double y_sc);
 void		add_coeficient(double (*rgb)[3], double coef, int color);
 t_color		build_color(int color, double rgb[3]);
-t_color		compute_color(t_scene *scene, t_figures *figure,
-				t_point ray, double dist);
+t_color	compute_color(t_scene *scene, t_figures *figure,
+		t_point ray, double dist, t_point intersect);
 t_point		get_normal(t_figures *figure, t_point intersect, t_point ray);
 int			check_shadow(t_scene *scene, t_point intersect, t_figures *figure);
 
@@ -182,7 +182,6 @@ void delta_generate(double *delta_x, double *delta_y, t_scene *scene);
 int get_color(t_minirt *data, double x_sc, double y_sc);
 void	add_coeficient(double (*rgb)[3], double coef, int color);
 t_color	build_color(int color, double rgb[3]);
-t_color	compute_color(t_scene *scene, t_figures *figure, t_point ray, double dist);
 
 //ray_tracing
 void	new_camera_coords(t_point *dot, t_point old, t_camera *cam);
@@ -224,6 +223,6 @@ double is_cylinder(t_point o, t_point p, t_figures *cy);
 //old
 // void get_cy_basis_dot(t_point dot, t_point *new, t_point r, t_point u, t_point d, t_point k);
 // void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figures *cy);
-
+t_color	compute_cy_color(t_scene *scene, t_figures *figure,t_point ray, double dist, t_point norm, t_point);
 
 #endif

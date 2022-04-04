@@ -12,7 +12,7 @@ void	sphere_param(double *min_t, t_color *min_c,
 		(*min_t) = t;
 		(*min_c) = sp->color;
 		get_ray_dot(&sp_dot, ray, *(min_t));
-		(*min_c) = compute_color(sc, sp, ray.op, t);
+		(*min_c) = compute_color(sc, sp, ray.op, t, sp_dot);
 	}
 }
 
@@ -28,7 +28,7 @@ void	plane_param(double *min_t, t_color *min_color,
 		(*min_t) = t;
 		(*min_color) = pl->color;
 		get_ray_dot(&pl_dot, ray, *(min_t));
-		(*min_color) = compute_color(sc, pl, ray.op, t);
+		(*min_color) = compute_color(sc, pl, ray.op, t, pl_dot);
 	}
 }
 
@@ -39,6 +39,7 @@ void	cylinder_param(double *min_t, t_color *min_color,
 	t_point		cy_dot;
 	t_point		norm;
 	double		t;
+	t_ray		ray;
 
 	t = is_cylinder(sc->camera->pos, dot, cy);
 	if (((*min_t) == -1 || t < *min_t) && t > 1)
@@ -51,7 +52,9 @@ void	cylinder_param(double *min_t, t_color *min_color,
 		get_ray_dot(&cy_dot, new_ray, *(min_t));
 		vec_fill(&norm, cy_dot.x, cy_dot.y, 0);
 		normalize2(&norm, norm);
-		(*min_color) = get_ligth_cylinder(cy, cy_dot, norm, (*min_color), sc->light);
+		// (*min_color) = get_ligth_cylinder(cy, cy_dot, norm, (*min_color), sc->light);
+		ray_fill(&ray, sc->camera->pos, dot);
+		(*min_color) = compute_cy_color(sc, cy, ray.op, t, norm, cy_dot);
 	}
 }
 

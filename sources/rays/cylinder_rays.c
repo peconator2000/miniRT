@@ -112,6 +112,17 @@ int is_valid_cy_param(t_equ *equ)
 	return (1);
 }
 
+void in_dot_checker(t_figures *cy, t_ray new_ray, double hei)
+{
+	t_point cam;
+
+	cam = new_ray.o;
+	if (sqrt(cam.x * cam.x + cam.y * cam.y) >= cy->fig.cy.diameter * (0.5))
+		return ;
+	(void)hei;
+	cy->in_dot = 1;
+}
+
 double	get_cy_t(t_equ equ, double hei, t_ray new_ray, t_figures *cy)
 {
 	double t_min;
@@ -122,6 +133,7 @@ double	get_cy_t(t_equ equ, double hei, t_ray new_ray, t_figures *cy)
 	swap_t(&equ);
 	// printf("t1, t2 = %f , %f\n", equ.t2, equ.t1);
 	cy->in_dot = 0;
+	in_dot_checker(cy, new_ray, hei);
 	if (!is_valid_cy_param(&equ))
 		return (-1);
 	t_min = equ.t_min;
@@ -150,6 +162,7 @@ double is_cylinder(t_point o, t_point p, t_figures *cy)
 	get_cy_basis_dot(p, &(new_ray.p), cy, k);
 	get_cy_basis_dot(o, &(new_ray.o), cy, k);
 	ray_fill(&new_ray, new_ray.o, new_ray.p);
+	normalize2(&(new_ray.op), new_ray.op);
 	equ.a = new_ray.op.x * new_ray.op.x + new_ray.op.y * new_ray.op.y;
 	equ.b = 2 * new_ray.op.x * new_ray.o.x + 2 * new_ray.op.y * new_ray.o.y;
 	equ.c = new_ray.o.x * new_ray.o.x + new_ray.o.y * new_ray.o.y - rad * rad;
