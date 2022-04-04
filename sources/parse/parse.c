@@ -36,19 +36,25 @@ int	parse(int argc, char **argv, t_minirt *minirt)
 {
 	char		*line;
 	int			fd;
+	int			read_status;
 	t_figures	*figs;
 
 	figs = minirt->scene->figs;
+	read_status = -1;
 	if (argc != 2)
 		terminate("Usage ./miniRt *filename*.rt");
 	fd = open(argv[1], O_RDONLY);
 	if (fd <= 0)
 		terminate("Can't open file");
-	while (get_next_line(fd, &line) > 0)
+	read_status = get_next_line(fd, &line);
+	if (read_status == -1)
+		terminate("Can't open file");
+	while (read_status > 0)
 	{
 		parse_element(minirt, &figs, line);
 		free(line);
 		line = NULL;
+		read_status = get_next_line(fd, &line);
 	}
 	minirt->scene->figs = figs;
 	close(fd);
