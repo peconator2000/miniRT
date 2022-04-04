@@ -65,6 +65,7 @@ typedef struct s_figures
 	t_point				r;
 	t_point				u;
 	t_point				d;
+	int					in_dot;
 	struct s_figures	*next;
 }				t_figures;
 

@@ -33,3 +33,11 @@ t_color	build_color(int color, double rgb[3])
 		b = 255;
 	return (create_color(r, g, b));
 }
+
+void	fill_color(t_color *col, int r, int g, int b)
+{
+	(*col).r = r;
+	(*col).g = g;
+	(*col).b = b;
+	(*col).mix = (((*col).r << 16) | ((*col).g << 8) | (*col).b);
+}

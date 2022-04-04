@@ -1,69 +1,104 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray_tracing.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/04 19:01:08 by vellie            #+#    #+#             */
+/*   Updated: 2022/04/04 22:57:07 by vellie           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
-//sphere_ray(&min_t, &min_color, dot, elems->fig.sp);
-// void sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem, t_point sp_dot, t_light *ligth, t_camera *cam)
-// {
-// 	double		cur_t;
-// 	double		discr;
-// 	double		rad;
-// 	static int flag;
-// 	// t_point		sp_dot;
-
-// 	rad = elem->fig.sp.diameter * 0.5;
-// 	if (!flag)
-// 	{
-// 		printf("rad = %f, centre = [%f, %f, %f]\n", rad, elem->fig.sp.coord.x, elem->fig.sp.coord.y, elem->fig.sp.coord.z);
-// 		printf("first dot = [%f, %f, %f]\n", dot.x, dot.y, dot.z);
-// 		flag++;
-// 	}
-// 	// printf("dot = [%f, %f, %f]\n", dot.x, dot.y, dot.z);
-// 	// t_point newdot;
-// 	// newdot.x = cam->pos.x - elem->fig.sp.coord.x;
-// 	// newdot.y = cam->pos.y - elem->fig.sp.coord.y;
-// 	// newdot.z = cam->pos.z - elem->fig.sp.coord.z;
-// 	// static double	delta_x;
-// 	// delta_x = cam->view_size[0] * pow(800, -1);
-// 	// dot.x *= pow(delta_x, -1);
-// 	// dot.y *= pow(delta_x, -1);
-// 	// dot.z *= pow(delta_x, -1);
-// 	dot.x -= cam->pos.x;
-// 	dot.y -= cam->pos.y;
-// 	dot.z -= cam->pos.z;
-// 	discr = get_discr_sp(cam->pos, dot, rad);
-// 	// printf("centre = (%f, %f, %f)\n", elem->fig.sp.coord.x,  elem->fig.sp.coord.y,  elem->fig.sp.coord.z);
-// 	// printf("discr = %f\n", discr);
-// 	if (discr < 0)
-// 	{
-// 		// printf("blc\n");
-// 		return ;
-// 	}
-// 	cur_t = get_min_root(discr, elem->fig.sp.coord, dot, rad);
-// 	// printf("rad = [%f, %f, %f] cur_t = %f\n", elem->fig.sp.coord.x, elem->fig.sp.coord.y, elem->fig.sp.coord.z, cur_t);
-// 	if ((*min_t == -1 || cur_t < *min_t))// && cur_t > 1)
-// 	{
-// 		*min_t = cur_t;
-// 		*min_color = elem->color;
-// 		vec_mult_num(&sp_dot, (*min_t));
-// 		// printf("GET DOT = [%f, %f, %f]\n", sp_dot.x, sp_dot.y, sp_dot.z);
-// 		(void)ligth;
-// 		*min_color = get_ligth_sphere(elem, sp_dot, *min_color, ligth);
-// 	}
-// }
-
-int	plane_ray(int *min_t, int *min_color, t_point dot, t_plane *pl)
+void	sphere_param(double *min_t, t_color *min_c,
+	t_figures *sp, t_scene *sc, t_ray ray)
 {
-	(void)min_t;
-	(void)min_color;
-	(void)dot;
-	(void)pl;
-	return (0);
+	t_point		sp_dot;
+	double		t;
+
+	t = is_sphere(ray, sp);
+	if (((*min_t) == -1 || t < *min_t) && t != -1)
+	{
+		(*min_t) = t;
+		(*min_c) = sp->color;
+		get_ray_dot(&sp_dot, ray, *(min_t));
+		(*min_c) = compute_color(sc, sp, ray.op, t);
+	}
 }
 
-int			cylinder_ray(int *min_t, int *min_color, t_point dot, t_cylinder *cy)
+void	plane_param(double *min_t, t_color *min_color,
+	t_figures *pl, t_scene *sc, t_ray ray)
 {
-	(void)min_t;
-	(void)min_color;
-	(void)dot;
-	(void)cy;
-	return (0);
+	t_point		pl_dot;
+	double		t;
+
+	t = is_plane(ray, pl);
+	if (((*min_t) == -1 || t < *min_t) && t > 1)
+	{
+		(*min_t) = t;
+		(*min_color) = pl->color;
+		get_ray_dot(&pl_dot, ray, *(min_t));
+		(*min_color) = compute_color(sc, pl, ray.op, t);
+	}
+}
+
+void	cylinder_param(double *min_t, t_color *min_color,
+	t_figures *cy, t_scene *sc, t_point dot)
+{
+	t_ray		new_ray;
+	t_point		cy_dot;
+	t_point		norm;
+	double		t;
+
+	t = is_cylinder(sc->camera->pos, dot, cy);
+	if (((*min_t) == -1 || t < *min_t) && t > 1)
+	{
+		get_cy_basis_dot(sc->camera->pos, &(new_ray.o), cy, cy->fig.cy.coord);
+		get_cy_basis_dot(dot, &(new_ray.p), cy, cy->fig.cy.coord);
+		ray_fill(&new_ray, new_ray.o, new_ray.p);
+		(*min_t) = t;
+		(*min_color) = cy->color;
+		get_ray_dot(&cy_dot, new_ray, *(min_t));
+		vec_fill(&norm, cy_dot.x, cy_dot.y, 0);
+		normalize2(&norm, norm);
+		(*min_color) = get_ligth_cylinder(cy, cy_dot, norm, (*min_color), sc->light);
+	}
+}
+
+t_color	get_minimal_color(t_minirt *data, t_point dot)
+{
+	double		min_t;
+	t_color		min_color;
+	t_figures	*elems;
+	t_ray		ray;
+
+	elems = data->scene->figs;
+	min_t = -1;
+	fill_color(&min_color, 0, 0, 0);
+	while (elems)
+	{
+		ray_fill(&ray, data->scene->camera->pos, dot);
+		if (elems->type == PLANE)
+			plane_param(&min_t, &min_color, elems,
+				data->scene, ray);
+		if (elems->type == SPHERE)
+			sphere_param(&min_t, &min_color, elems, data->scene, ray);
+		if (elems->type == CYLINDER)
+			cylinder_param(&min_t, &min_color, elems, data->scene, dot);
+		elems = elems->next;
+	}
+	return (min_color);
+}
+
+int	get_color(t_minirt *data, double x_sc, double y_sc)
+{
+	t_color	color;
+	t_point	dot;
+
+	get_inscreen(data->scene, &dot, x_sc, y_sc);
+	get_new_coords(data->scene->camera, &dot);
+	color = get_minimal_color(data, dot);
+	return (color.mix);
 }

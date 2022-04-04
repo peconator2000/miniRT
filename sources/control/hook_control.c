@@ -1,4 +1,58 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hook_control.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/04 18:44:47 by vellie            #+#    #+#             */
+/*   Updated: 2022/04/04 18:45:10 by vellie           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
+
+static void	back_forth(int keycode, t_minirt *data)
+{
+	if (keycode == 125)
+	{
+		data->scene->camera->pos.z -= STEP;
+		draw_figures(data);
+	}
+	else if (keycode == 126)
+	{
+		data->scene->camera->pos.z += STEP;
+		draw_figures(data);
+	}
+}
+
+static void	rigth_left(int keycode, t_minirt *data)
+{
+	if (keycode == 124)
+	{
+		data->scene->camera->pos.x += STEP;
+		draw_figures(data);
+	}
+	else if (keycode == 123)
+	{
+		data->scene->camera->pos.x -= STEP;
+		draw_figures(data);
+	}
+}
+
+static void	up_down(int keycode, t_minirt *data)
+{
+	if (keycode == 13)
+	{
+		data->scene->camera->pos.y += STEP;
+		draw_figures(data);
+	}
+	else if (keycode == 1)
+	{
+		data->scene->camera->pos.y -= STEP;
+		draw_figures(data);
+	}
+}
 
 int	key_hook(int keycode, t_minirt *data)
 {
@@ -8,47 +62,9 @@ int	key_hook(int keycode, t_minirt *data)
 		free_minirt(data);
 		exit(0);
 	}
-	else if (keycode == 124)//rigth
-	{
-		data->scene->camera->pos.x += STEP;
-		printf("now camer = (%f, %f, %f\n)", data->scene->camera->pos.x, data->scene->camera->pos.y, data->scene->camera->pos.z);
-		printf("cen = (%f, %f, %f\n)", data->scene->figs->fig.sp.coord.x, data->scene->figs->fig.sp.coord.y, data->scene->figs->fig.sp.coord.z);
-		draw_figures(data);
-	}
-	else if (keycode == 123)//left
-	{
-		data->scene->camera->pos.x -= STEP;
-		printf("now camer = (%f, %f, %f\n)", data->scene->camera->pos.x, data->scene->camera->pos.y, data->scene->camera->pos.z);
-		printf("cen = (%f, %f, %f\n)", data->scene->figs->fig.sp.coord.x, data->scene->figs->fig.sp.coord.y, data->scene->figs->fig.sp.coord.z);
-		draw_figures(data);
-	}
-	else if (keycode == 125)//down
-	{
-		data->scene->camera->pos.z -= STEP;
-		printf("now camer = (%f, %f, %f\n)", data->scene->camera->pos.x, data->scene->camera->pos.y, data->scene->camera->pos.z);
-		printf("cen = (%f, %f, %f\n)", data->scene->figs->fig.sp.coord.x, data->scene->figs->fig.sp.coord.y, data->scene->figs->fig.sp.coord.z);
-		draw_figures(data);
-	}
-	else if (keycode == 126)//up
-	{
-		data->scene->camera->pos.z += STEP;
-		printf("now camer = (%f, %f, %f\n)", data->scene->camera->pos.x, data->scene->camera->pos.y, data->scene->camera->pos.z);
-		draw_figures(data);
-	}
-	else if (keycode == 13)
-	{
-		data->scene->camera->pos.y += STEP;
-		printf("now camer = (%f, %f, %f\n)", data->scene->camera->pos.x, data->scene->camera->pos.y, data->scene->camera->pos.z);
-		printf("cen = (%f, %f, %f\n)", data->scene->figs->fig.sp.coord.x, data->scene->figs->fig.sp.coord.y, data->scene->figs->fig.sp.coord.z);
-		draw_figures(data);
-	}
-	else if (keycode == 1)
-	{
-		data->scene->camera->pos.y -= STEP;
-		printf("now camer = (%f, %f, %f\n)", data->scene->camera->pos.x, data->scene->camera->pos.y, data->scene->camera->pos.z);
-		printf("cen = (%f, %f, %f\n)", data->scene->figs->fig.sp.coord.x, data->scene->figs->fig.sp.coord.y, data->scene->figs->fig.sp.coord.z);
-		draw_figures(data);
-	}
+	back_forth(keycode, data);
+	rigth_left(keycode, data);
+	up_down(keycode, data);
 	return (1);
 }
 
@@ -57,12 +73,4 @@ int	cross_icon(int key)
 	(void)key;
 	exit(0);
 	return (0);
-}
-
-void	controller(t_minirt *data)
-{
-	draw_figures(data);
-	mlx_hook(data->win, 17, 0, &cross_icon, (void *)data);
-	mlx_key_hook(data->win, &key_hook, (void *)data);
-	mlx_loop(data->mlx);
 }
