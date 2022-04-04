@@ -78,9 +78,9 @@ int rem_cylinder(t_ray ray, double t_min, double hei)
 	t_point cy_dot;
 
 	get_ray_dot(&cy_dot, ray, t_min);
-	if (cy_dot.z - (-0.5) * hei < 0.0001 || cy_dot.z - hei * (0.5) < 0.0001)
-		return (0);
-	return (1);
+	if (cy_dot.z < (-0.5) * hei || cy_dot.z > hei * (0.5))
+		return (1);
+	return (0);
 }
 
 int is_valid_cy_param(t_equ *equ)
@@ -120,8 +120,7 @@ double	get_cy_t(t_equ equ, double hei, t_ray new_ray)
 	equ.t1 = ((-1) * equ.b + sqrt(equ.discr)) / (2 * equ.a);
 	equ.t2 = ((-1) * equ.b - sqrt(equ.discr)) / (2 * equ.a);
 	swap_t(&equ);
-	// printf("t1 = %f\n", equ.t1);
-	// printf("t2 = %f\n", equ.t2);
+	// printf("t1, t2 = %f , %f\n", equ.t2, equ.t1);
 	if (!is_valid_cy_param(&equ))
 		return (-1);
 	t_min = equ.t_min;
@@ -288,7 +287,6 @@ double is_cylinder(t_point o, t_point p, t_figures *cy)
 // 	b = 2 * new_op.x * new_o.x + 2 * new_op.y * new_o.y;
 // 	c = new_o.x * new_o.x + new_o.y * new_o.y - rad * rad;
 // 	discr = b * b - 4 * a * c;
-// 	printf("(a, b, c, discr) = (%f, %f, %f, %f)\n", a, b, c, discr);
 // 	if (discr < 0)
 // 		return ;
 // 	if (fabs(a) < 0.00001)// цилиндр повернут
@@ -303,17 +301,16 @@ double is_cylinder(t_point o, t_point p, t_figures *cy)
 // 		// printf("hey\n");
 // 		if (new_o.x * new_o.x + new_o.y * new_o.y - rad * rad > 0.00001)
 // 			return ;
-// 		// printf("i am here\n");
+// 		printf("i am here\n");
 // 		vec_fill(&norm, 0, 0, cy_dot.z);
 // 		normalize2(&norm, norm);
-// 		// printf("dot = (%f, %f, %f) norm = (%f, %f, %f)\n", new_o.x, new_o.y, new_o.z, norm.x, norm.y, norm.z);
+// 		printf("dot = (%f, %f, %f) norm = (%f, %f, %f)\n", new_o.x, new_o.y, new_o.z, norm.x, norm.y, norm.z);
 // 		return ;
 // 	}
 // 	else
 // 	{
 // 		t1 = ((-1) * b + sqrt(discr)) / (2 * a);
 // 		t2 = ((-1) * b - sqrt(discr)) / (2 * a);
-// 		printf("t1, t2 = %f , %f\n", t1, t2);
 // 		if (t1 >= 1 || t2 >= 1)
 // 		{
 // 			if (t1 >= 1 && t2 >= 1)

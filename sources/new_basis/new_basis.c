@@ -19,7 +19,10 @@ void	get_r(t_camera *cam)
 {
 	t_point tmp;
 
-	vec_fill(&tmp, 0, 1, 0);
+	if (cam->dir.x == 0 && cam->dir.z == 0)
+		vec_fill(&tmp, -1, 0, 0);
+	else
+		vec_fill(&tmp, 0, 1, 0);
 	if (cam->dir.y == 1 || cam->dir.y == -1)
 	{
 		if (cam->dir.y == 1)
