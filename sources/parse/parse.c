@@ -32,7 +32,6 @@ static void	read_file(t_minirt *minirt, t_figures **figs, int fd)
 {
 	char		*line;
 	int			read_status;
-	t_figures	*figs;
 
 	*figs = minirt->scene->figs;
 	read_status = -1;
@@ -57,7 +56,6 @@ static void	read_file(t_minirt *minirt, t_figures **figs, int fd)
 
 int	parse(int argc, char **argv, t_minirt *minirt)
 {
-	char		*line;
 	int			fd;
 	int			read_status;
 	t_figures	*figs;

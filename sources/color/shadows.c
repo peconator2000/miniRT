@@ -23,6 +23,13 @@ static void	get_dist_to_obj(t_scene *scene, t_point ray,
 			ray_fig.p = figs->fig.sp.coord;
 			dist = is_plane(ray_fig, figs);
 		}
+		else if (figs->type == CYLINDER)
+		{
+			ray_fig.p = figs->fig.cy.coord;
+			dist = is_cylinder(ray_fig.o, ray_fig.p, figs);
+			printf("dist = %f\n", dist);
+			// dist = EPSILON;
+		}
 		if (dist > EPSILON && dist < *closest_intersection)
 			*closest_intersection = dist;
 		figs = figs->next;

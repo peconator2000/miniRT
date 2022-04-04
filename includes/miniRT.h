@@ -18,6 +18,8 @@
 # define STEP		1
 # define EPSILON	0.0001
 
+t_point aha;
+int		flag;
 typedef struct s_image
 {
 	void	*img;

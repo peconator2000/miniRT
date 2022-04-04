@@ -57,7 +57,9 @@ void	get_cylinder_param(double *min_t, t_color *min_color, t_figures *cy, t_scen
 		get_ray_dot(&cy_dot, new_ray, *(min_t));
 		vec_fill(&norm, cy_dot.x, cy_dot.y, 0);
 		normalize2(&norm, norm);
-		(*min_color) = get_ligth_cylinder(cy, cy_dot, norm, (*min_color), sc->light);
+
+		aha = norm;
+		(*min_color) = compute_color(sc, cy, new_ray.op, t);
 	}
 }
 

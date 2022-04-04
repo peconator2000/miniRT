@@ -157,7 +157,7 @@ double is_cylinder(t_point o, t_point p, t_figures *cy)
 		return (-1);
 	if (fabs(equ.a) < 0.00001)// крышка
 		return (-1);
-	return (get_cy_t(equ, hei, new_ray));		
+	return (get_cy_t(equ, hei, new_ray));
 }
 
 
@@ -368,5 +368,5 @@ double is_cylinder(t_point o, t_point p, t_figures *cy)
 // 		*min_color = cy->color;
 // 		// fill_color(min_color, 255, 0, 0);
 // 		*min_color = get_ligth_cylinder(cy, cy_dot, norm, *min_color, sc->light);
-// 	// }			
+// 	// }
 // }
