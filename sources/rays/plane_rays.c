@@ -25,3 +25,13 @@ double	is_plane(t_ray ray, t_figures *pl)
 	
 	return (get_pl_t(n, ray, k));
 }
+
+double	is_cy_plane(t_ray ray, t_figures *pl, t_point k)
+{
+	t_point n;
+	t_point r;
+
+	get_cy_basis_dot(pl->fig.pl.coord, &r, pl, k);
+	get_cy_basis_dot(pl->no_vec, &n, pl, k);
+	return (get_pl_t(n, ray, r));
+}

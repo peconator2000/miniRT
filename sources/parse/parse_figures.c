@@ -12,6 +12,7 @@ void	parse_cylinder(t_figures **figs, char **str, t_scene *scene)
 	current_fig->no_vec = normalize(parse_point3(str));
 	current_fig->fig.cy.diameter = str_to_double(str);
 	current_fig->fig.cy.height = str_to_double(str);
+	current_fig->in_dot = 0;
 	current_fig->color = parse_color(str);
 }
 
@@ -27,6 +28,7 @@ void	parse_sphere(t_figures **figs, char **str, t_scene *scene)
 	current_fig->fig.sp.coord = parse_point3(str);
 	current_fig->fig.sp.diameter = str_to_double(str);
 	current_fig->color = parse_color(str);
+	current_fig->in_dot = 0;
 	// *figs->scene = scene;
 }
 
@@ -41,4 +43,5 @@ void	parse_plane(t_figures **figs, char **str, t_scene *scene)
 	current_fig->fig.pl.coord = parse_point3(str);
 	current_fig->no_vec = normalize(parse_point3(str));
 	current_fig->color = parse_color(str);
+	current_fig->in_dot = 0;
 }

@@ -70,3 +70,24 @@ double	is_sphere(t_ray ray, t_figures *sp)
 	return (equ.t_min);
 }
 
+double	is_cy_sphere(t_ray ray, t_figures *sp, t_point k)
+{
+	t_point	s;
+	t_equ	equ;
+	double	rad;
+
+	// s = sp->fig.sp.coord;//центр сферы
+	get_cy_basis_dot(sp->fig.sp.coord, &s, sp, k);
+	rad = sp->fig.sp.diameter * 0.5;//радиус
+	equ.t_min = -1;
+	equ.a = ray.op.x * ray.op.x + ray.op.y * ray.op.y +  ray.op.z *  ray.op.z;
+	equ.b = 2 * (ray.op.x * (ray.o.x - s.x) +  ray.op.y * (ray.o.y - s.y) +  ray.op.z * (ray.o.z - s.z));
+	equ.c = ((ray.o.x - s.x) * (ray.o.x - s.x) + (ray.o.y - s.y) * (ray.o.y - s.y) + (ray.o.z - s.z) * (ray.o.z - s.z) - rad * rad);
+	equ.discr = equ.b * equ.b - 4 * equ.a * equ.c;
+	equ.t1 = (equ.b * (-1) + sqrt(equ.discr)) / (2 * equ.a);
+	equ.t2 = (equ.b * (-1) - sqrt(equ.discr)) / (2 * equ.a);
+	if (!is_valid_param(&equ))
+		return (-1);
+	return (equ.t_min);
+}
+

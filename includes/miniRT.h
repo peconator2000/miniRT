@@ -124,10 +124,8 @@ void		delta_generate(double *delta_x, double *delta_y, t_scene *scene);
 int			get_color(t_minirt *data, double x_sc, double y_sc);
 void		add_coeficient(double (*rgb)[3], double coef, int color);
 t_color		build_color(int color, double rgb[3]);
-t_color		compute_color(t_scene *scene, t_figures *figure,
-				t_point ray, double dist);
 t_point		get_normal(t_figures *figure, t_point intersect, t_point ray);
-int			check_shadow(t_scene *scene, t_point intersect, t_figures *figure);
+int			check_shadow(t_scene *scene, t_ray ray, t_figures *figure);
 
 // Ray tracing
 void		new_camera_coords(t_point *dot, t_point old, t_camera *cam);
@@ -139,10 +137,9 @@ double		get_min_root(double dis, t_point cen, t_point ve, double rad);
 
 // Color Light
 t_color		get_minimal_color(t_minirt *data, t_point dot);
-t_color		get_ligth_sphere(t_figures *elem, t_point dot,
-				t_color true_color, t_light *ligth);
+t_color		get_ligth_sphere(t_figures *elem, t_point dot,	t_color true_color, t_light *ligth, t_minirt *data);
 void		sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem, t_point sp_dot, t_light *ligth, t_camera *camera);
-t_color		get_ligth(t_point v1, t_point v2, t_figures *elem, t_color true_color, t_light *light);
+
 void		camera_diff(t_point *dot, t_camera *cam);
 
 // New basis
@@ -150,11 +147,10 @@ void		new_basis(t_scene *scene);
 void		get_inscreen(t_scene *sc, t_point *dot, double x, double y);
 void		get_new_coords(t_camera *cam, t_point *dot);
 void		fill_color(t_color *col, int r, int g, int b);
-t_color		get_ligth_plane(t_figures *elem, t_point dot,
-				t_color true_color, t_light *ligth);
+t_color		get_ligth_plane(t_figures *elem, t_point dot, t_color true_color, t_light *ligth, t_minirt *data);
 double		is_plane(t_ray ray, t_figures *pl);
 // void		is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figures *cy);
-t_color		get_ligth_cylinder(t_figures *elem, t_point dot, t_point norm, t_color true_color, t_light *ligth);
+t_color get_ligth_cylinder(t_figures *elem, t_point dot, t_ray norm, t_color true_color, t_light *ligth, t_minirt *data);
 // void		get_cy_basis_dot(t_point dot, t_point *new, t_point r, t_point u, t_point d, t_point k);
 void		ray_dir(t_point *res, t_point dot1, t_point dot2);
 double		is_sphere(t_ray ray, t_figures *sp);
@@ -182,7 +178,7 @@ void delta_generate(double *delta_x, double *delta_y, t_scene *scene);
 int get_color(t_minirt *data, double x_sc, double y_sc);
 void	add_coeficient(double (*rgb)[3], double coef, int color);
 t_color	build_color(int color, double rgb[3]);
-t_color	compute_color(t_scene *scene, t_figures *figure, t_point ray, double dist);
+
 
 //ray_tracing
 void	new_camera_coords(t_point *dot, t_point old, t_camera *cam);
@@ -194,9 +190,8 @@ double	get_min_root(double dis, t_point cen, t_point ve, double rad);
 
 //color_ligth
 t_color get_minimal_color(t_minirt *data, t_point dot);
-t_color get_ligth_sphere(t_figures *elem, t_point dot, t_color true_color, t_light *ligth);
 void sphere_ray(double *min_t, t_color *min_color, t_point dot, t_figures *elem, t_point sp_dot, t_light *ligth, t_camera *camera);
-t_color get_ligth(t_point v1, t_point v2, t_figures *elem, t_color true_color, t_light *light);
+// t_color get_ligth(t_point v1, t_point v2, t_figures *elem, t_color true_color, t_light *light);
 
 void camera_diff(t_point *dot, t_camera *cam);
 
@@ -205,9 +200,9 @@ void new_basis(t_scene *scene);
 void	get_inscreen(t_scene *sc, t_point *dot, double x, double y);
 void get_new_coords(t_camera *cam, t_point *dot);
 void	fill_color(t_color *col, int r, int g, int b);
-t_color get_ligth_plane(t_figures *elem, t_point dot, t_color true_color, t_light *ligth);
+// t_color get_ligth_plane(t_figures *elem, t_point dot, t_color true_color, t_light *ligth);
 double	is_plane(t_ray ray, t_figures *pl);
-t_color get_ligth_cylinder(t_figures *elem, t_point dot, t_point norm, t_color true_color, t_light *ligth);
+// t_color get_ligth_cylinder(t_figures *elem, t_point dot, t_point norm, t_color true_color, t_light *ligth);
 void ray_dir(t_point *res, t_point dot1, t_point dot2);
 double	is_sphere(t_ray ray, t_figures *sp);
 void ray_fill(t_ray *res, t_point dot1, t_point dot2);
@@ -224,6 +219,14 @@ double is_cylinder(t_point o, t_point p, t_figures *cy);
 //old
 // void get_cy_basis_dot(t_point dot, t_point *new, t_point r, t_point u, t_point d, t_point k);
 // void is_cylinder(t_scene *sc, t_point p, t_color *min_color, double *min_t, t_figures *cy);
+t_color	compute_cy_color(t_scene *scene, t_figures *figure, t_ray ray, double dist, t_point norm, t_point intersect);
+t_color	compute_color(t_scene *scene, t_figures *figure, t_ray ray, double dist, t_point norm, t_point intersect);
+void back_world_basis(t_point *dot, t_figures *fig);
+
+
+t_color get_ligth(t_ray v1, t_ray v2, t_figures *elem, t_color true_color, t_light *light, t_minirt *data);
+double	is_cy_sphere(t_ray ray, t_figures *sp, t_point k);
+double	is_cy_plane(t_ray ray, t_figures *pl, t_point k);
 
 
 #endif

@@ -13,20 +13,43 @@ static double	get_specular(t_scene *scene, t_point normal, t_point intersect)
 }
 
 t_color	compute_color(t_scene *scene, t_figures *figure,
-		t_point ray, double dist)
+		t_ray ray, double dist, t_point normal, t_point dot)
 {
-	t_point	intersect;
-	t_point	normal;
-	t_point	direction;
+	t_ray	direction;
 	double	rgb[3];
 
 	ft_memset(rgb, 0, 3 * sizeof(double));
-	intersect = vector_add(scene->camera->pos, vector_nmultiply(ray, dist));
-	normal = get_normal(figure, intersect, ray);
-	direction = normalize(vector_subtract(scene->light->coord, intersect));
+	(void)ray;
+	(void)dist;
+	ray_fill(&direction, dot, scene->light->coord);
 	add_coeficient(&rgb, scene->a_light, scene->al_color.mix);
-	if (get_dot(normal, direction) > 0
-		&& !check_shadow(scene, intersect, figure))
+	if (get_dot(normal, direction.op) > 0 && !figure->in_dot && !check_shadow(scene, direction, figure))
+	{
+		add_coeficient(&rgb, vcos(normal, direction.op) * scene->light->bri,
+			scene->light->color.mix);
+		add_coeficient(&rgb, get_specular(scene, normal, dot),
+			scene->light->color.mix);
+	}
+	return (build_color(figure->color.mix, rgb));
+}
+
+t_color	compute_cy_color(t_scene *scene, t_figures *figure,
+		t_ray ray, double dist, t_point norm, t_point intersect)
+{
+	// t_point	intersect;
+	t_point	normal;
+	t_point	direction;
+	double	rgb[3];
+	t_point new_lig;
+
+	ft_memset(rgb, 0, 3 * sizeof(double));
+	normal = norm;
+	(void)ray;
+	(void)dist;
+	get_cy_basis_dot(scene->light->coord, &new_lig, figure, figure->fig.cy.coord);
+	direction = normalize(vector_subtract(new_lig, intersect));
+	add_coeficient(&rgb, scene->a_light, scene->al_color.mix);
+	if (!figure->in_dot)//&& !check_shadow(scene, intersect, figure))
 	{
 		add_coeficient(&rgb, vcos(normal, direction) * scene->light->bri,
 			scene->light->color.mix);

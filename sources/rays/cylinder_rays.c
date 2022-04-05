@@ -61,6 +61,20 @@ void get_cy_basis_dot(t_point dot, t_point *new, t_figures *fig, t_point k)//с�
 	(*new).z = (r_new.z * (dot.x - k.x) + u_new.z * (dot.y - k.y) + d_new.z * (dot.z - k.z)) / det;
 }
 
+void back_world_basis(t_point *dot, t_figures *fig)
+{
+	t_point	rig;
+	t_point	up;
+	t_point	dir;
+
+	rig = fig->r;
+	up = fig->u;
+	dir = fig->d;
+	(*dot).x = rig.x * (*dot).x + rig.y * (*dot).y + rig.z * (*dot).z + fig->fig.cy.coord.x;//(rig.x * cam->pos.x + rig.y * cam->pos.y + rig.z * cam->pos.z);
+	(*dot).y = up.x * (*dot).x + up.y * (*dot).y + up.z * (*dot).z  + fig->fig.cy.coord.y;//(up.x * cam->pos.x + up.y * cam->pos.y + up.z * cam->pos.z);
+	(*dot).z = dir.x * (*dot).x + dir.y * (*dot).y + dir.z * (*dot).z + fig->fig.cy.coord.z;// dir.x * cam->pos.x + dir.y * cam->pos.y + dir.z * cam->pos.z;
+}
+
 void swap_t(t_equ *equ)
 {
 	double	mid;
@@ -112,16 +126,34 @@ int is_valid_cy_param(t_equ *equ)
 	return (1);
 }
 
+void in_dot_checker(t_ray ray, t_figures *cy)
+{
+	double x;
+	double y;
+	double rad;
+
+	x = ray.o.x;
+	y = ray.o.y;
+	rad = cy->fig.cy.diameter * (0.5);
+	if (sqrt(x * x + y * y) - rad >= 0.0001)
+		return ;
+	cy->in_dot = 1;
+}
+
 double	get_cy_t(t_equ equ, double hei, t_ray new_ray, t_figures *cy)
 {
 	double t_min;
-
 
 	equ.t1 = ((-1) * equ.b + sqrt(equ.discr)) / (2 * equ.a);
 	equ.t2 = ((-1) * equ.b - sqrt(equ.discr)) / (2 * equ.a);
 	swap_t(&equ);
 	// printf("t1, t2 = %f , %f\n", equ.t2, equ.t1);
 	cy->in_dot = 0;
+	if (equ.t1 < 1 && equ.t2 > 1)
+		cy->in_dot = 1;
+	// else
+	// 	printf("t1 = %f t2 = %f\n", equ.t1, equ.t2);
+	in_dot_checker(new_ray, cy);
 	if (!is_valid_cy_param(&equ))
 		return (-1);
 	t_min = equ.t_min;
@@ -154,7 +186,6 @@ double is_cylinder(t_point o, t_point p, t_figures *cy)
 	equ.b = 2 * new_ray.op.x * new_ray.o.x + 2 * new_ray.op.y * new_ray.o.y;
 	equ.c = new_ray.o.x * new_ray.o.x + new_ray.o.y * new_ray.o.y - rad * rad;
 	equ.discr = equ.b * equ.b - 4 * equ.a * equ.c;
-	// printf("(a, b, c, discr) = (%f, %f, %f, %f)\n", equ.a, equ.b, equ.c, equ.discr);
 	if (equ.discr < 0)
 		return (-1);
 	if (fabs(equ.a) < 0.00001)// крышка
@@ -301,9 +332,9 @@ double is_cylinder(t_point o, t_point p, t_figures *cy)
 // 		cy_dot.x = new_o.x;
 // 		cy_dot.y = new_o.y;
 // 		// printf("hey\n");
+// 		printf("i am here\n");
 // 		if (new_o.x * new_o.x + new_o.y * new_o.y - rad * rad > 0.00001)
 // 			return ;
-// 		printf("i am here\n");
 // 		vec_fill(&norm, 0, 0, cy_dot.z);
 // 		normalize2(&norm, norm);
 // 		printf("dot = (%f, %f, %f) norm = (%f, %f, %f)\n", new_o.x, new_o.y, new_o.z, norm.x, norm.y, norm.z);
