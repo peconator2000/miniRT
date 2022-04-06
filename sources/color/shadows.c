@@ -9,6 +9,7 @@
 
 // 	figs = scene->figs;
 // 	dist = INFINITY;
+// 	(void)ray;
 // 	// ray_fig.op = ray;
 // 	// ray_fig.o = scene->light->coord;
 // 	while (figs)
@@ -28,8 +29,8 @@
 // 			// ray_fig.p = figs->fig.cy.coord;
 // 			// dist = is_cylinder(ray_fig.o, ray_fig.p, figs);
 // 			// printf("dist = %f\n", dist);
-// 			get_cy_basis_dot(scene->light->coord, &(ray_fig.o), figs, figs->fig.cy.coord);
-// 			get_cy_basis_dot(figs->fig.cy.coord, &(ray_fig.p), figs, figs->fig.cy.coord);
+// 			// get_cy_basis_dot(scene->light->coord, &(ray_fig.o), figs, figs->fig.cy.coord);
+// 			// get_cy_basis_dot(figs->fig.cy.coord, &(ray_fig.p), figs, figs->fig.cy.coord);
 
 
 // 		}
@@ -60,41 +61,28 @@ static void	get_dist_to_obj(t_scene *scene, t_ray ray_fig,
 	// t_ray		ray_cy;
 
 	figs = scene->figs;
-	dist = INFINITY;
-	// ray_fig.op = ray;
-	// ray_fig.o = scene->light->coord;
+	dist = -1;
 	while (figs)
 	{
-		if (figs->type == SPHERE)
+		if (figs->type == SPHERE && !(figs->is_check))
 		{
-			// if (!first)
-			// 	show_type(figs, "peresekaet");
-			// first = 1;
-			// ray_fig.p = figs->fig.sp.coord;
-			dist = is_sphere(ray_fig, figs);
+			*closest_intersection = is_sphere(ray_fig, figs);
 		}
-		else if (figs->type == PLANE)
+		else if (figs->type == PLANE && !(figs->is_check))
 		{
-			// if (!second)
-			// 	show_type(figs, "peresekaet");
-			// second = 1;
-			dist = is_plane(ray_fig, figs);
+			*closest_intersection = is_plane(ray_fig, figs);
 		}
-		else if (figs->type == CYLINDER)
+		else if (figs->type == CYLINDER && !(figs->is_check))
 		{
-			// if (!third)
-			// 	show_type(figs, "peresekaet");
-			// third = 1;
-			dist = is_cylinder(ray_fig.o, ray_fig.p, figs);
+			*closest_intersection = is_cylinder(ray_fig.o, ray_fig.p, figs);
 		}
-		if (dist > EPSILON && dist < *closest_intersection)
-			*closest_intersection = dist;
+		if (*closest_intersection > 0.00001)
+			return ;
+		// if (*closest_intersection == -1 || (dist > 0.0001 && dist < *closest_intersection))
+		// 	*closest_intersection = dist;
 		figs = figs->next;
 	}
 }
-
-
-
 
 int	check_shadow(t_scene *scene, t_point intersect, t_figures *figure)
 {
@@ -102,18 +90,18 @@ int	check_shadow(t_scene *scene, t_point intersect, t_figures *figure)
 	double	ray_len;
 	double	dist;
 
-	// ray.op = vector_subtract(intersect, scene->light->coord);
-	// ray.o = scene->light->coord;
-	// ray.p = intersect;
 	ray_fill(&ray, intersect, scene->light->coord);
 	// normalize2(&ray.op, ray.op);
 	ray_len = get_module(ray.op, ray.op);
 	ray.op = normalize(ray.op);
-	dist = INFINITY;
+	dist = -1;
 	// show_type(figure, "dot on figure");
+	figure->is_check = 1;
 	get_dist_to_obj(scene, ray, &dist);
+	figure->is_check = 0;
 	if (dist == -1)
 		return (0);
+		(void)figure;
 	if (dist > EPSILON && dist < ray_len - EPSILON && figure->type != -1)
 		return (1);
 	return (0);

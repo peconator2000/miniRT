@@ -102,10 +102,11 @@ int is_valid_cy_param(t_equ *equ)
 	double t1 = equ->t1;
 	double t2 = equ->t2;
 	double t_min;
+	double ed = 0.00001;
 
-	if (t1 >= 1 || t2 >= 1)
+	if (t1 >= ed || t2 >= ed)
 	{
-		if (t1 >= 1 && t2 >= 1)
+		if (t1 >= ed && t2 >= ed)
 		{
 			if (t1 < t2)
 				t_min = t1;
@@ -114,7 +115,7 @@ int is_valid_cy_param(t_equ *equ)
 		}
 		else
 		{
-			if (t1 >= 1)
+			if (t1 >= ed)
 				t_min = t1;
 			else
 				t_min = t2;

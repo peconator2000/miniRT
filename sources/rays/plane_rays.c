@@ -11,10 +11,10 @@ double get_pl_t(t_point n, t_ray ray, t_point k)
 	
 	d = n.x * k.x + n.y * k.y + n.z * k.z;
 	num = d - (n.x * ray.o.x + n.y * ray.o.y + n.z * ray.o.z);
-	den = n.x * ray.op.x + n.y * ray.op.y + n.z * ray.op.z;
+	den = n.x  * ray.op.x + n.y * ray.op.y + n.z * ray.op.z;
 	if (den == 0)
 		return (-1);
-	return (num * pow(den, -1));
+	return (num /den);
 
 }
 

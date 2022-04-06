@@ -110,25 +110,17 @@ t_color	compute_color(t_scene *scene, t_figures *figure,
 	normal = get_normal(figure, intersect, ray);
 	direction = normalize(vector_subtract(scene->light->coord, intersect));
 	how = vec_scalar_mult(normal, direction);
-	// if (figure->in_dot)
-	// {
-	// 	vec_mult_num(&normal, -1);
-	// }
 	if (how < 0 || check_shadow(scene, intersect, figure))// || is_shad(data, elem, v1))
 	{
-		new_color.r = true_color.r;// * (0.2);
-		new_color.g = true_color.g;// * (0.2);
-		new_color.b = true_color.b;// * (0.2);
+		new_color.r = true_color.r * (0.2);
+		new_color.g = true_color.g * (0.2);
+		new_color.b = true_color.b * (0.2);
 		new_color.mix =((new_color.r << 16) | (new_color.g << 8) | new_color.b);
 		return (new_color);
 	}
-
 	new_color.r = true_color.r * (0.2) + true_color.r  * (how *  light.bri);
 	new_color.g = true_color.g * (0.2) + true_color.g  * (how * light.bri);
 	new_color.b = true_color.b * (0.2) + true_color.b * (how * light.bri);
-	// new_color.r = true_color.r * (0.2) * true_color.r  * (how *  light.bri) / 255;
-	// new_color.g = true_color.g * (0.2) * true_color.g  * (how * light.bri) / 255;
-	// new_color.b = true_color.b * (0.2) * true_color.b * (how * light.bri) / 255;
 	new_color.mix =((new_color.r << 16) | (new_color.g << 8) | new_color.b);
 	return (new_color);
 }

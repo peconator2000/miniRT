@@ -6,7 +6,7 @@
 /*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:44:47 by vellie            #+#    #+#             */
-/*   Updated: 2022/04/06 16:37:19 by vellie           ###   ########.fr       */
+/*   Updated: 2022/04/06 23:34:31 by vellie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ static void	back_forth(int keycode, t_minirt *data)
 {
 	if (keycode == 125)
 	{
+		// data->scene->camera->pos.z += STEP;
 		data->scene->light->coord.z -= STEP;
 		draw_figures(data);
 	}
 	else if (keycode == 126)
 	{
+		// data->scene->camera->pos.z -= STEP;
 		data->scene->light->coord.z += STEP;
 		draw_figures(data);
 	}
