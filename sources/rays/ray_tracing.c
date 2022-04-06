@@ -8,7 +8,7 @@ void	sphere_param(double *min_t, t_color *min_c,	t_figures *sp, t_scene *sc, t_r
 	
 	double		t;
 
-	t = is_sphere(ray, sp);
+	t = is_sphere(ray, sp, 1);
 	if (((*min_t) == -1 || t < *min_t) && t != -1)
 	{
 		(*min_t) = t;
@@ -49,7 +49,7 @@ void	cylinder_param(double *min_t, t_color *min_color, t_figures *cy, t_scene *s
 	double		t;
 	// t_ray		ray;
 	(void)data;
-	t = is_cylinder(sc->camera->pos, dot, cy);
+	t = is_cylinder(sc->camera->pos, dot, cy, 1);
 	if (((*min_t) == -1 || t < *min_t) && t > 0)
 	{
 		get_cy_basis_dot(sc->camera->pos, &(new_ray.o), cy, cy->fig.cy.coord);

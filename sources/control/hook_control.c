@@ -6,7 +6,7 @@
 /*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:44:47 by vellie            #+#    #+#             */
-/*   Updated: 2022/04/06 23:34:31 by vellie           ###   ########.fr       */
+/*   Updated: 2022/04/07 00:25:12 by vellie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ static void	back_forth(int keycode, t_minirt *data)
 {
 	if (keycode == 125)
 	{
-		// data->scene->camera->pos.z += STEP;
-		data->scene->light->coord.z -= STEP;
+		data->scene->camera->pos.z += STEP;
+		// data->scene->light->coord.z -= STEP;
 		draw_figures(data);
 	}
 	else if (keycode == 126)
 	{
-		// data->scene->camera->pos.z -= STEP;
-		data->scene->light->coord.z += STEP;
+		data->scene->camera->pos.z -= STEP;
+		// data->scene->light->coord.z += STEP;
 		draw_figures(data);
 	}
 }
@@ -32,14 +32,14 @@ static void	rigth_left(int keycode, t_minirt *data)
 {
 	if (keycode == 124)
 	{
-		// data->scene->camera->pos.x += STEP;
-		data->scene->light->coord.x += STEP;
+		data->scene->camera->pos.x += STEP;
+		// data->scene->light->coord.x += STEP;
 		draw_figures(data);
 	}
 	else if (keycode == 123)
 	{
-		// data->scene->camera->pos.x -= STEP;
-		data->scene->light->coord.x -= STEP;
+		data->scene->camera->pos.x -= STEP;
+		// data->scene->light->coord.x -= STEP;
 		draw_figures(data);
 	}
 }
@@ -48,14 +48,14 @@ static void	up_down(int keycode, t_minirt *data)
 {
 	if (keycode == 13)
 	{
-		// data->scene->camera->pos.y += STEP;
-		data->scene->light->coord.y += STEP;
+		data->scene->camera->pos.y += STEP;
+		// data->scene->light->coord.y += STEP;
 		draw_figures(data);
 	}
 	else if (keycode == 1)
 	{
-		// data->scene->camera->pos.y -= STEP;
-		data->scene->light->coord.y -= STEP;
+		data->scene->camera->pos.y -= STEP;
+		// data->scene->light->coord.y -= STEP;
 		draw_figures(data);
 	}
 }

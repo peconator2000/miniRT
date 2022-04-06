@@ -66,7 +66,7 @@ static void	get_dist_to_obj(t_scene *scene, t_ray ray_fig,
 	{
 		if (figs->type == SPHERE && !(figs->is_check))
 		{
-			*closest_intersection = is_sphere(ray_fig, figs);
+			*closest_intersection = is_sphere(ray_fig, figs, 0.00001);
 		}
 		else if (figs->type == PLANE && !(figs->is_check))
 		{
@@ -74,7 +74,7 @@ static void	get_dist_to_obj(t_scene *scene, t_ray ray_fig,
 		}
 		else if (figs->type == CYLINDER && !(figs->is_check))
 		{
-			*closest_intersection = is_cylinder(ray_fig.o, ray_fig.p, figs);
+			*closest_intersection = is_cylinder(ray_fig.o, ray_fig.p, figs, 0.00001);
 		}
 		if (*closest_intersection > 0.00001)
 			return ;

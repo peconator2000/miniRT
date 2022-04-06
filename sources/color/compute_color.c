@@ -68,7 +68,6 @@ t_color	compute_cy_color(t_scene *scene, t_figures *figure,
 	(void)ray;
 	light = *(scene->light);
 	direction = normalize(vector_subtract(scene->light->coord, intersect));
-	// vec_fill(&(direction), scene->light->coord.x - intersect.x, scene->light->coord.y - intersect.y, scene->light->coord.z - intersect.z);
 	normalize2(&direction, direction);
 	if (figure->in_dot)
 	{
@@ -76,7 +75,7 @@ t_color	compute_cy_color(t_scene *scene, t_figures *figure,
 	}
 		how = vec_scalar_mult(normal, direction);
 		// printf("how = %f\n", how);
-		if (how < 0 || check_shadow(scene, intersect, figure))// || is_shad(data, elem, v1))
+		if (how < 0 || check_shadow(scene, intersect, figure))
 		{
 			new_color.r = true_color.r * (0.2);
 			new_color.g = true_color.g * (0.2);
@@ -84,12 +83,10 @@ t_color	compute_cy_color(t_scene *scene, t_figures *figure,
 			new_color.mix =((new_color.r << 16) | (new_color.g << 8) | new_color.b);
 			return (new_color);
 		}
-		// printf("new tsvet\n");
 		new_color.r = true_color.r * (0.2) + true_color.r  * (how *  light.bri);
 		new_color.g = true_color.g * (0.2) + true_color.g  * (how * light.bri);
 		new_color.b = true_color.b * (0.2) + true_color.b * (how * light.bri);
 		new_color.mix =((new_color.r << 16) | (new_color.g << 8) | new_color.b);
-	// }
 	return (new_color);
 }
 

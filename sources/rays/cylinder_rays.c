@@ -97,12 +97,12 @@ int rem_cylinder(t_ray ray, double t_min, double hei)
 	return (0);
 }
 
-int is_valid_cy_param(t_equ *equ)
+int is_valid_cy_param(t_equ *equ, double ed)
 {
 	double t1 = equ->t1;
 	double t2 = equ->t2;
 	double t_min;
-	double ed = 0.00001;
+	// double ed = 0.00001;
 
 	if (t1 >= ed || t2 >= ed)
 	{
@@ -138,7 +138,7 @@ void in_dot_checker(t_figures *cy, t_ray new_ray, double hei)
 	cy->in_dot = 1;
 }
 
-double	get_cy_t(t_equ equ, double hei, t_ray new_ray, t_figures *cy, t_ray ray)
+double	get_cy_t(t_equ equ, double hei, t_ray new_ray, t_figures *cy, t_ray ray, double md)
 {
 	double	t_min;
 	double	w_t_min;
@@ -150,7 +150,7 @@ double	get_cy_t(t_equ equ, double hei, t_ray new_ray, t_figures *cy, t_ray ray)
 	// printf("t1, t2 = %f , %f\n", equ.t2, equ.t1);
 	cy->in_dot = 0;
 	in_dot_checker(cy, new_ray, hei);
-	if (!is_valid_cy_param(&equ))
+	if (!is_valid_cy_param(&equ, md))
 		return (-1);
 	t_min = equ.t_min;
 	if (rem_cylinder(new_ray, t_min, hei))
@@ -173,7 +173,7 @@ double	get_cy_t(t_equ equ, double hei, t_ray new_ray, t_figures *cy, t_ray ray)
 	return (w_t_min);
 }
 
-double is_cylinder(t_point o, t_point p, t_figures *cy)
+double is_cylinder(t_point o, t_point p, t_figures *cy, double md)
 {
 	t_ray	new_ray;
 	t_ray	ray;
@@ -200,7 +200,7 @@ double is_cylinder(t_point o, t_point p, t_figures *cy)
 		return (-1);
 	if (fabs(equ.a) < 0.00001)// крышка
 		return (-1);
-	return (get_cy_t(equ, hei, new_ray, cy, ray));
+	return (get_cy_t(equ, hei, new_ray, cy, ray, md));
 }
 
 

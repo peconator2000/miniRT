@@ -1,10 +1,10 @@
 #include "miniRT.h"
 
-int is_valid_param(t_equ *equ)
+int is_valid_param(t_equ *equ, double md)
 {
-	if ((*equ).t1 >= 1 || (*equ).t2 >= 1)
+	if ((*equ).t1 >= md || (*equ).t2 >= md)
 	{
-		if ((*equ).t1 >= 1 && (*equ).t2 >= 1)
+		if ((*equ).t1 >= md && (*equ).t2 >= md)
 		{
 			if ((*equ).t1 < (*equ).t2)
 				(*equ).t_min = (*equ).t1;
@@ -13,7 +13,7 @@ int is_valid_param(t_equ *equ)
 		}
 		else
 		{
-			if ((*equ).t1 >= 1)
+			if ((*equ).t1 >= md)
 				(*equ).t_min = (*equ).t1;
 			else	
 				(*equ).t_min = (*equ).t2;
@@ -50,7 +50,7 @@ void ray_fill(t_ray *res, t_point o, t_point p)
 	(*res).p = p;
 }
 
-double	is_sphere(t_ray ray, t_figures *sp)
+double	is_sphere(t_ray ray, t_figures *sp, double md)
 {
 	t_point	s;
 	t_equ	equ;
@@ -65,12 +65,12 @@ double	is_sphere(t_ray ray, t_figures *sp)
 	equ.discr = equ.b * equ.b - 4 * equ.a * equ.c;
 	equ.t1 = (equ.b * (-1) + sqrt(equ.discr)) / (2 * equ.a);
 	equ.t2 = (equ.b * (-1) - sqrt(equ.discr)) / (2 * equ.a);
-	if (!is_valid_param(&equ))
+	if (!is_valid_param(&equ, md))
 		return (-1);
 	return (equ.t_min);
 }
 
-double	is_cy_sphere(t_ray ray, t_figures *sp, t_point k)
+double	is_cy_sphere(t_ray ray, t_figures *sp, t_point k, double md)
 {
 	t_point	s;
 	t_equ	equ;
@@ -86,7 +86,7 @@ double	is_cy_sphere(t_ray ray, t_figures *sp, t_point k)
 	equ.discr = equ.b * equ.b - 4 * equ.a * equ.c;
 	equ.t1 = (equ.b * (-1) + sqrt(equ.discr)) / (2 * equ.a);
 	equ.t2 = (equ.b * (-1) - sqrt(equ.discr)) / (2 * equ.a);
-	if (!is_valid_param(&equ))
+	if (!is_valid_param(&equ, md))
 		return (-1);
 	return (equ.t_min);
 }
