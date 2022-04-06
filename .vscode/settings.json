@@ -2,6 +2,8 @@
 	"files.associations": {
 		"sstream": "c",
 		"functional": "c",
-		"minirt.h": "c"
+		"minirt.h": "c",
+		"memory": "c",
+		"utility": "c"
 	}
 }

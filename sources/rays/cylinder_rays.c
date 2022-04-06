@@ -126,34 +126,29 @@ int is_valid_cy_param(t_equ *equ)
 	return (1);
 }
 
-void in_dot_checker(t_ray ray, t_figures *cy)
+void in_dot_checker(t_figures *cy, t_ray new_ray, double hei)
 {
-	double x;
-	double y;
-	double rad;
+	t_point cam;
 
-	x = ray.o.x;
-	y = ray.o.y;
-	rad = cy->fig.cy.diameter * (0.5);
-	if (sqrt(x * x + y * y) - rad >= 0.0001)
+	cam = new_ray.o;
+	if (sqrt(cam.x * cam.x + cam.y * cam.y) >= cy->fig.cy.diameter * (0.5))
 		return ;
+	(void)hei;
 	cy->in_dot = 1;
 }
 
-double	get_cy_t(t_equ equ, double hei, t_ray new_ray, t_figures *cy)
+double	get_cy_t(t_equ equ, double hei, t_ray new_ray, t_figures *cy, t_ray ray)
 {
-	double t_min;
+	double	t_min;
+	double	w_t_min;
+	t_point cy_dot;
 
 	equ.t1 = ((-1) * equ.b + sqrt(equ.discr)) / (2 * equ.a);
 	equ.t2 = ((-1) * equ.b - sqrt(equ.discr)) / (2 * equ.a);
 	swap_t(&equ);
 	// printf("t1, t2 = %f , %f\n", equ.t2, equ.t1);
 	cy->in_dot = 0;
-	if (equ.t1 < 1 && equ.t2 > 1)
-		cy->in_dot = 1;
-	// else
-	// 	printf("t1 = %f t2 = %f\n", equ.t1, equ.t2);
-	in_dot_checker(new_ray, cy);
+	in_dot_checker(cy, new_ray, hei);
 	if (!is_valid_cy_param(&equ))
 		return (-1);
 	t_min = equ.t_min;
@@ -164,17 +159,30 @@ double	get_cy_t(t_equ equ, double hei, t_ray new_ray, t_figures *cy)
 	}
 	if (rem_cylinder(new_ray, t_min, hei))
 		return (-1);
-	return (t_min);
+	get_ray_dot(&cy_dot, new_ray, t_min);
+	back_world_basis(&cy_dot, cy);
+	if (ray.op.x != 0)
+		w_t_min = (cy_dot.x - ray.o.x) / ray.op.x;
+	else if (ray.op.y != 0)
+		w_t_min = (cy_dot.y - ray.o.y) / ray.op.y;
+	else
+		w_t_min = (cy_dot.z - ray.o.z) / ray.op.z;
+	// printf("t_min = %f, w_t_min = %f\n", t_min, w_t_min);
+	cy->cy_t = t_min;
+	return (w_t_min);
 }
 
 double is_cylinder(t_point o, t_point p, t_figures *cy)
 {
 	t_ray	new_ray;
+	t_ray	ray;
 	t_equ	equ;
 	double	rad;
 	double	hei;
 	t_point	k;
 
+	ray_fill(&ray, o, p);
+	cy->in_dot = 0;
 	k = cy->fig.cy.coord;
 	hei = cy->fig.cy.height;
 	rad = cy->fig.cy.diameter * (0.5);
@@ -182,6 +190,7 @@ double is_cylinder(t_point o, t_point p, t_figures *cy)
 	get_cy_basis_dot(p, &(new_ray.p), cy, k);
 	get_cy_basis_dot(o, &(new_ray.o), cy, k);
 	ray_fill(&new_ray, new_ray.o, new_ray.p);
+	normalize2(&(new_ray.op), new_ray.op);
 	equ.a = new_ray.op.x * new_ray.op.x + new_ray.op.y * new_ray.op.y;
 	equ.b = 2 * new_ray.op.x * new_ray.o.x + 2 * new_ray.op.y * new_ray.o.y;
 	equ.c = new_ray.o.x * new_ray.o.x + new_ray.o.y * new_ray.o.y - rad * rad;
@@ -190,7 +199,7 @@ double is_cylinder(t_point o, t_point p, t_figures *cy)
 		return (-1);
 	if (fabs(equ.a) < 0.00001)// крышка
 		return (-1);
-	return (get_cy_t(equ, hei, new_ray, cy));
+	return (get_cy_t(equ, hei, new_ray, cy, ray));
 }
 
 

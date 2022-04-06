@@ -4,6 +4,8 @@ void	add_coeficient(double (*rgb)[3], double coef, int color)
 {
 	unsigned int	mask;
 
+	// if (coef < 0)
+	// 	return ;
 	mask = 255 << 16;
 	(*rgb)[0] += coef * ((color & mask) >> 16) * pow(255, -1);
 	mask >>= 8;

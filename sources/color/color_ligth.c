@@ -2,54 +2,54 @@
 
 double epsi = 0.0000001;
 
-int cy_shad(t_minirt *data, t_ray ray, t_point k)
-{
-	double		min_t;
-	// t_color		min_color;
-	t_figures	*elems;
+// int cy_shad(t_minirt *data, t_ray ray, t_point k)
+// {
+// 	double		min_t;
+// 	// t_color		min_color;
+// 	t_figures	*elems;
 
-	elems = data->scene->figs;
-	min_t = -1;
-	while (elems)
-	{
-		if (elems->type == PLANE)
-			min_t = is_cy_plane(ray, elems, k);
-		if (elems->type == SPHERE)
-			min_t = is_cy_sphere(ray, elems, k);
-		if (elems->type == CYLINDER)
-			min_t = is_cylinder(ray.o, ray.p, elems);
-		elems = elems->next;
-		if (min_t > 1)
-			return (1);
-	}
-	return (0);
-}
+// 	elems = data->scene->figs;
+// 	min_t = -1;
+// 	while (elems)
+// 	{
+// 		if (elems->type == PLANE)
+// 			min_t = is_cy_plane(ray, elems, k);
+// 		if (elems->type == SPHERE)
+// 			min_t = is_cy_sphere(ray, elems, k);
+// 		if (elems->type == CYLINDER)
+// 			min_t = is_cylinder(ray.o, ray.p, elems);
+// 		elems = elems->next;
+// 		if (min_t > 1)
+// 			return (1);
+// 	}
+// 	return (0);
+// }
 
-int is_shad(t_minirt *data, t_figures *fig, t_ray ray)
-{
-	double		min_t;
-	t_color		min_color;
-	t_figures	*elems;
+// int is_shad(t_minirt *data, t_figures *fig, t_ray ray)
+// {
+// 	double		min_t;
+// 	t_color		min_color;
+// 	t_figures	*elems;
 
-	elems = data->scene->figs;
-	min_t = -1;
-	if (fig->type == CYLINDER)
-		return (cy_shad(data, ray, fig->fig.cy.coord));
-	fill_color(&min_color, 0, 0, 0);
-	while (elems)
-	{
-		if (elems->type == PLANE)
-			min_t = is_plane(ray, elems);
-		if (elems->type == SPHERE)
-			min_t = is_sphere(ray, elems);
-		if (elems->type == CYLINDER)
-			min_t = is_cylinder(ray.o, ray.p, elems);
-		elems = elems->next;
-		if (min_t > 1)
-			return (1);
-	}
-	return (0);
-}
+// 	elems = data->scene->figs;
+// 	min_t = -1;
+// 	if (fig->type == CYLINDER)
+// 		return (cy_shad(data, ray, fig->fig.cy.coord));
+// 	fill_color(&min_color, 0, 0, 0);
+// 	while (elems)
+// 	{
+// 		if (elems->type == PLANE)
+// 			min_t = is_plane(ray, elems);
+// 		if (elems->type == SPHERE)
+// 			min_t = is_sphere(ray, elems);
+// 		if (elems->type == CYLINDER)
+// 			min_t = is_cylinder(ray.o, ray.p, elems);
+// 		elems = elems->next;
+// 		if (min_t > 1)
+// 			return (1);
+// 	}
+// 	return (0);
+// }
 
 t_color get_ligth(t_ray v1, t_ray v2, t_figures *elem, t_color true_color, t_light *light, t_minirt *data)
 {

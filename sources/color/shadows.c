@@ -1,12 +1,63 @@
 #include "miniRT.h"
 
+// static void	get_dist_to_obj(t_scene *scene, t_point ray,
+// 		double *closest_intersection)
+// {
+// 	double		dist;
+// 	t_figures	*figs;
+// 	t_ray		ray_fig;
+
+// 	figs = scene->figs;
+// 	dist = INFINITY;
+// 	// ray_fig.op = ray;
+// 	// ray_fig.o = scene->light->coord;
+// 	while (figs)
+// 	{
+// 		if (figs->type == SPHERE)
+// 		{
+// 			// ray_fig.p = figs->fig.sp.coord;
+// 			dist = is_sphere(ray_fig, figs);
+// 		}
+// 		else if (figs->type == PLANE)
+// 		{
+// 			// ray_fig.p = figs->fig.sp.coord;
+// 			dist = is_plane(ray_fig, figs);
+// 		}
+// 		else if (figs->type == CYLINDER)
+// 		{
+// 			// ray_fig.p = figs->fig.cy.coord;
+// 			// dist = is_cylinder(ray_fig.o, ray_fig.p, figs);
+// 			// printf("dist = %f\n", dist);
+// 			get_cy_basis_dot(scene->light->coord, &(ray_fig.o), figs, figs->fig.cy.coord);
+// 			get_cy_basis_dot(figs->fig.cy.coord, &(ray_fig.p), figs, figs->fig.cy.coord);
+
+
+// 		}
+// 		if (dist > EPSILON && dist < *closest_intersection)
+// 			*closest_intersection = dist;
+// 		figs = figs->next;
+// 	}
+// }
+
+void show_type(t_figures *fig, char *str)
+{
+	if (fig->type == SPHERE)
+		printf("shpere %s\n", str);
+	else if (fig->type == PLANE)
+		printf("plane %s\n", str);
+	else if (fig->type == CYLINDER)
+		printf("cylinder %s\n", str);
+}
+
 static void	get_dist_to_obj(t_scene *scene, t_ray ray_fig,
 		double *closest_intersection)
 {
 	double		dist;
 	t_figures	*figs;
-	// t_ray		ray_fig;
-	// t_point lig;
+	// static int first;
+	// static int second;
+	// static int third;
+	// t_ray		ray_cy;
 
 	figs = scene->figs;
 	dist = INFINITY;
@@ -16,21 +67,25 @@ static void	get_dist_to_obj(t_scene *scene, t_ray ray_fig,
 	{
 		if (figs->type == SPHERE)
 		{
+			// if (!first)
+			// 	show_type(figs, "peresekaet");
+			// first = 1;
 			// ray_fig.p = figs->fig.sp.coord;
 			dist = is_sphere(ray_fig, figs);
 		}
 		else if (figs->type == PLANE)
 		{
-			// ray_fig.p = figs->fig.sp.coord;
+			// if (!second)
+			// 	show_type(figs, "peresekaet");
+			// second = 1;
 			dist = is_plane(ray_fig, figs);
 		}
 		else if (figs->type == CYLINDER)
 		{
-			// get_cy_basis_dot(scene->light->coord, &lig, figs, figs->fig.cy.coord);
-			// ray_fig.o = lig;
-			// ray_fig.p = ;
+			// if (!third)
+			// 	show_type(figs, "peresekaet");
+			// third = 1;
 			dist = is_cylinder(ray_fig.o, ray_fig.p, figs);
-			// dist = EPSILON;
 		}
 		if (dist > EPSILON && dist < *closest_intersection)
 			*closest_intersection = dist;
@@ -38,18 +93,27 @@ static void	get_dist_to_obj(t_scene *scene, t_ray ray_fig,
 	}
 }
 
-int	check_shadow(t_scene *scene, t_ray ray, t_figures *figure)
+
+
+
+int	check_shadow(t_scene *scene, t_point intersect, t_figures *figure)
 {
-	// t_ray	ray;
+	t_ray	ray;
 	double	ray_len;
 	double	dist;
 
-	// ray = vector_subtract(intersect, scene->light->coord);
-	// ray_fill(&ray, scene->light->coord, intersect);
+	// ray.op = vector_subtract(intersect, scene->light->coord);
+	// ray.o = scene->light->coord;
+	// ray.p = intersect;
+	ray_fill(&ray, intersect, scene->light->coord);
+	// normalize2(&ray.op, ray.op);
 	ray_len = get_module(ray.op, ray.op);
 	ray.op = normalize(ray.op);
 	dist = INFINITY;
+	// show_type(figure, "dot on figure");
 	get_dist_to_obj(scene, ray, &dist);
+	if (dist == -1)
+		return (0);
 	if (dist > EPSILON && dist < ray_len - EPSILON && figure->type != -1)
 		return (1);
 	return (0);
