@@ -64,19 +64,19 @@ static void	get_dist_to_obj(t_scene *scene, t_ray ray_fig,
 	dist = -1;
 	while (figs)
 	{
-		if (figs->type == SPHERE && !(figs->is_check))
+		if (figs->type == SPHERE && (!(figs->is_check)))
 		{
 			*closest_intersection = is_sphere(ray_fig, figs, 0.00001);
 		}
-		else if (figs->type == PLANE && !(figs->is_check))
+		else if (figs->type == PLANE && (!(figs->is_check)))
 		{
 			*closest_intersection = is_plane(ray_fig, figs);
 		}
-		else if (figs->type == CYLINDER && !(figs->is_check))
+		else if (figs->type == CYLINDER && (!(figs->is_check)))
 		{
 			*closest_intersection = is_cylinder(ray_fig.o, ray_fig.p, figs, 0.00001);
 		}
-		if (*closest_intersection > 0.00001)
+		if (*closest_intersection > 0.00001 && *closest_intersection < 1)
 			return ;
 		// if (*closest_intersection == -1 || (dist > 0.0001 && dist < *closest_intersection))
 		// 	*closest_intersection = dist;
@@ -93,7 +93,7 @@ int	check_shadow(t_scene *scene, t_point intersect, t_figures *figure)
 	ray_fill(&ray, intersect, scene->light->coord);
 	// normalize2(&ray.op, ray.op);
 	ray_len = get_module(ray.op, ray.op);
-	ray.op = normalize(ray.op);
+	// ray.op = normalize(ray.op);
 	dist = -1;
 	// show_type(figure, "dot on figure");
 	figure->is_check = 1;
@@ -102,7 +102,7 @@ int	check_shadow(t_scene *scene, t_point intersect, t_figures *figure)
 	if (dist == -1)
 		return (0);
 		(void)figure;
-	if (dist > EPSILON && dist < ray_len - EPSILON && figure->type != -1)
+	if (dist > EPSILON && dist < 1)//ray_len - EPSILON && figure->type != -1)
 		return (1);
 	return (0);
 }
