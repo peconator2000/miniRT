@@ -6,7 +6,7 @@
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:59:06 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/04/07 20:59:32 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/04/07 21:28:23 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,9 @@ void		get_new_coords(t_camera *cam, t_point *dot);
 // Rays
 int			get_color(t_minirt *data, double x_sc, double y_sc);
 t_color		get_minimal_color(t_minirt *data, t_point dot);
-void		cylinder_param(double *min_t, t_color *min_color, t_figures *cy, t_scene *sc, t_point dot, t_ray ray, t_minirt *data);
-void		plane_param(double *min_t, t_color *min_color,	t_figures *pl, t_scene *sc, t_ray ray, t_minirt *data);
-void		sphere_param(double *min_t, t_color *min_c,	t_figures *sp, t_scene *sc, t_ray ray, t_minirt *data);
+void		cylinder_param(double *min_t, t_color *min_color, t_figures *cy, t_scene *sc, t_point dot, t_ray ray);
+void		plane_param(double *min_t, t_color *min_color,	t_figures *pl, t_scene *sc, t_ray ray);
+void		sphere_param(double *min_t, t_color *min_c,	t_figures *sp, t_scene *sc, t_ray ray);
 
 double		is_cy_sphere(t_ray ray, t_figures *sp, t_point k, double md);
 double		is_sphere(t_ray ray, t_figures *sp, double md);
