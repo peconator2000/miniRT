@@ -6,7 +6,7 @@
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 19:32:47 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/04/07 19:32:48 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/04/07 23:26:06 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	add_coeficient(double (*rgb)[3], double coef, int color)
 {
 	unsigned int	mask;
 
+	if (coef < 0)
+		return ;
 	mask = 255 << 16;
 	(*rgb)[0] += coef * ((color & mask) >> 16) * pow(255, -1);
 	mask >>= 8;

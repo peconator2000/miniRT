@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   shadows.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 19:32:56 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/04/07 21:47:23 by vellie           ###   ########.fr       */
+/*   Updated: 2022/04/07 23:26:30 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void show_type(t_figures *fig, char *str)
+void	show_type(t_figures *fig, char *str)
 {
 	if (fig->type == SPHERE)
 		printf("shpere %s\n", str);
@@ -56,18 +56,3 @@ int	check_shadow(t_scene *scene, t_point intersect, t_figures *figure)
 		return (1);
 	return (0);
 }
-
-// int	check_shadow(t_scene *scene, t_point intersect, t_figures *figure)
-// {
-// 	t_ray	ray;
-// 	double	dist;
-
-// 	ray_fill(&ray, intersect, scene->light->coord);
-// 	dist = -1;
-// 	figure->is_check = 1;
-// 	get_dist_to_obj(scene, ray, &dist);
-// 	figure->is_check = 0;
-// 	if (dist > EPSILON && dist < 1)
-// 		return (1);
-// 	return (0);
-// }
