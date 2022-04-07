@@ -1,9 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray_tracing.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/07 21:19:04 by mwittenb          #+#    #+#             */
+/*   Updated: 2022/04/07 22:37:04 by vellie           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
-void	sphere_param(double *min_t, t_color *min_c,	t_figures *sp, t_scene *sc, t_ray ray, t_minirt *data)
+void	sphere_param(double *min_t, t_color *min_c,	t_figures *sp, t_scene *sc, t_ray ray)
 {
 	t_point		sp_dot;
-	(void)data;
 	t_point		norm;
 
 	double		t;
@@ -20,13 +31,12 @@ void	sphere_param(double *min_t, t_color *min_c,	t_figures *sp, t_scene *sc, t_r
 	}
 }
 
-void	plane_param(double *min_t, t_color *min_color,	t_figures *pl, t_scene *sc, t_ray ray, t_minirt *data)
+void	plane_param(double *min_t, t_color *min_color,	t_figures *pl, t_scene *sc, t_ray ray)
 {
 	t_point		pl_dot;
 	double		t;
 	t_point		norm;
 
-	(void)data;
 	t = is_plane(ray, pl);
 	if (((*min_t) == -1 || t < *min_t) && t > 1)
 	{
@@ -39,14 +49,13 @@ void	plane_param(double *min_t, t_color *min_color,	t_figures *pl, t_scene *sc, 
 	}
 }
 
-void	cylinder_param(double *min_t, t_color *min_color, t_figures *cy, t_scene *sc, t_point dot, t_ray ray, t_minirt *data)
+void	cylinder_param(double *min_t, t_color *min_color, t_figures *cy, t_scene *sc, t_point dot, t_ray ray)
 {
 	t_ray		new_ray;
 	t_point		cy_dot;
 	t_point		norm;
 	double		t;
 
-	(void)data;
 	t = is_cylinder(sc->camera->pos, dot, cy, 1);
 	if (((*min_t) == -1 || t < *min_t) && t > 0)
 	{
@@ -83,11 +92,11 @@ t_color	get_minimal_color(t_minirt *data, t_point dot)
 	{
 		ray_fill(&ray, data->scene->camera->pos, dot);
 		if (elems->type == PLANE)
-			plane_param(&min_t, &min_color, elems,data->scene, ray, data);
+			plane_param(&min_t, &min_color, elems,data->scene, ray);
 		if (elems->type == SPHERE)
-			sphere_param(&min_t, &min_color, elems, data->scene, ray, data);
+			sphere_param(&min_t, &min_color, elems, data->scene, ray);
 		if (elems->type == CYLINDER)
-			cylinder_param(&min_t, &min_color, elems, data->scene, dot, ray, data);
+			cylinder_param(&min_t, &min_color, elems, data->scene, dot, ray);
 		elems = elems->next;
 	}
 	return (min_color);
