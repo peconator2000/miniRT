@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structs.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/07 20:59:44 by mwittenb          #+#    #+#             */
+/*   Updated: 2022/04/07 21:01:33 by mwittenb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCTS_H
 
 # define STRUCTS_H
@@ -9,7 +21,6 @@ typedef struct s_color
 	int	b;
 	int	mix;
 }				t_color;
-
 
 typedef struct s_point
 {
@@ -45,7 +56,7 @@ typedef struct s_cylinder
 	double		height;
 }				t_cylinder;
 
-typedef struct s_scene t_scene;
+typedef struct s_scene	t_scene;
 
 union			u_figures
 {
@@ -84,13 +95,13 @@ typedef struct s_light
 typedef struct s_camera
 {
 	t_point		pos;
-	t_point		new_pos;//положение в новой системе координат
+	t_point		new_pos;
 	t_point		no_vec;
-	t_point		dir;	//z
-	t_point		rigth;	//x
-	t_point		up;		//y
+	t_point		dir;
+	t_point		rigth;
+	t_point		up;
 	int			deg;
-	double		view_size[2];//размеры окна просмотра новые
+	double		view_size[2];
 }				t_camera;
 
 // Scene
@@ -117,9 +128,9 @@ typedef struct s_equ
 
 typedef struct s_ray
 {
-	t_point op;
-	t_point o;
-	t_point p;
+	t_point	op;
+	t_point	o;
+	t_point	p;
 }				t_ray;
 
 #endif
