@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 19:04:12 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/03/22 13:35:46 by vellie           ###   ########.fr       */
+/*   Updated: 2022/04/07 20:31:30 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	str_to_int(char **str)
 {
-	int i;
+	int	i;
 	int	neg;
 
 	i = 0;

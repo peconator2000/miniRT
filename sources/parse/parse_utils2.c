@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_utils2.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/07 20:31:37 by mwittenb          #+#    #+#             */
+/*   Updated: 2022/04/07 20:31:50 by mwittenb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 t_color	create_color(int red, int green, int blue)
@@ -21,7 +33,7 @@ t_color	parse_color(char **str)
 	red = 0;
 	green = 0;
 	blue = 0;
-	red = str_to_int(str);//113,101,163
+	red = str_to_int(str);
 	check_range(red, 0.0, 255, "COLOR");
 	comma(str);
 	green = str_to_int(str);

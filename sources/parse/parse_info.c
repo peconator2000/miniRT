@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_info.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/07 20:30:55 by mwittenb          #+#    #+#             */
+/*   Updated: 2022/04/07 20:31:17 by mwittenb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 void	parse_resolution(t_minirt *minirt, char **str)
@@ -15,7 +27,7 @@ void	parse_ambient_light(t_minirt *minirt, char **str)
 	skip_space(str);
 	minirt->scene->a_light = str_to_double(str);
 	check_range(minirt->scene->a_light, 0.0, 1.0, "AMBIENT LIGHT");
-	minirt->scene->al_color =  parse_color(str);
+	minirt->scene->al_color = parse_color(str);
 }
 
 void	parse_light(t_minirt *minirt, char **str)

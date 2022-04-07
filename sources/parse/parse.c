@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/07 20:30:01 by mwittenb          #+#    #+#             */
+/*   Updated: 2022/04/07 20:30:15 by mwittenb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 static void	parse_line(t_minirt *minirt, t_figures **figs, char **strptr)
 {
-	char *str;
+	char	*str;
 
 	str = *strptr;
 	if (*str == 'R' && *(str++))
