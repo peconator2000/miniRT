@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   screen_coord.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/07 20:54:22 by mwittenb          #+#    #+#             */
+/*   Updated: 2022/04/07 20:57:34 by mwittenb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 void	get_new_sizes(t_scene *sc, double *delta)
@@ -25,7 +37,7 @@ void	get_inscreen(t_scene *sc, t_point *dot, double x, double y)
 	(*dot).z = -1;
 }
 
-void get_new_coords(t_camera *cam, t_point *dot)
+void	get_new_coords(t_camera *cam, t_point *dot)
 {
 	t_point	rig;
 	t_point	up;
@@ -34,7 +46,9 @@ void get_new_coords(t_camera *cam, t_point *dot)
 	rig = cam->rigth;
 	up = cam->up;
 	dir = cam->dir;
-	(*dot).x = rig.x * (*dot).x + rig.y * (*dot).y + rig.z * (*dot).z + cam->pos.x;
-	(*dot).y = up.x * (*dot).x + up.y * (*dot).y + up.z * (*dot).z  + cam->pos.y;
-	(*dot).z = dir.x * (*dot).x + dir.y * (*dot).y + dir.z * (*dot).z + cam->pos.z;
+	(*dot).x = rig.x * (*dot).x + rig.y * (*dot).y
+		+ rig.z * (*dot).z + cam->pos.x;
+	(*dot).y = up.x * (*dot).x + up.y * (*dot).y + up.z * (*dot).z + cam->pos.y;
+	(*dot).z = dir.x * (*dot).x + dir.y * (*dot).y
+		+ dir.z * (*dot).z + cam->pos.z;
 }
