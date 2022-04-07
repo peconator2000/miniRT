@@ -16,7 +16,7 @@ void	sphere_param(double *min_t, t_color *min_c,	t_figures *sp, t_scene *sc, t_r
 		get_ray_dot(&sp_dot, ray, *(min_t));
 		vec_fill(&norm, sp_dot.x - sp->fig.sp.coord.x, sp_dot.y - sp->fig.sp.coord.y, sp_dot.z - sp->fig.sp.coord.z);
 		normalize2(&norm, norm);
-		(*min_c) = compute_color(sc, sp, ray.op, t, sp_dot);//, norm);
+		(*min_c) = compute_color(sc, sp, ray.op, sp_dot);//, norm);
 	}
 }
 
@@ -35,7 +35,7 @@ void	plane_param(double *min_t, t_color *min_color,	t_figures *pl, t_scene *sc, 
 		get_ray_dot(&pl_dot, ray, *(min_t));
 		vec_fill(&norm, pl->no_vec.x, pl->no_vec.y, pl->no_vec.z);
 		normalize2(&norm, norm);
-		(*min_color) = compute_color(sc, pl, ray.op, t, pl_dot);
+		(*min_color) = compute_color(sc, pl, ray.op, pl_dot);
 	}
 }
 
@@ -65,7 +65,7 @@ void	cylinder_param(double *min_t, t_color *min_color, t_figures *cy, t_scene *s
 		norm.y -= cy->fig.cy.coord.y;
 		norm.z -= cy->fig.cy.coord.z;
 		get_ray_dot(&cy_dot, ray, (*min_t));
-		(*min_color) = compute_cy_color(sc, cy, ray.op, *min_t, cy_dot, norm);
+		(*min_color) = compute_cy_color(sc, cy, cy_dot, norm);
 	}
 }
 

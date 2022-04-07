@@ -66,13 +66,15 @@ void	back_world_basis(t_point *dot, t_figures *fig)
 	t_point	rig;
 	t_point	up;
 	t_point	dir;
+	t_point	old;
 
 	rig = fig->r;
 	up = fig->u;
 	dir = fig->d;
-	(*dot).x = rig.x * (*dot).x + rig.y * (*dot).y + rig.z * (*dot).z + fig->fig.cy.coord.x;
-	(*dot).y = up.x * (*dot).x + up.y * (*dot).y + up.z * (*dot).z  + fig->fig.cy.coord.y;
-	(*dot).z = dir.x * (*dot).x + dir.y * (*dot).y + dir.z * (*dot).z + fig->fig.cy.coord.z;
+	old = *dot;
+	(*dot).x = vec_scalar_mult(rig, old) + fig->fig.cy.coord.x;
+	(*dot).y = vec_scalar_mult(up, old) + fig->fig.cy.coord.y;
+	(*dot).z = vec_scalar_mult(dir, old) + fig->fig.cy.coord.z;
 }
 
 void	swap_t(t_equ *equ)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   screen_coord.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:54:22 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/04/07 20:58:14 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/04/07 21:28:35 by vellie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void	get_new_coords(t_camera *cam, t_point *dot)
 	t_point	rig;
 	t_point	up;
 	t_point	dir;
+	t_point	old;
 
 	rig = cam->rigth;
 	up = cam->up;
 	dir = cam->dir;
-	(*dot).x = rig.x * (*dot).x + rig.y * (*dot).y
-		+ rig.z * (*dot).z + cam->pos.x;
-	(*dot).y = up.x * (*dot).x + up.y * (*dot).y + up.z * (*dot).z + cam->pos.y;
-	(*dot).z = dir.x * (*dot).x + dir.y * (*dot).y
-		+ dir.z * (*dot).z + cam->pos.z;
+	old = *dot;
+	(*dot).x = vec_scalar_mult(rig, old) + cam->pos.x;
+	(*dot).y = vec_scalar_mult(up, old) + cam->pos.y;
+	(*dot).z = vec_scalar_mult(dir, old) + cam->pos.z;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:59:06 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/04/07 20:59:32 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/04/07 22:09:52 by vellie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,9 @@ void		add_coeficient(double (*rgb)[3], double coef, int color);
 t_color		build_color(int color, double rgb[3]);
 void		fill_color(t_color *col, int r, int g, int b);
 void		get_cy_coord(t_figures *fig, t_point *dot);
-t_color		compute_cy_color(t_scene *scene, t_figures *figure,
-				t_point ray, double dist, t_point intersect, t_point normal);
+t_color		compute_cy_color(t_scene *sc, t_figures *fig, t_point dot, t_point norm);
 t_color		compute_color(t_scene *scene, t_figures *figure,
-				t_point ray, double dist, t_point intersect);
+				t_point ray, t_point dot);
 int			check_shadow(t_scene *scene, t_point intersect, t_figures *figure);
 void		show_type(t_figures *fig, char *str);
 t_point		get_normal(t_figures *figure, t_point intersect, t_point ray);
