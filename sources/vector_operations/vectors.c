@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vectors.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/07 20:35:04 by mwittenb          #+#    #+#             */
+/*   Updated: 2022/04/07 20:35:27 by mwittenb         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "miniRT.h"
 
 double	vcos(t_point a, t_point b)
@@ -17,5 +29,6 @@ t_point	vec_mult_coef(t_point vector, double coef)
 
 t_point	reflect_ray(t_point ray, t_point normal)
 {
-	return (vector_subtract(vec_mult_coef(normal, 2 * get_dot(normal, ray)), ray));
+	return (vector_subtract(vec_mult_coef(normal, 2
+				* get_dot(normal, ray)), ray));
 }
