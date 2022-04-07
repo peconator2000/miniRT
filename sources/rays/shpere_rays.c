@@ -15,7 +15,7 @@ int is_valid_param(t_equ *equ, double md)
 		{
 			if ((*equ).t1 >= md)
 				(*equ).t_min = (*equ).t1;
-			else	
+			else
 				(*equ).t_min = (*equ).t2;
 		}
 	}
@@ -36,11 +36,6 @@ void	get_ray_dot(t_point *res_dot, t_ray ray, double t_min)
 	(*res_dot).z = dir.z * t_min + dot.z;
 }
 
-/*
-	(*sp_dot).x = op.x * equ.t_min + o.x;
-	(*sp_dot).y = op.y * equ.t_min + o.y;
-	(*sp_dot).z = op.z * equ.t_min + o.z;
-*/
 void ray_fill(t_ray *res, t_point o, t_point p)
 {
 	(*res).op.x = p.x - o.x;
@@ -56,8 +51,8 @@ double	is_sphere(t_ray ray, t_figures *sp, double md)
 	t_equ	equ;
 	double	rad;
 
-	s = sp->fig.sp.coord;//центр сферы
-	rad = sp->fig.sp.diameter * 0.5;//радиус
+	s = sp->fig.sp.coord;
+	rad = sp->fig.sp.diameter * 0.5;
 	equ.t_min = -1;
 	equ.a = ray.op.x * ray.op.x + ray.op.y * ray.op.y +  ray.op.z *  ray.op.z;
 	equ.b = 2 * (ray.op.x * (ray.o.x - s.x) +  ray.op.y * (ray.o.y - s.y) +  ray.op.z * (ray.o.z - s.z));
@@ -76,9 +71,8 @@ double	is_cy_sphere(t_ray ray, t_figures *sp, t_point k, double md)
 	t_equ	equ;
 	double	rad;
 
-	// s = sp->fig.sp.coord;//центр сферы
 	get_cy_basis_dot(sp->fig.sp.coord, &s, sp, k);
-	rad = sp->fig.sp.diameter * 0.5;//радиус
+	rad = sp->fig.sp.diameter * 0.5;
 	equ.t_min = -1;
 	equ.a = ray.op.x * ray.op.x + ray.op.y * ray.op.y +  ray.op.z *  ray.op.z;
 	equ.b = 2 * (ray.op.x * (ray.o.x - s.x) +  ray.op.y * (ray.o.y - s.y) +  ray.op.z * (ray.o.z - s.z));

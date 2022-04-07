@@ -40,9 +40,6 @@ void new_basis(t_scene *scene)
 	get_d(scene->camera);
 	vec_mult_num(&(scene->camera->dir), -1);
 	get_r(scene->camera);
-	// get_u(scene->camera);
-	// vec_mult_num(&(scene->camera->up), -1);
-	// vec_mult_num(&(scene->camera->rigth), -1);
 	get_norm(&(scene->camera->dir));
 	get_norm(&(scene->camera->up));
 	get_norm(&(scene->camera->rigth));
