@@ -6,7 +6,7 @@
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:44:47 by vellie            #+#    #+#             */
-/*   Updated: 2022/04/08 16:05:17 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/04/08 16:35:16 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int	key_hook(int keycode, t_minirt *data)
 	return (1);
 }
 
-int	cross_icon(int key)
+int	cross_icon(t_minirt *data)
 {
-	(void)key;
+	free_minirt(data);
 	exit(0);
 	return (0);
 }

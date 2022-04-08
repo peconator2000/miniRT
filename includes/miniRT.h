@@ -6,7 +6,7 @@
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:59:06 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/04/08 16:24:08 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/04/08 16:35:15 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_point		get_normal(t_figures *figure, t_point intersect, t_point ray);
 
 // Control
 int			key_hook(int keycode, t_minirt *data);
-int			cross_icon(int key);
+int			cross_icon(t_minirt *data);
 
 // Coordinates
 void		vec_equal(t_point *dot1, t_point *dot2);

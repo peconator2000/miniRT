@@ -6,7 +6,7 @@
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 16:21:43 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/04/08 16:21:44 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/04/08 16:31:39 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,18 @@ void	back_world_basis(t_point *dot, t_figures *fig)
 	(*dot).z = vec_scalar_mult(dir, old) + fig->fig.cy.coord.z;
 }
 
+static double	for_normik(t_equ *equ, t_figures *cy, t_ray new_ray)
+{
+	(*equ).t1 = ((-1) * equ->b + sqrt(equ->discr)) / (2 * equ->a);
+	(*equ).t2 = ((-1) * equ->b - sqrt(equ->discr)) / (2 * equ->a);
+	swap_t(equ);
+	cy->in_dot = 0;
+	in_dot_checker(cy, new_ray, cy->fig.cy.height);
+	if (!is_valid_cy_param(equ, cy->fig.cy.md))
+		return (-1.0);
+	return (equ->t_min);
+}
+
 double	get_cy_t(t_equ equ, t_ray new_ray,
 		t_figures *cy, t_ray ray)
 {
@@ -62,14 +74,9 @@ double	get_cy_t(t_equ equ, t_ray new_ray,
 	double	w_t_min;
 	t_point	cy_dot;
 
-	equ.t1 = ((-1) * equ.b + sqrt(equ.discr)) / (2 * equ.a);
-	equ.t2 = ((-1) * equ.b - sqrt(equ.discr)) / (2 * equ.a);
-	swap_t(&equ);
-	cy->in_dot = 0;
-	in_dot_checker(cy, new_ray, cy->fig.cy.height);
-	if (!is_valid_cy_param(&equ, cy->fig.cy.md))
+	t_min = for_normik(&equ, cy, new_ray);
+	if (t_min == -1.000)
 		return (-1);
-	t_min = equ.t_min;
 	if (rem_cylinder(new_ray, t_min, cy->fig.cy.height))
 	{
 		t_min = equ.t2;
