@@ -179,16 +179,14 @@ double is_cylinder(t_point o, t_point p, t_figures *cy, double md)
 	t_equ	equ;
 	double	rad;
 	double	hei;
-	t_point	k;
 
 	ray_fill(&ray, o, p);
 	cy->in_dot = 0;
-	k = cy->fig.cy.coord;
 	hei = cy->fig.cy.height;
 	rad = cy->fig.cy.diameter * (0.5);
 	get_new_cylinder_basis(cy);
-	get_cy_basis_dot(p, &(new_ray.p), cy, k);
-	get_cy_basis_dot(o, &(new_ray.o), cy, k);
+	get_cy_basis_dot(p, &(new_ray.p), cy, cy->fig.cy.coord);
+	get_cy_basis_dot(o, &(new_ray.o), cy, cy->fig.cy.coord);
 	ray_fill(&new_ray, new_ray.o, new_ray.p);
 	normalize2(&(new_ray.op), new_ray.op);
 	equ.a = new_ray.op.x * new_ray.op.x + new_ray.op.y * new_ray.op.y;
