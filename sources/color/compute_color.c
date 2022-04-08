@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_color.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 23:25:47 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/04/07 23:26:02 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/04/08 13:51:55 by vellie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ t_color	pixel_mix(double how, t_scene *sc, t_point dot, t_figures *fig)
 		;
 	else
 		add_coeficient(&rgb, how * sc->light->bri, sc->light->color.mix);
+	fig->in_dot = 0;
 	return (build_color(true_c.mix, rgb));
 }
 

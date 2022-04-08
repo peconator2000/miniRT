@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shadows.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 19:32:56 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/04/07 23:26:30 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/04/08 13:25:15 by vellie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	get_dist_to_obj(t_scene *scene, t_ray ray_fig,
 	figs = scene->figs;
 	while (figs)
 	{
-		if (figs->type == SPHERE && (!(figs->is_check)))
+		if (figs->type == SPHERE && (!(figs->is_check) || figs->in_dot))
 			*min_t = is_sphere(ray_fig, figs, EPSILON);
 		else if (figs->type == PLANE && (!(figs->is_check)))
 			*min_t = is_plane(ray_fig, figs);

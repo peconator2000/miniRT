@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hook_control.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vellie <vellie@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 18:44:47 by vellie            #+#    #+#             */
-/*   Updated: 2022/04/07 20:51:32 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/04/08 13:44:33 by vellie           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	back_forth(int keycode, t_minirt *data)
 		data->scene->light->coord.z += STEP;
 	else if (keycode == 38)
 		data->scene->light->coord.z -= STEP;
+	
 	draw_figures(data);
 }
 
@@ -62,6 +63,7 @@ int	key_hook(int keycode, t_minirt *data)
 	back_forth(keycode, data);
 	rigth_left(keycode, data);
 	up_down(keycode, data);
+	printf("cam = (%f, %f, %f)\n", data->scene->camera->pos.x, data->scene->camera->pos.y, data->scene->camera->pos.z);
 	return (1);
 }
 
