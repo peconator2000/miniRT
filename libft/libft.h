@@ -6,7 +6,7 @@
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/26 15:12:28 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/03/11 16:18:28 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/04/08 16:21:29 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,5 @@ t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 int					ft_pow_recursive(int basis, int exponent);
 int					is_newline(char *str);
 size_t				ft_cstrlen(const char *str, char c);
-
 
 #endif

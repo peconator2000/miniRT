@@ -6,7 +6,7 @@
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:59:06 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/04/08 00:22:41 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/04/08 16:24:08 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,15 +101,12 @@ void		terminate(char *msg);
 void		*err_malloc(unsigned int size);
 
 // Color
-t_color		get_light(t_ray v1, t_ray v2, t_figures *elem, t_color true_color, t_light *light);
-t_color		get_light_sphere(t_figures *elem, t_point dot, t_color true_color, t_light *ligth);
-t_color		get_light_cylinder(t_figures *elem, t_point dot, t_ray norm, t_color true_color, t_light *ligth);
-t_color		get_light_plane(t_figures *elem, t_point dot, t_color true_color, t_light *ligth);
 void		add_coeficient(double (*rgb)[3], double coef, int color);
 t_color		build_color(int color, double rgb[3]);
 void		fill_color(t_color *col, int r, int g, int b);
 void		get_cy_coord(t_figures *fig, t_point *dot);
-t_color		compute_cy_color(t_scene *sc, t_figures *fig, t_point dot, t_point norm);
+t_color		compute_cy_color(t_scene *sc, t_figures *fig,
+				t_point dot, t_point norm);
 t_color		compute_color(t_scene *scene, t_figures *figure,
 				t_point ray, t_point dot);
 int			check_shadow(t_scene *scene, t_point intersect, t_figures *figure);
@@ -145,9 +142,9 @@ void		get_new_coords(t_camera *cam, t_point *dot);
 // Rays
 int			get_color(t_minirt *data, double x_sc, double y_sc);
 void		get_minimal_color(t_minirt *data, t_point dot, t_color *color);
-void		cylinder_param(double *min_t, t_color *min_color, t_figures *cy, t_scene *sc, t_point dot, t_ray ray);
-void		plane_param(double *min_t, t_color *min_color,	t_figures *pl, t_scene *sc, t_ray ray);
-void		sphere_param(double *min_t, t_color *min_color,	t_figures *sp, t_scene *sc, t_ray ray);
+void		cylinder_processing(t_kostyl *ko, t_scene *scene, t_point dot);
+void		plane_processing(t_kostyl *ko, t_scene *scene);
+void		sphere_processing(t_kostyl *ko, t_scene *scene);
 
 double		is_cy_sphere(t_ray ray, t_figures *sp, t_point k, double md);
 double		is_sphere(t_ray ray, t_figures *sp, double md);
@@ -160,13 +157,14 @@ double		is_plane(t_ray ray, t_figures *pl);
 double		get_pl_t(t_point n, t_ray ray, t_point k);
 
 double		is_cylinder(t_point o, t_point p, t_figures *cy, double md);
-double		get_cy_t(t_equ equ, double hei, t_ray new_ray, t_figures *cy, t_ray ray, double md);
+double		get_cy_t(t_equ equ, t_ray new_ray, t_figures *cy, t_ray ray);
 void		in_dot_checker(t_figures *cy, t_ray new_ray, double hei);
 int			is_valid_cy_param(t_equ *equ, double ed);
 int			rem_cylinder(t_ray ray, double t_min, double hei);
 void		swap_t(t_equ *equ);
 void		back_world_basis(t_point *dot, t_figures *fig);
-void		get_cy_basis_dot(t_point dot, t_point *new, t_figures *fig, t_point k);
+void		get_cy_basis_dot(t_point dot, t_point *new,
+				t_figures *fig, t_point k);
 double		get_matrix_determinant(t_point r, t_point u, t_point d);
 void		get_new_cylinder_basis(t_figures *cy);
 void		show_vec(char *str, t_point vec);

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/07 21:19:04 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/04/07 23:48:51y mwittenb         ###   ########.fr       */
+/*   Created: 2022/04/08 15:46:50 by mwittenb          #+#    #+#             */
+/*   Updated: 2022/04/08 15:46:53 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,24 @@
 
 void	get_minimal_color(t_minirt *data, t_point dot, t_color *color)
 {
-	double		t;
-	double		min_t;
 	t_figures	*elems;
-	t_ray		ray;
+	t_kostyl	ko;
 
 	elems = data->scene->figs;
-	min_t = -1;
 	fill_color(color, 0, 0, 0);
+	ko.min_color = *color;
+	ko.min_t = -1;
 	while (elems)
 	{
-		ray_fill(&ray, data->scene->camera->pos, dot);
+		ray_fill(&(ko.ray), data->scene->camera->pos, dot);
+		ko.fig = elems;
 		if (elems->type == PLANE)
-		{
-			t = is_plane(ray, elems);
-			if ((min_t == -1 || t < min_t) && t > 1)
-			{
-				min_t = t;
-				plane_param(&min_t, color, elems, data->scene, ray);
-			}
-		}
+			plane_processing(&ko, data->scene);
 		else if (elems->type == SPHERE)
-		{
-			t = is_sphere(ray, elems, 1);
-			if ((min_t == -1 || t < min_t) && t > 1)
-			{
-				min_t = t;
-				sphere_param(&min_t, color, elems, data->scene, ray);
-			}
-		}
+			sphere_processing(&ko, data->scene);
 		else if (elems->type == CYLINDER)
-		{
-			t = is_cylinder(data->scene->camera->pos, dot, elems, 1);
-			if ((min_t == -1 || t < min_t) && t > 1)
-			{
-				min_t = t;
-				cylinder_param(&min_t, color, elems, data->scene, dot, ray);
-			}
-		}
+			cylinder_processing(&(ko), data->scene, dot);
+		*color = ko.min_color;
 		elems = elems->next;
 	}
 }

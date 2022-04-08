@@ -6,7 +6,7 @@
 /*   By: mwittenb <mwittenb@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 20:59:44 by mwittenb          #+#    #+#             */
-/*   Updated: 2022/04/07 21:01:33 by mwittenb         ###   ########.fr       */
+/*   Updated: 2022/04/08 16:22:31 by mwittenb         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_cylinder
 	t_point		coord;
 	double		diameter;
 	double		height;
+	double		md;
 }				t_cylinder;
 
 typedef struct s_scene	t_scene;
@@ -132,5 +133,13 @@ typedef struct s_ray
 	t_point	o;
 	t_point	p;
 }				t_ray;
+
+typedef struct s_kostyl
+{
+	t_color		min_color;
+	t_figures	*fig;
+	t_ray		ray;
+	double		min_t;
+}				t_kostyl;
 
 #endif
